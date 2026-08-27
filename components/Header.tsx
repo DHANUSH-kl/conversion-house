@@ -1,96 +1,129 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const LINKS = [
-  { href: "#work", label: "Work" },
-  { href: "#services", label: "Services" },
-  { href: "#pricing", label: "Pricing" },
-  { href: "#faq", label: "FAQ" },
+  { href: "/work", label: "Work" },
+  { href: "/services", label: "Services" },
+  { href: "/process", label: "Process" },
+  { href: "/about", label: "About" },
+  { href: "/insights", label: "Insights" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-[var(--bg)]/90 backdrop-blur border-b border-[var(--line)]" : "border-b border-transparent"
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur border-b border-neutral-100 py-4"
+          : "bg-transparent py-6"
       }`}
     >
-      <div className="container-x flex h-16 items-center justify-between">
-        <a href="#top" className="flex items-center gap-2">
-          <Image
-            src="/CONVERION HOUSE LOGO .png"
-            alt="Conversion House"
-            width={180}
-            height={45}
-            className="h-8 w-auto object-contain invert scale-[1.5] origin-left"
-            priority
-          />
-        </a>
+      <div className="container-x flex items-center justify-between">
+        <Link href="/" className="group flex items-center gap-3">
+          <span className="font-display text-2xl font-bold tracking-tighter text-black transition-colors group-hover:text-[#ff4500]">
+            ConversionHouse.
+          </span>
+        </Link>
 
+        {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-[14px] text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors"
-            >
-              {l.label}
-            </a>
-          ))}
+          {LINKS.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-[14px] font-medium transition-colors hover:text-[#ff4500] ${
+                  isActive ? "text-[#ff4500]" : "text-neutral-600"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
-        <div className="hidden md:block">
-          <a
-            href="#contact"
-            className="btn-primary rounded-full px-4 py-2 text-[13px] font-medium"
+        {/* Right Action Button */}
+        <div className="hidden md:flex items-center gap-6">
+          <span className="text-[12px] text-neutral-400 font-mono">
+            [ Client login ]
+          </span>
+          <Link
+            href="/contact"
+            className="bg-black hover:bg-[#ff4500] text-white text-[13px] font-semibold px-6 py-3 rounded-full transition-all duration-200"
           >
-            Book a free call
-          </a>
+            Get a quote
+          </Link>
         </div>
 
+        {/* Mobile Hamburger Menu Button */}
         <button
-          aria-label="Toggle menu"
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle Navigation Menu"
+          onClick={() => setOpen((prev) => !prev)}
+          className="md:hidden flex flex-col gap-1.5 p-2 text-black justify-center items-center"
         >
-          <span className={`h-[1.5px] w-5 bg-[var(--ink)] transition-transform ${open ? "translate-y-[3px] rotate-45" : ""}`} />
-          <span className={`h-[1.5px] w-5 bg-[var(--ink)] transition-opacity ${open ? "opacity-0" : ""}`} />
-          <span className={`h-[1.5px] w-5 bg-[var(--ink)] transition-transform ${open ? "-translate-y-[3px] -rotate-45" : ""}`} />
+          <span
+            className={`h-[2px] w-6 bg-black transition-transform duration-300 ${
+              open ? "translate-y-[8px] rotate-45 bg-[#ff4500]" : ""
+            }`}
+          />
+          <span
+            className={`h-[2px] w-6 bg-black transition-opacity duration-300 ${
+              open ? "opacity-0" : ""
+            }`}
+          />
+          <span
+            className={`h-[2px] w-6 bg-black transition-transform duration-300 ${
+              open ? "-translate-y-[8px] -rotate-45 bg-[#ff4500]" : ""
+            }`}
+          />
         </button>
       </div>
 
+      {/* Mobile Drawer menu */}
       {open && (
-        <div className="md:hidden border-t border-[var(--line)] bg-[var(--bg)]">
-          <div className="container-x flex flex-col py-4 gap-4">
-            {LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="text-[15px] text-[var(--ink-soft)]"
+        <div className="md:hidden fixed inset-x-0 top-[72px] bottom-0 bg-white/95 backdrop-blur z-40 border-t border-neutral-100 animate-fade-in">
+          <div className="flex flex-col p-8 gap-6 h-full justify-between pb-24">
+            <div className="flex flex-col gap-6">
+              {LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-2xl font-display font-semibold text-black hover:text-[#ff4500] transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+            <div className="flex flex-col gap-4">
+              <div className="text-sm text-neutral-500 font-mono">[ Client login ]</div>
+              <Link
+                href="/contact"
+                className="bg-black hover:bg-[#ff4500] text-white text-center py-4 rounded-full font-semibold transition-colors"
               >
-                {l.label}
-              </a>
-            ))}
-            <a
-              href="#contact"
-              onClick={() => setOpen(false)}
-              className="btn-primary rounded-full px-4 py-2.5 text-[14px] font-medium text-center"
-            >
-              Book a free call
-            </a>
+                Get a quote
+              </Link>
+            </div>
           </div>
         </div>
       )}

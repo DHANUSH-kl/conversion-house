@@ -1,48 +1,35 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg: #fdfdfb;
-  --ink: #10130f;
-  --ink-soft: #565f56;
-  --line: #e6e8e2;
-  --accent: #1c7a44;
-  --accent-ink: #0f3f24;
-  --accent-tint: #e8f4ec;
-  --paper: #ffffff;
-}
-
-@theme inline {
-  --color-bg: var(--bg);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-line: var(--line);
-  --color-accent: var(--accent);
-  --color-accent-ink: var(--accent-ink);
-  --color-accent-tint: var(--accent-tint);
-  --color-paper: var(--paper);
-}
-
-* {
-  border-color: var(--line);
-}
-
-html {
-  scroll-behavior: smooth;
+  --bg-dark: #000000;
+  --bg-light: #ffffff;
+  --ink-dark: #ffffff;
+  --ink-light: #000000;
+  --ink-soft: #555555;
+  --line-dark: #222222;
+  --line-light: #eaeaea;
+  --accent: #ff4500;
+  --accent-hover: #e03d00;
 }
 
 body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg-light);
+  color: var(--ink-light);
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-.font-mono-label {
-  font-family: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+.font-display {
+  font-family: 'Clash Display', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 
 .container-x {
-  max-width: 1180px;
+  max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 24px;
@@ -51,37 +38,46 @@ body {
 
 @media (min-width: 768px) {
   .container-x {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 48px;
+    padding-right: 48px;
   }
 }
 
-.eyebrow {
-  font-family: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent-ink);
+.btn-primary {
+  background: #000000;
+  color: #ffffff;
+  font-weight: 500;
+  transition: all 200ms ease;
+  border: 1px solid #000000;
 }
 
-.btn-primary {
-  background: var(--ink);
-  color: var(--paper);
-  transition: background-color 180ms ease, transform 180ms ease;
-}
 .btn-primary:hover {
-  background: var(--accent-ink);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
 }
 
 .btn-ghost {
-  border: 1px solid var(--line);
-  color: var(--ink);
+  border: 1px solid #000000;
+  color: #000000;
   background: transparent;
-  transition: border-color 180ms ease, background-color 180ms ease;
+  transition: all 200ms ease;
 }
+
 .btn-ghost:hover {
-  border-color: var(--ink);
-  background: var(--paper);
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: #000000;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -91,25 +87,4 @@ body {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.marquee-track {
-  animation: marquee 28s linear infinite;
-}
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.fade-up {
-  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

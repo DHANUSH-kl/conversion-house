@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "CONVERSION HOUSE — Websites & Online Stores That Bring In Business",
+  title: "ConversionHouse — Brand. Build. Convert. Grow.",
   description:
-    "Conversion House designs and builds websites, online stores, and brand identities for small businesses. Simple, fast, built to bring in customers.",
+    "We build brands, websites, e-commerce experiences and growth systems designed to help businesses move forward.",
+  openGraph: {
+    title: "ConversionHouse — Brand. Build. Convert. Grow.",
+    description: "Digital growth studio that connects brand, technology, acquisition and optimization.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -13,8 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <body className="antialiased bg-white text-black selection:bg-[#ff4500] selection:text-white">
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -1,31 +1,1012 @@
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import LogoStrip from "@/components/LogoStrip";
-import Services from "@/components/Services";
-import Process from "@/components/Process";
-import Testimonials from "@/components/Testimonials";
-import Pricing from "@/components/Pricing";
-import About from "@/components/About";
-import FAQ from "@/components/FAQ";
-import FinalCTA from "@/components/FinalCTA";
-import Footer from "@/components/Footer";
+"use client";
+
+import Link from "next/link";
+import { ArrowRight, Star, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
+import Accordion from "@/components/Accordion";
+
+// 1. HERO
+const HERO_TITLE_LINE1 = "When someone searches for your business…";
+const HERO_TITLE_LINE2 = "Do they find you?";
+const HERO_SUBTITLE = "Or do they find your competitors first?";
+const HERO_COPY =
+  "We build the brand, website and growth systems that help businesses get discovered, get trusted and get chosen.";
+
+// 2. CORE IDEA
+const PILLARS = [
+  {
+    num: "01",
+    title: "Be remembered",
+    desc: "Build a brand people recognize and trust.",
+  },
+  {
+    num: "02",
+    title: "Be found",
+    desc: "Build websites and digital experiences designed for search and discovery.",
+  },
+  {
+    num: "03",
+    title: "Be chosen",
+    desc: "Turn visitors and attention into enquiries, leads and sales.",
+  },
+  {
+    num: "04",
+    title: "Keep growing",
+    desc: "Use SEO, paid advertising, analytics and optimization to improve what happens next.",
+  },
+];
+
+// 3. SERVICES (Adapted style matching reference image)
+const SERVICES = [
+  {
+    title: "Branding",
+    tag: "Build a brand people remember.",
+    desc: "We create identities that give your business a clear presence across digital and physical touchpoints.",
+    cta: "Build My Brand",
+  },
+  {
+    title: "Websites",
+    tag: "Not another template. A website built around your business.",
+    desc: "We design and develop high-performance websites that communicate your value clearly, build trust and guide visitors towards action.",
+    cta: "Build My Website",
+  },
+  {
+    title: "E-commerce",
+    tag: "Build an online store that is made to sell.",
+    desc: "From Shopify stores to advanced headless commerce experiences, we build e-commerce systems designed around performance, usability and growth.",
+    cta: "Build My Store",
+  },
+  {
+    title: "SEO",
+    tag: "Get found when your customers are searching.",
+    desc: "We build search visibility into your digital presence — then continuously improve it.",
+    cta: "Grow My Search Visibility",
+  },
+  {
+    title: "Paid Growth",
+    tag: "Turn advertising spend into measurable opportunities.",
+    desc: "We create, launch and optimize paid campaigns designed around your actual business goals.",
+    cta: "Start Growing",
+  },
+  {
+    title: "Conversion Optimization",
+    tag: "More visitors aren't always the answer. Better conversion is.",
+    desc: "We analyze how people interact with your digital experience and identify opportunities to turn more of that traffic into action.",
+    cta: "Optimize My Traffic",
+  },
+  {
+    title: "Analytics & Tracking",
+    tag: "If you can't measure it, you can't improve it.",
+    desc: "We connect the right analytics and tracking systems so you can understand where your customers come from, what they do and where they drop off.",
+    cta: "Connect Tracking",
+  },
+  {
+    title: "Ongoing Support",
+    tag: "Launching isn't the finish line.",
+    desc: "After your website goes live, we can continue supporting your business with website maintenance, SEO, ads, analytics, and growth recommendations.",
+    cta: "Get Support",
+  },
+];
+
+// 4. WHY US
+const WHY_US = [
+  {
+    title: "Built around your business",
+    desc: "We don't force every business into the same package, template or strategy. Your goals determine what we build.",
+  },
+  {
+    title: "Brand meets technology",
+    desc: "Your branding shouldn't live separately from your website. Your website shouldn't live separately from your marketing. We connect the pieces.",
+  },
+  {
+    title: "Built for conversion",
+    desc: "Design matters. But design without action is decoration. We build experiences around what you want the customer to do next.",
+  },
+  {
+    title: "Search and performance from day one",
+    desc: "SEO, performance, analytics and conversion aren't things we want to bolt on after launch. They're considered while the experience is being built.",
+  },
+  {
+    title: "One team",
+    desc: "Branding. Design. Development. SEO. Ads. Optimization. One partner.",
+  },
+  {
+    title: "We stay after launch",
+    desc: "The launch is where most agencies finish. For us, it's where the next phase begins. You can continue working with ConversionHouse for ongoing growth support.",
+  },
+  {
+    title: "Straightforward communication",
+    desc: "Clear scope. Clear deliverables. Clear timelines. Clear communication. No unnecessary agency jargon.",
+  },
+];
+
+// 5. SELECTED WORK
+const CASE_STUDIES = [
+  {
+    name: "SHEEN",
+    tag: "From brand identity to digital launch.",
+    desc: "Sheen wanted to introduce a new mobile car-care experience to Mysuru. ConversionHouse helped bring the brand to life across the places customers would actually encounter it.",
+    bullets: ["Branding", "Digital Experience", "Meta Ads"],
+    statement: "We didn't just design the brand. We built the identity, digital presence and acquisition foundation around it.",
+    slug: "sheen",
+  },
+  {
+    name: "RACE DIVISION",
+    tag: "A website built to be found.",
+    desc: "Race Division needed more than an attractive website. The objective was to create a digital presence capable of competing for search queries while communicating clearly.",
+    bullets: ["SEO-first architecture", "On-page SEO", "Performance optimization"],
+    statement: "Built for people. Structured for search. Optimized for performance.",
+    slug: "race-division",
+  },
+  {
+    name: "IRANI MOTOHUB",
+    tag: "Flexible custom e-commerce stores.",
+    desc: "Irani MotoHub needed a modern e-commerce experience built on Shopify while giving the frontend greater flexibility and performance.",
+    bullets: ["Headless Shopify storefront", "Product experience", "Advanced analytics"],
+    statement: "A headless Shopify experience designed to give the brand more control over performance, experience and future growth.",
+    slug: "irani-motohub",
+  },
+];
+
+// 6. PROOF CARDS
+const PROOF_CARDS = [
+  { title: "Search Visibility", desc: "Organic rankings and search growth." },
+  { title: "Lead Generation", desc: "Enquiries generated through paid campaigns and websites." },
+  { title: "Performance", desc: "Website speed, technical health and Core Web Vitals." },
+  { title: "Conversion", desc: "Improved enquiry or purchase journeys." },
+  { title: "Business Growth", desc: "Sales, bookings or leads where clients allow public reporting." },
+];
+
+// 7. THE LOOP
+const PROCESS_STEPS = [
+  { num: "01", title: "Discover", desc: "We learn about your business, customers, competition, goals and current digital presence." },
+  { num: "02", title: "Define", desc: "We identify the positioning, user journey, growth opportunities and priorities that matter most." },
+  { num: "03", title: "Build", desc: "Brand identity, website, store, landing pages and tracking are designed and developed around the strategy." },
+  { num: "04", title: "Launch", desc: "We launch the digital experience, tracking and acquisition campaigns where required." },
+  { num: "05", title: "Measure", desc: "We track traffic, enquiries, conversions, rankings, campaign performance and user behaviour." },
+  { num: "06", title: "Optimize", desc: "We use the data to improve SEO, advertising, conversion rates, performance and the overall customer journey." },
+];
+
+// 8. PACKAGES
+const PACKAGES = [
+  {
+    title: "Launch",
+    desc: "Build a strong digital foundation.",
+    bullets: ["Branding", "Website", "Landing pages", "Analytics", "Basic SEO", "Conversion-focused structure"],
+    best: "Businesses starting fresh or upgrading an outdated presence.",
+    popular: false,
+  },
+  {
+    title: "Growth",
+    desc: "Turn your digital presence into a customer acquisition system.",
+    bullets: ["Website", "SEO", "Meta Ads", "Google Ads", "Conversion optimization", "Analytics", "Landing pages", "Ongoing optimization"],
+    best: "Businesses that already have a product/service and want more qualified enquiries or customers.",
+    popular: true,
+  },
+  {
+    title: "Scale",
+    desc: "Build, acquire, optimize and scale.",
+    bullets: ["Advanced branding", "High-performance website", "Headless Shopify", "Advanced SEO", "Meta Ads", "Google Ads", "CRO", "Advanced tracking", "Ongoing optimization"],
+    best: "Growing brands, e-commerce businesses and companies investing seriously in digital acquisition.",
+    popular: false,
+  },
+  {
+    title: "Custom",
+    desc: "Don't see what you need?",
+    bullets: ["Your business doesn't have to fit into a package. Select the services you need and we'll calculate an estimated project scope."],
+    best: "Businesses looking for tailored, specialized systems designed from scratch.",
+    popular: false,
+  },
+];
+
+// 11. AUDIENCE
+const AUDIENCES = [
+  { title: "Growing businesses", desc: "You already have something people want. Now your digital presence needs to catch up." },
+  { title: "New businesses", desc: "You're launching and want to start with the right brand, website and growth foundation." },
+  { title: "Service businesses", desc: "You need more qualified enquiries, bookings or calls." },
+  { title: "E-commerce brands", desc: "You want a better storefront, stronger conversion and scalable acquisition." },
+  { title: "Local businesses", desc: "You want customers to find you through Google, Maps, social and search." },
+  { title: "Established brands", desc: "Your current website, branding or acquisition strategy is no longer keeping up with the business." },
+  { title: "Founders", desc: "You know where you want to go but need the right team to build the digital system around it." },
+];
+
+const NOT_FOR = [
+  "You only want the cheapest possible website.",
+  "You're looking for a ₹5K logo with no strategic work.",
+  "You expect guaranteed Google rankings.",
+  "You want advertising without a realistic marketing budget.",
+  "You're looking for someone to simply follow instructions without challenging bad ideas.",
+  "You're not willing to invest in improving the business itself.",
+];
+
+// 13. FAQ
+const FAQ_ITEMS = [
+  { question: "What does ConversionHouse do?", answer: "ConversionHouse helps businesses build and grow online through branding, website development, e-commerce, SEO, paid advertising and conversion optimization." },
+  { question: "Do you only build websites?", answer: "No. A website is one part of what we do. We can also help with branding, SEO, Meta Ads, Google Ads, Shopify, analytics, conversion optimization and ongoing digital support." },
+  { question: "Can I hire you for only one service?", answer: "Yes. You can work with us for an individual requirement such as a website, branding project, SEO or paid advertising." },
+  { question: "Do you provide ongoing SEO?", answer: "Yes. We offer ongoing SEO focused on improving search visibility, technical health, content relevance and organic growth." },
+  { question: "Do you manage Meta Ads?", answer: "Yes. We can handle campaign strategy, setup, targeting, creative direction, tracking, optimization and reporting. Ad spend is separate from our management fee." },
+  { question: "Do you work with Shopify?", answer: "Yes. We work with Shopify and can build advanced headless Shopify experiences where the project requires greater control over the frontend, performance or customer experience." },
+  { question: "Do you guarantee Google rankings?", answer: "No. Nobody can honestly guarantee a specific Google ranking. What we can do is build and continuously optimize the technical, content and authority foundations that improve your chances of earning sustainable search visibility." },
+  { question: "How much does a project cost?", answer: "Every project is different. Instead of forcing every client into a fixed price, we calculate an estimated range based on the services and scope you select. Get a Quote to see your estimated investment." },
+  { question: "Can you work with businesses outside India?", answer: "Yes. ConversionHouse works with businesses remotely and can support clients across different markets." },
+  { question: "What happens after my website launches?", answer: "You can continue working with us for SEO, paid advertising, maintenance, analytics, conversion optimization and ongoing growth." },
+  { question: "How long does a website take?", answer: "The timeline depends on the scope, number of pages, content, integrations and approval cycles. Once we understand your requirements, we'll provide a realistic timeline before development begins." },
+];
 
 export default function Home() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <LogoStrip />
-        <Services />
-        <Process />
-        <Testimonials />
-        <Pricing />
-        <About />
-        <FAQ />
-        <FinalCTA />
-      </main>
-      <Footer />
-    </>
+    <main className="bg-white text-black">
+      {/* A. HERO SECTION */}
+      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <h1 className="font-display tracking-tight text-black leading-tight mb-8">
+              <span className="block text-2xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[62px] text-black font-semibold tracking-tight leading-none mb-2">
+                When people search for your business,
+              </span>
+              <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[54px] tracking-tight leading-none">
+                will <span className="text-[#ff4500] font-semibold">they find you</span>{" "}
+                <span className="text-neutral-800 font-medium">or your competitors?</span>
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed mb-10 font-normal">
+              We build the brand, website and growth systems that help businesses get discovered, get trusted and get chosen.
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+              <Link
+                href="/contact"
+                className="bg-[#ff4500] hover:bg-[#e03d00] text-white font-semibold px-8 py-4 rounded-full transition-colors flex items-center gap-2 group w-full sm:w-auto justify-center"
+              >
+                Get Your Estimate <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                href="/work"
+                className="btn-ghost font-semibold px-8 py-4 rounded-full w-full sm:w-auto text-center"
+              >
+                View Our Work
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* A2. SHOWCASE CAROUSEL - "A look at the work." */}
+      <section className="py-16 overflow-hidden relative border-t border-neutral-100 bg-white">
+        <div className="container-x mb-12">
+          <h2 className="font-display text-4xl md:text-6xl text-black tracking-tight leading-none">
+            A look at the <span className="text-[#ff4500]">work.</span>
+          </h2>
+        </div>
+
+        {/* Side Gradient Blurs */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-20" />
+
+        {/* Infinite Moving Marquee */}
+        <div className="flex overflow-hidden select-none">
+          <motion.div
+            className="flex gap-6 shrink-0 pr-6"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{
+              repeat: Infinity,
+              ease: "linear",
+              duration: 35,
+            }}
+          >
+            {[
+              {
+                bg: "bg-[#2d3a2e]",
+                title: "BRASSA",
+                type: "Brand Identity",
+                content: (
+                  <div className="h-full flex flex-col items-center justify-center text-white space-y-4 p-8 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-900 via-neutral-900 to-black">
+                    <div className="w-16 h-16 border-2 border-white/80 rounded-2xl flex items-center justify-center text-2xl font-display">
+                      B
+                    </div>
+                    <span className="font-display tracking-[0.3em] text-xl font-light">BRASSA</span>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#f8f8f8]",
+                title: "DNA",
+                type: "Minimalist Identity",
+                content: (
+                  <div className="h-full flex flex-col items-center justify-center text-black p-8 bg-white border border-neutral-200">
+                    <div className="flex items-center gap-2 text-4xl font-display tracking-widest">
+                      <span className="text-[#ff4500]">✦</span> DNA
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#ff4500]",
+                title: "Stationery & Brand",
+                type: "Print & Collateral",
+                content: (
+                  <div className="h-full flex flex-col justify-between p-8 bg-[#ff4500] text-white">
+                    <div className="text-xs font-mono uppercase tracking-widest opacity-80">[ Identity System ]</div>
+                    <div className="space-y-2">
+                      <h4 className="font-display text-2xl">Brand Collateral</h4>
+                      <p className="text-xs opacity-90 font-sans">Business cards, letterheads & brand guidelines.</p>
+                    </div>
+                    <div className="text-3xl font-display">✦</div>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#1a1a1a]",
+                title: "Architectural UX",
+                type: "Digital Design",
+                content: (
+                  <div className="h-full flex flex-col items-center justify-center text-white p-8 bg-neutral-900">
+                    <div className="w-full h-48 border border-neutral-700 rounded-2xl p-4 flex flex-col justify-between font-mono text-[10px] text-neutral-400">
+                      <div className="flex justify-between">
+                        <span>Wireframe v2.4</span>
+                        <span>[UI/UX]</span>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-2 bg-neutral-700 rounded w-3/4" />
+                        <div className="h-2 bg-neutral-800 rounded w-1/2" />
+                      </div>
+                      <div className="h-10 bg-[#ff4500]/20 border border-[#ff4500]/40 rounded-xl flex items-center justify-center text-[#ff4500]">
+                        Interactive Engine
+                      </div>
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#f4efe8]",
+                title: "LUCKY CHAN",
+                type: "E-commerce & Storefront",
+                content: (
+                  <div className="h-full flex flex-col justify-between p-8 bg-[#f5ebd9] text-neutral-900 border border-amber-950/10">
+                    <div className="text-xs font-mono uppercase text-[#ff4500] tracking-wider">LUCKY CHAN</div>
+                    <div className="font-display text-3xl leading-tight">
+                      Craft Hospitality & Retail
+                    </div>
+                    <div className="text-xs font-mono text-neutral-500">Mysuru / Bangalore</div>
+                  </div>
+                ),
+              },
+              // Duplicate set for seamless looping
+              {
+                bg: "bg-[#2d3a2e]",
+                title: "BRASSA",
+                type: "Brand Identity",
+                content: (
+                  <div className="h-full flex flex-col items-center justify-center text-white space-y-4 p-8 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-900 via-neutral-900 to-black">
+                    <div className="w-16 h-16 border-2 border-white/80 rounded-2xl flex items-center justify-center text-2xl font-display">
+                      B
+                    </div>
+                    <span className="font-display tracking-[0.3em] text-xl font-light">BRASSA</span>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#f8f8f8]",
+                title: "DNA",
+                type: "Minimalist Identity",
+                content: (
+                  <div className="h-full flex flex-col items-center justify-center text-black p-8 bg-white border border-neutral-200">
+                    <div className="flex items-center gap-2 text-4xl font-display tracking-widest">
+                      <span className="text-[#ff4500]">✦</span> DNA
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#ff4500]",
+                title: "Stationery & Brand",
+                type: "Print & Collateral",
+                content: (
+                  <div className="h-full flex flex-col justify-between p-8 bg-[#ff4500] text-white">
+                    <div className="text-xs font-mono uppercase tracking-widest opacity-80">[ Identity System ]</div>
+                    <div className="space-y-2">
+                      <h4 className="font-display text-2xl">Brand Collateral</h4>
+                      <p className="text-xs opacity-90 font-sans">Business cards, letterheads & brand guidelines.</p>
+                    </div>
+                    <div className="text-3xl font-display">✦</div>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#1a1a1a]",
+                title: "Architectural UX",
+                type: "Digital Design",
+                content: (
+                  <div className="h-full flex flex-col items-center justify-center text-white p-8 bg-neutral-900">
+                    <div className="w-full h-48 border border-neutral-700 rounded-2xl p-4 flex flex-col justify-between font-mono text-[10px] text-neutral-400">
+                      <div className="flex justify-between">
+                        <span>Wireframe v2.4</span>
+                        <span>[UI/UX]</span>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-2 bg-neutral-700 rounded w-3/4" />
+                        <div className="h-2 bg-neutral-800 rounded w-1/2" />
+                      </div>
+                      <div className="h-10 bg-[#ff4500]/20 border border-[#ff4500]/40 rounded-xl flex items-center justify-center text-[#ff4500]">
+                        Interactive Engine
+                      </div>
+                    </div>
+                  </div>
+                ),
+              },
+              {
+                bg: "bg-[#f4efe8]",
+                title: "LUCKY CHAN",
+                type: "E-commerce & Storefront",
+                content: (
+                  <div className="h-full flex flex-col justify-between p-8 bg-[#f5ebd9] text-neutral-900 border border-amber-950/10">
+                    <div className="text-xs font-mono uppercase text-[#ff4500] tracking-wider">LUCKY CHAN</div>
+                    <div className="font-display text-3xl leading-tight">
+                      Craft Hospitality & Retail
+                    </div>
+                    <div className="text-xs font-mono text-neutral-500">Mysuru / Bangalore</div>
+                  </div>
+                ),
+              },
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                className="w-72 sm:w-80 h-[400px] rounded-3xl overflow-hidden shadow-sm shrink-0 relative group border border-neutral-200/60"
+              >
+                {item.content}
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* B. CORE IDEA SECTION */}
+      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+        <div className="container-x">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Core Philosophy ]</span>
+              <h2 className="font-display text-4xl sm:text-5xl leading-none text-black">
+                Your business has one goal. Your digital presence should work towards it.
+              </h2>
+              <div className="text-neutral-600 space-y-4 max-w-lg leading-relaxed">
+                <p>
+                  A great logo alone won't grow your business. A beautiful website alone won't grow your business. Traffic without conversion won't grow your business.
+                </p>
+                <p className="font-semibold text-black">That's why we connect the pieces.</p>
+                <p>
+                  ConversionHouse brings together brand, technology, acquisition and optimization under one roof — so every part of your digital presence works towards the same goal.
+                </p>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {PILLARS.map((pillar) => (
+                <div key={pillar.num} className="bg-white border border-neutral-100 p-6 rounded-2xl shadow-sm">
+                  <div className="text-xs font-mono text-[#ff4500] mb-4">{pillar.num}</div>
+                  <h3 className="font-display text-lg text-black mb-2">{pillar.title}</h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed">{pillar.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* C. WHAT WE DO (SERVICES OVERVIEW) */}
+      <section className="py-32 border-t border-neutral-100 bg-white">
+        <div className="container-x">
+          <div className="mb-24 text-left max-w-4xl space-y-6">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Capabilities ]</span>
+            <h2 className="font-display text-5xl sm:text-7xl text-black leading-[0.95] tracking-tighter">
+              Four services.<br />One operating model.
+            </h2>
+            <p className="text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed pt-2">
+              We don't promise a magic ranking. We build the systems that give your business a better chance of earning sustainable search visibility.
+            </p>
+          </div>
+
+          <div className="space-y-32">
+            {SERVICES.map((s, idx) => (
+              <div
+                key={s.title}
+                className="pb-16 space-y-10 group relative border-b border-neutral-100/80"
+              >
+                {/* Top Row: Left Title & Serial (Expanded col span to prevent text wrap), Right Description */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
+                  <div className="lg:col-span-8 flex items-baseline gap-4 md:gap-6">
+                    <span className="text-5xl md:text-7xl font-display font-light text-[#ff4500] leading-none select-none tracking-tight shrink-0">
+                      0{idx + 1}
+                    </span>
+                    <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-black tracking-tight leading-tight transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-[#ff4500] cursor-pointer">
+                      {s.title}
+                    </h3>
+                  </div>
+
+                  <div className="lg:col-span-4 text-sm md:text-base text-neutral-600 leading-relaxed font-sans pt-1">
+                    {s.desc}
+                  </div>
+                </div>
+
+                {/* Middle Row: 4 Portfolio Cards with rounded corners (No auto-scaling on parent hover) */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 w-full pt-4">
+                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
+                    <div className="absolute inset-0 bg-[#f4f3ef] flex items-center justify-center p-4 text-center">
+                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
+                    </div>
+                  </div>
+                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
+                    <div className="absolute inset-0 bg-[#ecebe5] flex items-center justify-center p-4 text-center">
+                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
+                    </div>
+                  </div>
+                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
+                    <div className="absolute inset-0 bg-[#e5e4de] flex items-center justify-center p-4 text-center">
+                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
+                    </div>
+                  </div>
+                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
+                    <div className="absolute inset-0 bg-[#dfded8] flex items-center justify-center p-4 text-center">
+                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom Row: Typical Engagement Bar */}
+                <div className="group/bar relative overflow-hidden rounded-2xl transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] p-6 bg-transparent hover:bg-[#fff2ed]">
+                  <div className="flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
+                    <span className="text-xs md:text-sm font-sans text-neutral-700 font-medium">
+                      Typical engagement <span className="font-semibold text-black">₹35K to ₹1.5L</span> <span className="text-neutral-400 font-normal">($500 to $2K USD)</span>
+                    </span>
+
+                    <Link
+                      href="/contact"
+                      className="text-xs md:text-sm font-sans font-semibold text-black group-hover/bar:text-[#ff4500] flex items-center gap-2 transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    >
+                      {s.cta} <span className="transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/bar:translate-x-1.5">→</span>
+                    </Link>
+                  </div>
+
+                  {/* Thick Bottom Orange Border Line (Appears on section hover with ultra smooth velocity) */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[3.5px] bg-[#ff4500] origin-left scale-x-0 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* D. WHY CONVERSIONHOUSE */}
+      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+        <div className="container-x">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-4 space-y-4">
+              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Difference ]</span>
+              <h2 className="font-display text-3xl sm:text-4xl text-black">
+                Why work with us?
+              </h2>
+              <p className="text-lg text-neutral-600 font-display">
+                We think beyond the deliverable.
+              </p>
+              <p className="text-sm text-neutral-500 leading-relaxed max-w-xs">
+                You don't need someone who simply completes a checklist. You need someone who understands why the work exists in the first place.
+              </p>
+            </div>
+
+            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {WHY_US.map((item, idx) => (
+                <div key={idx} className="border-l-2 border-[#ff4500] pl-6 py-2">
+                  <h3 className="font-display text-lg text-black mb-2">{item.title}</h3>
+                  <p className="text-sm text-neutral-500 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* E. SELECTED WORK */}
+      <section className="py-24 border-t border-neutral-100 bg-white">
+        <div className="container-x">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="space-y-4">
+              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Shipped Projects ]</span>
+              <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
+                We build. Here's the proof.
+              </h2>
+              <p className="text-neutral-500 text-sm max-w-md">
+                A selection of work across branding, websites, e-commerce and growth. Every project solves a different problem.
+              </p>
+            </div>
+            <Link
+              href="/work"
+              className="bg-black hover:bg-[#ff4500] text-white text-xs font-mono uppercase tracking-wider px-6 py-3 rounded-full transition-colors"
+            >
+              [ View All Work ]
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {CASE_STUDIES.map((cs) => (
+              <div
+                key={cs.name}
+                className="bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl flex flex-col justify-between group hover:border-[#ff4500] transition-all"
+              >
+                <div>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {cs.bullets.map((b) => (
+                      <span key={b} className="text-[10px] font-mono bg-white text-neutral-500 border border-neutral-100 px-2 py-0.5 rounded">
+                        {b}
+                      </span>
+                    ))}
+                  </div>
+                  <h3 className="font-display text-2xl text-black group-hover:text-[#ff4500] transition-colors mb-2">
+                    {cs.name}
+                  </h3>
+                  <p className="text-xs font-mono text-[#ff4500] mb-4">{cs.tag}</p>
+                  <p className="text-sm text-neutral-600 leading-relaxed mb-6">{cs.desc}</p>
+                  <p className="text-xs italic text-neutral-400 border-t border-neutral-100 pt-4">
+                    "{cs.statement}"
+                  </p>
+                </div>
+                <Link
+                  href={`/work/${cs.slug}`}
+                  className="mt-8 text-xs font-mono uppercase text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
+                >
+                  View Case Study <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-16 text-center bg-neutral-50/40 p-8 rounded-2xl border border-neutral-100 max-w-xl mx-auto space-y-4">
+            <h3 className="font-display text-xl text-black">Have a project that belongs here?</h3>
+            <p className="text-neutral-500 text-xs">Let's build it.</p>
+            <Link
+              href="/contact"
+              className="inline-block bg-black hover:bg-[#ff4500] text-white font-semibold text-xs uppercase tracking-wider px-6 py-3 rounded-full transition-colors"
+            >
+              Get a Quote
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* F. RESULTS / PROOF SECTION */}
+      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+        <div className="container-x">
+          <div className="mb-16 max-w-xl">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Sustainable Growth ]</span>
+            <h2 className="font-display text-4xl sm:text-5xl text-black mt-4 leading-none">
+              We care about what happens after launch.
+            </h2>
+            <p className="text-neutral-500 text-sm mt-4 leading-relaxed">
+              The work isn't finished when the website goes live. A successful project should create something measurable: More visibility, enquiries, sales, conversions, and a stronger brand.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+            {PROOF_CARDS.map((card) => (
+              <div key={card.title} className="bg-white border border-neutral-105 p-6 rounded-2xl shadow-sm">
+                <h3 className="font-display text-lg text-black mb-2">{card.title}</h3>
+                <p className="text-xs text-neutral-500 leading-relaxed">{card.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* G. HOW WE WORK (PROCESS) */}
+      <section className="py-24 border-t border-neutral-100 bg-white">
+        <div className="container-x">
+          <div className="mb-16 text-center space-y-4">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Operating System ]</span>
+            <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
+              The ConversionHouse Growth Loop
+            </h2>
+            <p className="text-xs text-[#ff4500] font-mono">
+              Build → Measure → Learn → Improve → Repeat.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
+            {PROCESS_STEPS.map((step) => (
+              <div key={step.num} className="bg-neutral-50/40 border border-neutral-100 p-6 rounded-2xl flex flex-col justify-between">
+                <div>
+                  <span className="text-xs font-mono text-[#ff4500]">{step.num}</span>
+                  <h3 className="font-display text-lg text-black mt-2 mb-2">{step.title}</h3>
+                </div>
+                <p className="text-xs text-neutral-500 leading-relaxed">{step.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* H. PACKAGES / SOLUTIONS */}
+      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+        <div className="container-x">
+          <div className="mb-16 text-center space-y-4">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Transparent Packaging ]</span>
+            <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
+              Packages built around outcomes.
+            </h2>
+            <p className="text-neutral-500 text-sm max-w-md mx-auto">
+              We focus on building long-term growth channels, avoiding simple one-off commodity tiers.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {PACKAGES.map((pkg) => (
+              <div
+                key={pkg.title}
+                className={`border rounded-2xl p-6 flex flex-col justify-between relative ${
+                  pkg.popular
+                    ? "border-[#ff4500] bg-[#ff4500]/5"
+                    : "border-neutral-200 bg-white shadow-sm"
+                }`}
+              >
+                {pkg.popular && (
+                  <span className="absolute -top-3 right-6 bg-[#ff4500] text-white text-[10px] uppercase font-mono tracking-widest px-3 py-1 rounded-full">
+                    Most Popular
+                  </span>
+                )}
+                <div>
+                  <h3 className="font-display text-2xl mb-2 text-black">{pkg.title}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed mb-6">{pkg.desc}</p>
+                  
+                  <ul className="space-y-2 mb-8 border-t border-neutral-100 pt-4">
+                    {pkg.bullets.map((b) => (
+                      <li key={b} className="text-xs text-neutral-500 flex items-start gap-2">
+                        <span className="text-[#ff4500] font-semibold">•</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="border-t border-neutral-100 pt-4 mt-auto">
+                  <p className="text-[10px] uppercase tracking-widest text-[#ff4500] font-mono mb-4">
+                    Best For:
+                  </p>
+                  <p className="text-xs text-neutral-600 leading-relaxed mb-6">{pkg.best}</p>
+                  <Link
+                    href="/contact"
+                    className={`block w-full text-center py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors ${
+                      pkg.popular
+                        ? "bg-[#ff4500] hover:bg-[#e03d00] text-white"
+                        : "bg-black hover:bg-[#ff4500] text-white border border-neutral-200"
+                    }`}
+                  >
+                    Select Plan
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* I. QUOTE CALCULATOR TEASER */}
+      <section className="py-24 border-t border-neutral-100 bg-white">
+        <div className="container-x text-center max-w-xl mx-auto space-y-6">
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Dynamic Estimator ]</span>
+          <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
+            Tell us what you're building.
+          </h2>
+          <p className="text-neutral-500 text-sm">
+            Select what you need. Get an estimated investment.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+            <Link
+              href="/contact"
+              className="bg-black hover:bg-[#ff4500] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors w-full sm:w-auto"
+            >
+              Get a Quote
+            </Link>
+            <a
+              href="https://wa.me/919999999999"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-ghost text-black font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full flex items-center justify-center gap-2 w-full sm:w-auto"
+            >
+              <MessageSquare className="w-4 h-4 text-[#ff4500]" /> Talk on WhatsApp
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* J. ABOUT TEASER */}
+      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+        <div className="container-x">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Who We Are ]</span>
+              <h2 className="font-display text-4xl sm:text-5xl leading-none text-black">
+                We build with one question in mind: Will this actually help the business?
+              </h2>
+              <p className="text-neutral-500 leading-relaxed text-sm">
+                ConversionHouse exists to close the gap between looking good online and performing well online. We bring together creative thinking, technology and digital growth to help businesses build stronger brands, better experiences and more effective customer journeys.
+              </p>
+            </div>
+
+            <div className="lg:col-span-6 bg-white border border-neutral-100 p-8 rounded-2xl relative overflow-hidden shadow-sm">
+              <h3 className="text-xs font-mono uppercase text-[#ff4500] tracking-widest mb-4">
+                ABOUT PHILOSOPHY
+              </h3>
+              <div className="space-y-4">
+                <p className="font-display text-2xl text-black">
+                  "Pretty is good. Purpose is better."
+                </p>
+                <div className="space-y-2 text-xs text-neutral-500 font-mono">
+                  <p>• Strategy informs design.</p>
+                  <p>• Design supports experience.</p>
+                  <p>• Technology enables performance.</p>
+                  <p>• Marketing creates demand.</p>
+                  <p>• Data tells us what to improve.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* K. WHO WE WORK WITH */}
+      <section className="py-24 border-t border-neutral-100 bg-white">
+        <div className="container-x">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            {/* Suitable For */}
+            <div className="lg:col-span-7 space-y-8">
+              <div>
+                <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Ideal Fits ]</span>
+                <h2 className="font-display text-3xl sm:text-4xl text-black mt-2">
+                  Built for businesses ready to take digital seriously.
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {AUDIENCES.map((aud) => (
+                  <div key={aud.title} className="bg-neutral-50/40 border border-neutral-100 p-6 rounded-xl">
+                    <h3 className="font-display text-base text-black mb-2">{aud.title}</h3>
+                    <p className="text-xs text-neutral-500 leading-relaxed">{aud.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* NOT For */}
+            <div className="lg:col-span-5 bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl">
+              <h3 className="font-display text-lg text-[#ff4500] mb-6">
+                We're probably not the right fit if...
+              </h3>
+              <ul className="space-y-3">
+                {NOT_FOR.map((item, idx) => (
+                  <li key={idx} className="text-xs text-neutral-500 flex items-start gap-2.5">
+                    <span className="text-neutral-400 font-semibold">[✕]</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="border-t border-neutral-100 pt-6 mt-6">
+                <p className="text-xs italic text-neutral-400">
+                  "We'd rather build something meaningful with the right clients than take every project that comes our way."
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* L. CLIENT SUPPORT */}
+      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+        <div className="container-x text-center max-w-2xl mx-auto space-y-6">
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Active Partnerships ]</span>
+          <h2 className="font-display text-3xl sm:text-4xl text-black">
+            We don't disappear after delivery.
+          </h2>
+          <p className="text-sm text-neutral-500 leading-relaxed">
+            Your website going live shouldn't mean your relationship with us ends. Depending on your requirements, ConversionHouse can continue working with you through: SEO, Paid advertising, Website maintenance, CRO, analytics, and strategy.
+          </p>
+          <div className="text-xs font-mono text-[#ff4500] uppercase tracking-wider">
+            "Launch is not the end of the project. It's the beginning of growth."
+          </div>
+        </div>
+      </section>
+
+      {/* M. TESTIMONIALS */}
+      <section className="py-24 border-t border-neutral-100 bg-white">
+        <div className="container-x">
+          <div className="mb-16 text-center space-y-4">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Feedback ]</span>
+            <h2 className="font-display text-3xl sm:text-4xl text-black">
+              Don't take our word for it.
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl relative">
+              <div className="flex gap-1 mb-4 text-[#ff4500]">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-current" />
+                ))}
+              </div>
+              <p className="text-neutral-600 text-sm leading-relaxed mb-6 italic">
+                "Work with ConversionHouse was completely seamless. They took down our outdated business profile and restructured our website around customer leads."
+              </p>
+              <div>
+                <h4 className="text-sm font-semibold text-black">Customer Launch Retainer</h4>
+                <p className="text-xs text-neutral-400 font-mono">Mysuru, IN</p>
+              </div>
+            </div>
+            <div className="bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl relative">
+              <div className="flex gap-1 mb-4 text-[#ff4500]">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-current" />
+                ))}
+              </div>
+              <p className="text-neutral-600 text-sm leading-relaxed mb-6 italic">
+                "They didn't just build a gorgeous headless storefront, they made sure technical SEO rankings were active immediately post-launch."
+              </p>
+              <div>
+                <h4 className="text-sm font-semibold text-black">E-commerce Founder</h4>
+                <p className="text-xs text-neutral-400 font-mono">Retail Brand</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* N. FAQ */}
+      <section id="faq" className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+        <div className="container-x">
+          <div className="mb-16 text-center space-y-4">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Clear Answers ]</span>
+            <h2 className="font-display text-3xl sm:text-4xl text-black">
+              Questions before we start?
+            </h2>
+          </div>
+          <Accordion items={FAQ_ITEMS} />
+        </div>
+      </section>
+
+      {/* O. FINAL CTA */}
+      <section className="py-32 border-t border-neutral-100 bg-white relative overflow-hidden">
+        <div className="container-x relative z-10 text-center max-w-3xl space-y-8">
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Get Started ]</span>
+          <h2 className="font-display text-4xl sm:text-6xl text-black leading-none">
+            Ready to turn your digital presence into a growth engine?
+          </h2>
+          <p className="text-neutral-500 text-sm max-w-lg mx-auto leading-relaxed">
+            Whether you're building a brand from scratch, replacing an outdated website, launching an e-commerce store or looking for more customers — let's figure out what you actually need.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6">
+            <Link
+              href="/contact"
+              className="bg-black hover:bg-[#ff4500] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors w-full sm:w-auto"
+            >
+              Get a Quote
+            </Link>
+            <a
+              href="https://wa.me/919999999999"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-ghost text-black font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full flex items-center justify-center gap-2 w-full sm:w-auto"
+            >
+              <MessageSquare className="w-4 h-4 text-[#ff4500]" /> WhatsApp Us
+            </a>
+          </div>
+          <p className="text-xs text-neutral-400 font-mono">
+            Tell us what you're building. Select what you need. Get an estimated investment.
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }
