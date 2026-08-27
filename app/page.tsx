@@ -466,34 +466,55 @@ export default function Home() {
       </section>
 
       {/* B. CORE IDEA SECTION */}
-      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+      <section className="py-28 border-t border-neutral-900 bg-black text-white overflow-hidden">
         <div className="container-x">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-            <div className="lg:col-span-6 space-y-6">
-              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Core Philosophy ]</span>
-              <h2 className="font-display text-4xl sm:text-5xl leading-none text-black">
-                Your business has one goal. Your digital presence should work towards it.
-              </h2>
-              <div className="text-neutral-600 space-y-4 max-w-lg leading-relaxed">
-                <p>
-                  A great logo alone won't grow your business. A beautiful website alone won't grow your business. Traffic without conversion won't grow your business.
-                </p>
-                <p className="font-semibold text-black">That's why we connect the pieces.</p>
-                <p>
-                  ConversionHouse brings together brand, technology, acquisition and optimization under one roof — so every part of your digital presence works towards the same goal.
-                </p>
-              </div>
-            </div>
+          {/* Header Tag & Big Headline */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-4xl space-y-4 mb-20"
+          >
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Core Philosophy ]</span>
+            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl text-white leading-[0.98] tracking-tighter">
+              Your business has one goal. Your digital presence should work <span className="text-[#ff4500]">towards it.</span>
+            </h2>
+          </motion.div>
 
-            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {PILLARS.map((pillar) => (
-                <div key={pillar.num} className="bg-white border border-neutral-100 p-6 rounded-2xl shadow-sm">
-                  <div className="text-xs font-mono text-[#ff4500] mb-4">{pillar.num}</div>
-                  <h3 className="font-display text-lg text-black mb-2">{pillar.title}</h3>
-                  <p className="text-sm text-neutral-500 leading-relaxed">{pillar.desc}</p>
+          {/* Stacked Row Pillars matching reference image with Framer Motion scroll animations */}
+          <div className="border-t border-neutral-900 divide-y divide-neutral-900">
+            {PILLARS.map((pillar, idx) => (
+              <motion.div
+                key={pillar.num}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{
+                  duration: 0.9,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: idx * 0.12,
+                }}
+                className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 py-10 md:py-12 group transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-neutral-950/90 rounded-2xl px-3 md:px-6 cursor-pointer"
+              >
+                {/* Smaller Sleek Orange Number */}
+                <div className="md:col-span-3 lg:col-span-2 flex items-start pt-1">
+                  <span className="text-xl sm:text-2xl md:text-3xl font-display font-medium text-[#ff4500] leading-none tracking-tight select-none opacity-90 group-hover:opacity-100 transition-opacity duration-700">
+                    0{idx + 1}
+                  </span>
                 </div>
-              ))}
-            </div>
+
+                {/* Title & Description */}
+                <div className="md:col-span-9 lg:col-span-10 space-y-2 md:space-y-3">
+                  <h3 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-tight leading-tight transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-[#ff4500] group-hover:translate-x-1">
+                    {pillar.title}.
+                  </h3>
+                  <p className="text-neutral-400 text-sm sm:text-base md:text-lg leading-relaxed font-sans max-w-3xl transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-neutral-300">
+                    {pillar.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
