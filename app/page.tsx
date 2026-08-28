@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Star, MessageSquare } from "lucide-react";
+import { ArrowRight, Star, MessageSquare, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import Accordion from "@/components/Accordion";
 
@@ -197,6 +197,8 @@ const CASE_STUDIES = [
     bullets: ["Branding", "Digital Experience", "Meta Ads"],
     statement: "We didn't just design the brand. We built the identity, digital presence and acquisition foundation around it.",
     slug: "sheen",
+    website: "sheen.co.in",
+    url: "https://sheen.co.in",
   },
   {
     name: "RACE DIVISION",
@@ -205,6 +207,8 @@ const CASE_STUDIES = [
     bullets: ["SEO-first architecture", "On-page SEO", "Performance optimization"],
     statement: "Built for people. Structured for search. Optimized for performance.",
     slug: "race-division",
+    website: "racedivision.in",
+    url: "https://racedivision.in",
   },
   {
     name: "IRANI MOTOHUB",
@@ -213,6 +217,8 @@ const CASE_STUDIES = [
     bullets: ["Headless Shopify storefront", "Product experience", "Advanced analytics"],
     statement: "A headless Shopify experience designed to give the brand more control over performance, experience and future growth.",
     slug: "irani-motohub",
+    website: "iranimotohub.in",
+    url: "https://iranimotohub.in",
   },
 ];
 
@@ -748,12 +754,23 @@ export default function Home() {
                     "{cs.statement}"
                   </p>
                 </div>
-                <Link
-                  href={`/work/${cs.slug}`}
-                  className="mt-8 text-xs font-mono uppercase text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
-                >
-                  View Case Study <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+
+                <div className="mt-8 pt-4 border-t border-neutral-100 flex items-center justify-between gap-3 flex-wrap">
+                  <Link
+                    href={`/work/${cs.slug}`}
+                    className="text-xs font-mono uppercase text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
+                  >
+                    View Case Study <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                  <a
+                    href={cs.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-mono text-[#ff4500] hover:underline flex items-center gap-1 font-medium"
+                  >
+                    Visit Website <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
               </div>
             ))}
           </div>

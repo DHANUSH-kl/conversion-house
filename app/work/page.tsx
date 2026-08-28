@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 
 export const metadata = {
   title: "Selected Work — ConversionHouse",
@@ -12,18 +12,24 @@ const CASE_STUDIES = [
     name: "SHEEN",
     tag: "From brand identity to digital launch.",
     desc: "Sheen wanted to introduce a new mobile car-care experience to Mysuru. ConversionHouse helped bring the brand to life across physical and digital spaces.",
+    website: "sheen.co.in",
+    url: "https://sheen.co.in",
   },
   {
     slug: "race-division",
     name: "RACE DIVISION",
     tag: "A website built to be found.",
     desc: "Race Division needed more than an attractive website. The objective was to compete for search queries while communicating the brand proposition.",
+    website: "racedivision.in",
+    url: "https://racedivision.in",
   },
   {
     slug: "irani-motohub",
     name: "IRANI MOTOHUB",
     tag: "E-commerce storefront designed to sell.",
     desc: "Irani MotoHub needed a modern e-commerce storefront built on Shopify while using headless technology for premium customer interactions.",
+    website: "iranimotohub.in",
+    url: "https://iranimotohub.in",
   },
 ];
 
@@ -64,12 +70,22 @@ export default function WorkPage() {
                 <p className="text-xs font-mono text-[#ff5722] mb-4">{cs.tag}</p>
                 <p className="text-sm text-neutral-400 leading-relaxed mb-8">{cs.desc}</p>
               </div>
-              <Link
-                href={`/work/${cs.slug}`}
-                className="text-xs font-mono uppercase text-white group-hover:text-[#ff5722] flex items-center gap-1.5 transition-colors mt-auto"
-              >
-                View Case Study <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              <div className="flex items-center justify-between gap-4 mt-auto pt-6 border-t border-neutral-900">
+                <Link
+                  href={`/work/${cs.slug}`}
+                  className="text-xs font-mono uppercase text-white group-hover:text-[#ff5722] flex items-center gap-1.5 transition-colors"
+                >
+                  View Case Study <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                <a
+                  href={cs.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-mono text-[#ff5722] hover:underline flex items-center gap-1 font-medium"
+                >
+                  Visit Website <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
             </div>
           ))}
         </div>

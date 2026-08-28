@@ -1,12 +1,14 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Check, ArrowRight } from "lucide-react";
+import { ArrowLeft, Check, ArrowRight, ExternalLink } from "lucide-react";
 
 interface CaseStudy {
   slug: string;
   name: string;
   headline: string;
   objective: string;
+  website: string;
+  url: string;
   bullets: {
     category: string;
     items: string[];
@@ -25,6 +27,8 @@ const STUDIES: Record<string, CaseStudy> = {
     name: "SHEEN",
     headline: "From brand identity to digital launch.",
     objective: "Sheen wanted to introduce a new mobile car-care experience to Mysuru. ConversionHouse helped bring the brand to life across the places customers would actually encounter it.",
+    website: "sheen.co.in",
+    url: "https://sheen.co.in",
     bullets: [
       {
         category: "Branding",
@@ -51,6 +55,8 @@ const STUDIES: Record<string, CaseStudy> = {
     name: "RACE DIVISION",
     headline: "A website built to be found.",
     objective: "Race Division needed more than an attractive website. The objective was to create a digital presence capable of competing for relevant search queries while communicating the business clearly.",
+    website: "racedivision.in",
+    url: "https://racedivision.in",
     bullets: [
       {
         category: "What we did",
@@ -75,6 +81,8 @@ const STUDIES: Record<string, CaseStudy> = {
     name: "IRANI MOTOHUB",
     headline: "E-commerce without the limitations of a traditional storefront.",
     objective: "Irani MotoHub needed a modern e-commerce experience built on Shopify while giving the frontend greater flexibility and performance.",
+    website: "iranimotohub.in",
+    url: "https://iranimotohub.in",
     bullets: [
       {
         category: "What we did",
@@ -129,14 +137,24 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </Link>
 
         {/* Hero detail */}
-        <div className="border-b border-neutral-900 pb-12 mb-12">
-          <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Selected Project Case Study ]</span>
-          <h1 className="font-display text-4xl sm:text-6xl text-white leading-tight mt-4 mb-6">
-            {study.name}
-          </h1>
-          <p className="text-xl text-neutral-300 font-display max-w-3xl leading-relaxed">
-            {study.headline}
-          </p>
+        <div className="border-b border-neutral-900 pb-12 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Selected Project Case Study ]</span>
+            <h1 className="font-display text-4xl sm:text-6xl text-white leading-tight mt-4 mb-4">
+              {study.name}
+            </h1>
+            <p className="text-xl text-neutral-300 font-display max-w-3xl leading-relaxed">
+              {study.headline}
+            </p>
+          </div>
+          <a
+            href={study.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#ff5722] hover:bg-[#e64a19] text-white text-xs font-mono uppercase tracking-wider px-6 py-3.5 rounded-full transition-all shrink-0 font-semibold"
+          >
+            Visit {study.website} <ExternalLink className="w-4 h-4" />
+          </a>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
