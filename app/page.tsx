@@ -205,7 +205,6 @@ const WHY_US = [
   },
 ];
 
-// 5. SELECTED WORK
 const CASE_STUDIES = [
   {
     name: "sheen.co.in",
@@ -213,8 +212,7 @@ const CASE_STUDIES = [
     badge: "LIVE • PUBLICLY AVAILABLE",
     tag: "From brand identity to digital launch.",
     desc: "Sheen wanted to introduce a new mobile car-care experience to Mysuru. ConversionHouse helped bring the brand to life across the places customers would actually encounter it — building the identity, digital presence, and Meta acquisition campaigns.",
-    highlightPill: "Brand & Digital Launch",
-    pills: ["Branding", "Digital Experience", "Meta Ads"],
+    pills: ["Branding", "Web Development", "Meta Ads"],
     statement: "We didn't just design the brand. We built the identity, digital presence and acquisition foundation around it.",
     slug: "sheen",
     website: "sheen.co.in",
@@ -228,8 +226,7 @@ const CASE_STUDIES = [
     badge: "LIVE • PUBLICLY AVAILABLE",
     tag: "A website built to be found.",
     desc: "Race Division needed more than an attractive website. The objective was to create a high-performance digital presence capable of competing for search queries while communicating clearly and driving intent.",
-    highlightPill: "SEO & Search Engine Visibility",
-    pills: ["SEO Architecture", "On-page SEO", "Performance"],
+    pills: ["Web Development", "SEO", "Performance"],
     statement: "Built for people. Structured for search. Optimized for performance.",
     slug: "race-division",
     website: "racedivision.in",
@@ -490,12 +487,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="font-display tracking-tight text-black leading-tight mb-8">
-              <span className="font-display block text-2xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[62px] text-black font-semibold tracking-tight leading-none mb-2">
+              <span className="font-display block text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-semibold tracking-tight leading-tight mb-2">
                 When people search for your business,
               </span>
-              <span className="font-display block text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[54px] tracking-tight leading-none">
-                will <span className="font-display text-[#ff4500] font-semibold">they find you</span>{" "}
-                <span className="font-display text-neutral-800 font-medium">or your competitors?</span>
+              <span className="font-display block text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-tight">
+                will <span className="text-[#ff4500] font-bold">they find you</span>{" "}
+                <span className="text-black font-semibold">or your competitors?</span>
               </span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed mb-10 font-normal">
@@ -523,8 +520,8 @@ export default function Home() {
       {/* A2. SHOWCASE CAROUSEL - "A look at the work." */}
       <section className="py-16 overflow-hidden relative border-t border-neutral-100 bg-white">
         <div className="container-x mb-12">
-          <h2 className="font-display text-4xl md:text-6xl text-black tracking-tight leading-none">
-            A look at the <span className="text-[#ff4500]">work.</span>
+          <h2 className="font-display text-4xl md:text-6xl font-semibold text-black tracking-tight leading-none">
+            A look at the <span className="text-[#ff4500] font-bold">work.</span>
           </h2>
         </div>
 
@@ -721,8 +718,8 @@ export default function Home() {
             className="max-w-4xl space-y-4 mb-20"
           >
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Core Philosophy ]</span>
-            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl text-white leading-[0.98] tracking-tighter">
-              Your business has one goal. Your digital presence should work <span className="text-[#ff4500]">towards it.</span>
+            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold text-white leading-[0.98] tracking-tighter">
+              Your business has one goal. Your digital presence should work <span className="text-[#ff4500] font-bold">towards it.</span>
             </h2>
           </motion.div>
 
@@ -768,8 +765,8 @@ export default function Home() {
         <div className="container-x">
           <div className="mb-24 text-left max-w-4xl space-y-6">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Capabilities ]</span>
-            <h2 className="font-display text-5xl sm:text-7xl text-black leading-[0.95] tracking-tighter">
-              From first impression<br />to <span className="text-[#ff4500]">final click.</span>
+            <h2 className="font-display text-5xl sm:text-7xl font-semibold text-black leading-[0.95] tracking-tighter">
+              From first impression<br />to <span className="text-[#ff4500] font-bold">final click.</span>
             </h2>
             <p className="text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed pt-2">
               We don't promise a magic ranking. We build the systems that give your business a better chance of earning sustainable search visibility.
@@ -783,16 +780,16 @@ export default function Home() {
                 className="pb-16 space-y-10 group relative border-b border-neutral-100/80"
               >
                 {/* Top Row: Left Title & Serial, Tag/Subtitle, Right Description */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
-                  <div className="lg:col-span-7 flex items-baseline gap-4 md:gap-6 min-w-0">
-                    <span className="text-5xl md:text-7xl font-display font-light text-[#ff4500] leading-none select-none tracking-tight shrink-0">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10 items-start">
+                  <div className="lg:col-span-7 flex items-start gap-4 md:gap-6 min-w-0">
+                    <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-display font-light text-[#ff4500] leading-none select-none tracking-tight shrink-0 pt-1">
                       0{idx + 1}
                     </span>
-                    <div className="space-y-1.5 min-w-0">
-                      <h3 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-[36px] xl:text-[40px] text-black tracking-tight leading-tight transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-[#ff4500] cursor-pointer sm:whitespace-nowrap">
+                    <div className="space-y-2.5 min-w-0">
+                      <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[58px] font-bold text-black tracking-tight leading-none transition-colors duration-500 hover:text-[#ff4500] cursor-pointer">
                         {s.title}
                       </h3>
-                      <p className="text-sm md:text-base font-mono text-[#ff4500] font-medium">
+                      <p className="text-xs sm:text-sm font-mono text-[#ff4500] font-medium tracking-wide">
                         {s.tag}
                       </p>
                     </div>
@@ -859,8 +856,8 @@ export default function Home() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="space-y-4">
               <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Shipped Projects ]</span>
-              <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
-                We build. Here's the proof.
+              <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black leading-none">
+                We build. Here's the <span className="text-[#ff4500] font-bold">proof.</span>
               </h2>
               <p className="text-neutral-500 text-sm max-w-md">
                 A selection of work across branding, websites, e-commerce and growth. Every project solves a different problem.
@@ -928,7 +925,7 @@ export default function Home() {
                       {cs.badge}
                     </span>
 
-                    <h3 className="font-display text-3xl sm:text-4xl text-black tracking-tight group-hover:text-[#ff4500] transition-colors">
+                    <h3 className="font-display font-bold text-3xl sm:text-4xl text-black tracking-tight group-hover:text-[#ff4500] transition-colors">
                       {cs.name}
                     </h3>
 
@@ -938,11 +935,15 @@ export default function Home() {
 
                     {/* Pill Badges Row */}
                     <div className="flex flex-wrap gap-2 pt-2">
-                      <span className="bg-[#ff4500] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
-                        ⚡ {cs.highlightPill}
-                      </span>
-                      {cs.pills.map((pill) => (
-                        <span key={pill} className="bg-neutral-100 text-neutral-700 text-xs font-medium px-3.5 py-1.5 rounded-full">
+                      {cs.pills.map((pill, pIdx) => (
+                        <span
+                          key={pill}
+                          className={
+                            pIdx === 0
+                              ? "bg-[#ff4500] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full"
+                              : "bg-neutral-100 text-neutral-700 text-xs font-medium px-3.5 py-1.5 rounded-full"
+                          }
+                        >
                           {pill}
                         </span>
                       ))}
@@ -990,8 +991,8 @@ export default function Home() {
         <div className="container-x">
           <div className="mb-16 max-w-xl">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Sustainable Growth ]</span>
-            <h2 className="font-display text-4xl sm:text-5xl text-black mt-4 leading-none">
-              We care about what happens after launch.
+            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black mt-4 leading-none tracking-tight">
+              We care about what happens <span className="text-[#ff4500] font-bold">after launch.</span>
             </h2>
             <p className="text-neutral-500 text-sm mt-4 leading-relaxed">
               The work isn't finished when the website goes live. A successful project should create something measurable: More visibility, enquiries, sales, conversions, and a stronger brand.
@@ -1030,8 +1031,8 @@ export default function Home() {
       <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block mb-4">
         [ Operating System ]
       </span>
-      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-black tracking-tight leading-[1.05] mb-6">
-        The ConversionHouse <span className="text-[#ff4500]">Growth Loop</span>
+      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-black tracking-tight leading-[1.05] mb-6">
+        The ConversionHouse <span className="text-[#ff4500] font-bold">Growth Loop</span>
       </h2>
       <div className="flex items-center gap-3">
         <span className="w-1.5 h-1.5 rounded-full bg-[#ff4500]" />
@@ -1049,8 +1050,8 @@ export default function Home() {
       <section className="py-24 border-t border-neutral-100 bg-white">
         <div className="container-x text-center max-w-xl mx-auto space-y-6">
           <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Dynamic Estimator ]</span>
-          <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
-            Tell us what you're building.
+          <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black leading-none">
+            Tell us what you're <span className="text-[#ff4500] font-bold">building.</span>
           </h2>
           <p className="text-neutral-500 text-sm">
             Select what you need. Get an estimated investment.
@@ -1080,8 +1081,8 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-6 space-y-6">
               <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Who We Are ]</span>
-              <h2 className="font-display text-4xl sm:text-5xl leading-none text-black">
-                We build with one question in mind: Will this actually help the business?
+              <h2 className="font-display text-4xl sm:text-5xl font-semibold leading-tight text-black">
+                Pretty is good. <span className="text-[#ff4500] font-bold">Purpose is better.</span>
               </h2>
               <p className="text-neutral-500 leading-relaxed text-sm">
                 ConversionHouse exists to close the gap between looking good online and performing well online. We bring together creative thinking, technology and digital growth to help businesses build stronger brands, better experiences and more effective customer journeys.
@@ -1132,8 +1133,8 @@ export default function Home() {
         <div className="container-x">
           <div className="mb-16 max-w-5xl mx-auto space-y-4">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block">[ Clear Answers ]</span>
-            <h2 className="font-display font-bold text-4xl sm:text-5xl text-black tracking-tight">
-              Frequently Asked Questions
+            <h2 className="font-display font-semibold text-4xl sm:text-6xl text-black tracking-tight leading-tight">
+              Things founders ask before <span className="text-[#ff4500] font-bold">hiring us.</span>
             </h2>
           </div>
           <Accordion items={FAQ_ITEMS} />
@@ -1144,8 +1145,8 @@ export default function Home() {
       <section className="py-32 border-t border-neutral-100 bg-white relative overflow-hidden">
         <div className="container-x relative z-10 text-center max-w-3xl space-y-8">
           <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Get Started ]</span>
-          <h2 className="font-display text-4xl sm:text-6xl text-black leading-none">
-            Ready to turn your digital presence into a growth engine?
+          <h2 className="font-display text-4xl sm:text-6xl font-semibold text-black leading-tight tracking-tight">
+            Ready to turn your digital presence into a <span className="text-[#ff4500] font-bold">growth engine?</span>
           </h2>
           <p className="text-neutral-500 text-sm max-w-lg mx-auto leading-relaxed">
             Whether you're building a brand from scratch, replacing an outdated website, launching an e-commerce store or looking for more customers — let's figure out what you actually need.

@@ -8,8 +8,10 @@ export default function FinalCTA() {
             style={{ background: "var(--accent)" }}
           />
           <span className="eyebrow !text-[var(--accent)]">let's get you online</span>
-          <h2 className="mt-5 text-[30px] sm:text-[44px] font-semibold tracking-tight leading-tight max-w-2xl mx-auto">
-            Stop losing customers to businesses with a better website.
+          <h2 className="font-display mt-5 text-[30px] sm:text-[46px] font-semibold leading-tight tracking-tight max-w-3xl mx-auto text-white">
+            Working on something serious?
+            <br />
+            Get a quote in <span className="text-[#ff4500] font-bold">under 5 minutes.</span>
           </h2>
           <p className="mt-5 text-white/70 max-w-lg mx-auto text-[15px] sm:text-[16px]">
             Book a free 20-minute call. We'll look at what you have today and
