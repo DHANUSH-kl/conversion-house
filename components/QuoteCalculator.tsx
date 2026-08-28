@@ -335,37 +335,37 @@ export default function QuoteCalculator() {
   // Render Result Screen (In-Place Transition)
   if (isSubmitted) {
     return (
-      <div className="bg-white border border-neutral-200/80 rounded-3xl p-8 sm:p-12 shadow-sm max-w-4xl mx-auto my-8 animate-fade-in">
+      <div className="bg-white border border-neutral-200/80 rounded-3xl p-5 sm:p-8 md:p-12 shadow-sm max-w-4xl mx-auto my-6 sm:my-8 animate-fade-in">
         {/* Verification Success Toast */}
-        <div className="bg-[#ff4500]/[0.06] border border-[#ff4500]/30 rounded-2xl p-4 mb-8 flex items-center justify-between gap-4">
+        <div className="bg-[#ff4500]/[0.06] border border-[#ff4500]/30 rounded-2xl p-4 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 text-xs font-mono text-black font-semibold">
-            <CheckCircle className="w-4 h-4 text-[#ff4500]" />
+            <CheckCircle className="w-4 h-4 text-[#ff4500] shrink-0" />
             <span>Email verified. Your estimate & personalized PDF have been generated.</span>
           </div>
-          <span className="text-[10px] font-mono text-[#ff4500] bg-white px-2.5 py-1 rounded-full border border-[#ff4500]/20 font-bold">
+          <span className="text-[10px] font-mono text-[#ff4500] bg-white px-2.5 py-1 rounded-full border border-[#ff4500]/20 font-bold shrink-0">
             {quoteId}
           </span>
         </div>
 
         {/* Top Tag & Title */}
-        <div className="text-center max-w-2xl mx-auto space-y-4 mb-10">
+        <div className="text-center max-w-2xl mx-auto space-y-3 sm:space-y-4 mb-8 sm:mb-10">
           <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block font-semibold">
             [ ESTIMATE READY ]
           </span>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl text-black tracking-tight leading-tight">
+          <h2 className="font-display font-bold text-3xl sm:text-4xl md:text-5xl text-black leading-tight">
             Your estimate is ready.
           </h2>
-          <p className="text-neutral-500 text-sm leading-relaxed">
+          <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed">
             Based on the scope you selected, here is your estimated investment range. A PDF copy has also been sent to <span className="text-black font-semibold">{email}</span>.
           </p>
         </div>
 
         {/* Highlighted Price Range Box */}
-        <div className="bg-neutral-50 border border-neutral-200/80 rounded-2xl p-8 sm:p-10 text-center mb-10 shadow-sm relative">
-          <span className="text-xs font-mono uppercase tracking-wider text-neutral-400 block mb-2">
+        <div className="bg-neutral-50 border border-neutral-200/80 rounded-2xl p-6 sm:p-10 text-center mb-8 sm:mb-10 shadow-sm relative">
+          <span className="text-[10px] sm:text-xs font-mono uppercase tracking-wider text-neutral-400 block mb-2">
             YOUR ESTIMATED PROJECT RANGE
           </span>
-          <div className="font-display font-bold text-5xl sm:text-6xl text-[#ff4500] tracking-tight mb-4">
+          <div className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-[#ff4500] leading-none mb-4">
             {estimatedRange}
           </div>
           <p className="text-xs text-neutral-500 max-w-md mx-auto leading-relaxed mb-6">
@@ -376,7 +376,7 @@ export default function QuoteCalculator() {
             type="button"
             onClick={handleDownloadPdf}
             disabled={isDownloadingPdf}
-            className="inline-flex items-center gap-2 bg-white hover:bg-neutral-100 text-black border border-neutral-300 px-6 py-2.5 rounded-full text-xs font-mono font-semibold transition-all shadow-sm"
+            className="inline-flex items-center justify-center gap-2 bg-white hover:bg-neutral-100 text-black border border-neutral-300 px-5 py-2.5 rounded-full text-xs font-mono font-semibold transition-all shadow-sm w-full sm:w-auto"
           >
             {isDownloadingPdf ? (
               <RefreshCw className="w-3.5 h-3.5 animate-spin" />
@@ -388,28 +388,28 @@ export default function QuoteCalculator() {
         </div>
 
         {/* Project Snapshot Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 pb-10 border-b border-neutral-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10 pb-8 sm:pb-10 border-b border-neutral-100">
           {/* Left Column: Project Snapshot */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <h3 className="text-xs font-mono uppercase tracking-wider text-[#ff4500] font-semibold">
               Project Snapshot
             </h3>
-            <div className="bg-neutral-50/70 p-6 rounded-2xl border border-neutral-200/60 space-y-3 text-xs font-mono">
+            <div className="bg-neutral-50/70 p-5 sm:p-6 rounded-2xl border border-neutral-200/60 space-y-3 text-xs font-mono">
               <div className="flex justify-between pb-2 border-b border-neutral-200/60">
                 <span className="text-neutral-400">Quote ID:</span>
                 <span className="text-black font-bold">{quoteId}</span>
               </div>
               <div className="flex justify-between pb-2 border-b border-neutral-200/60">
                 <span className="text-neutral-400">Industry:</span>
-                <span className="text-black font-semibold">{selectedIndustry || "Not specified"}</span>
+                <span className="text-black font-semibold text-right">{selectedIndustry || "Not specified"}</span>
               </div>
               <div className="flex justify-between pb-2 border-b border-neutral-200/60">
                 <span className="text-neutral-400">Primary Goal:</span>
-                <span className="text-black font-semibold">{selectedGoal || "Not specified"}</span>
+                <span className="text-black font-semibold text-right">{selectedGoal || "Not specified"}</span>
               </div>
               <div className="flex justify-between pb-2 border-b border-neutral-200/60">
                 <span className="text-neutral-400">Timeline:</span>
-                <span className="text-black font-semibold">{selectedTimeline || "Not specified"}</span>
+                <span className="text-black font-semibold text-right">{selectedTimeline || "Not specified"}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-neutral-400">Selected Scope:</span>
@@ -419,11 +419,11 @@ export default function QuoteCalculator() {
           </div>
 
           {/* Right Column: Selected Services */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <h3 className="text-xs font-mono uppercase tracking-wider text-[#ff4500] font-semibold">
               Selected Deliverables
             </h3>
-            <div className="bg-neutral-50/70 p-6 rounded-2xl border border-neutral-200/60 max-h-[220px] overflow-y-auto space-y-2">
+            <div className="bg-neutral-50/70 p-5 sm:p-6 rounded-2xl border border-neutral-200/60 max-h-[220px] overflow-y-auto space-y-2">
               {selectedServices.length > 0 ? (
                 selectedServices.map((service) => (
                   <div key={service} className="flex items-center gap-2 text-xs font-mono text-neutral-800">
@@ -440,14 +440,14 @@ export default function QuoteCalculator() {
 
         {/* Project Notes if provided */}
         {projectContext && (
-          <div className="mb-10 bg-neutral-50 p-6 rounded-2xl border border-neutral-200/60 space-y-2">
+          <div className="mb-8 sm:mb-10 bg-neutral-50 p-5 sm:p-6 rounded-2xl border border-neutral-200/60 space-y-2">
             <span className="text-xs font-mono text-neutral-400 uppercase tracking-wider block">Your Notes</span>
             <p className="text-xs text-neutral-600 leading-relaxed font-sans">{projectContext}</p>
           </div>
         )}
 
         {/* Next Step Call to Action */}
-        <div className="bg-neutral-950 text-white rounded-3xl p-8 sm:p-10 text-center space-y-6">
+        <div className="bg-neutral-950 text-white rounded-3xl p-6 sm:p-10 text-center space-y-6">
           <div className="space-y-2 max-w-lg mx-auto">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block font-semibold">
               READY TO TAKE THE NEXT STEP?
@@ -497,18 +497,20 @@ export default function QuoteCalculator() {
   }
 
   return (
-    <div className="bg-white border border-neutral-200/80 rounded-3xl p-6 sm:p-10 shadow-sm max-w-4xl mx-auto my-8 relative">
-      {/* Top Header Progress Bar */}
-      <div className="flex items-center justify-between border-b border-neutral-100 pb-6 mb-8">
-        <div className="flex items-center gap-2 font-display text-lg font-bold text-black">
-          <span>ConversionHouse.</span>
-          <span className="text-xs font-mono text-[#ff4500] font-normal uppercase tracking-wider">
-            Build Your Scope
+    <div className="bg-white border border-neutral-200/80 rounded-3xl p-4 sm:p-8 md:p-10 shadow-sm max-w-4xl mx-auto my-6 sm:my-8 relative">
+      {/* Top Header Progress Bar - Fully Responsive */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 border-b border-neutral-100 pb-5 mb-8">
+        <div className="flex items-center justify-between sm:justify-start gap-2 font-display text-base sm:text-lg font-bold text-black">
+          <span className="hidden sm:inline">ConversionHouse.</span>
+          <span className="text-xs font-mono text-[#ff4500] font-semibold uppercase tracking-wider">
+            [ Build Your Scope ]
           </span>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-xs font-mono text-neutral-400">Step {step} of 6</span>
-          <div className="w-24 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+        <div className="flex items-center justify-between sm:justify-end gap-3 sm:gap-4 w-full sm:w-auto">
+          <span className="text-xs font-mono text-neutral-400 shrink-0 font-medium">
+            Step {step} of 6
+          </span>
+          <div className="w-24 sm:w-32 h-1.5 bg-neutral-100 rounded-full overflow-hidden shrink-0">
             <div
               className="h-full bg-[#ff4500] transition-all duration-300"
               style={{ width: `${(step / 6) * 100}%` }}
@@ -519,18 +521,18 @@ export default function QuoteCalculator() {
 
       {/* STEP 1: What are you building? */}
       {step === 1 && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 sm:space-y-8 animate-fade-in">
           <div>
             <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">01</span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-black leading-tight">
               What are you building?
             </h2>
-            <p className="text-neutral-500 text-sm mt-2">
+            <p className="text-neutral-500 text-xs sm:text-sm mt-2">
               Pick one. We'll tailor the rest of this around it.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-4">
             {INDUSTRIES.map((ind) => {
               const isSelected = selectedIndustry === ind.id;
               return (
@@ -538,13 +540,13 @@ export default function QuoteCalculator() {
                   key={ind.id}
                   type="button"
                   onClick={() => setSelectedIndustry(ind.id)}
-                  className={`p-6 rounded-2xl border text-left transition-all duration-200 ${
+                  className={`p-4 sm:p-6 rounded-2xl border text-left transition-all duration-200 ${
                     isSelected
                       ? "border-[#ff4500] bg-[#ff4500]/[0.03] ring-1 ring-[#ff4500]"
                       : "border-neutral-200/80 bg-white hover:border-neutral-300"
                   }`}
                 >
-                  <h3 className="font-display font-bold text-base text-black mb-1.5">{ind.title}</h3>
+                  <h3 className="font-display font-bold text-sm sm:text-base text-black mb-1">{ind.title}</h3>
                   <p className="text-xs text-neutral-500 leading-relaxed font-sans">{ind.desc}</p>
                 </button>
               );
@@ -556,7 +558,7 @@ export default function QuoteCalculator() {
               type="button"
               disabled={!selectedIndustry}
               onClick={() => setStep(2)}
-              className={`px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all ${
+              className={`w-full sm:w-auto px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
                 selectedIndustry
                   ? "bg-black hover:bg-[#ff4500] text-white cursor-pointer"
                   : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
@@ -570,18 +572,18 @@ export default function QuoteCalculator() {
 
       {/* STEP 2: What brings you to us? */}
       {step === 2 && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 sm:space-y-8 animate-fade-in">
           <div>
             <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">02</span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-black leading-tight">
               What brings you to us?
             </h2>
-            <p className="text-neutral-500 text-sm mt-2">
+            <p className="text-neutral-500 text-xs sm:text-sm mt-2">
               One line, then we'll move on.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             {GOALS.map((g) => {
               const isSelected = selectedGoal === g.id;
               return (
@@ -589,24 +591,24 @@ export default function QuoteCalculator() {
                   key={g.id}
                   type="button"
                   onClick={() => setSelectedGoal(g.id)}
-                  className={`p-6 rounded-2xl border text-left transition-all duration-200 ${
+                  className={`p-4 sm:p-6 rounded-2xl border text-left transition-all duration-200 ${
                     isSelected
                       ? "border-[#ff4500] bg-[#ff4500]/[0.03] ring-1 ring-[#ff4500]"
                       : "border-neutral-200/80 bg-white hover:border-neutral-300"
                   }`}
                 >
-                  <h3 className="font-display font-bold text-base text-black mb-1.5">{g.title}</h3>
+                  <h3 className="font-display font-bold text-sm sm:text-base text-black mb-1">{g.title}</h3>
                   <p className="text-xs text-neutral-500 leading-relaxed font-sans">{g.desc}</p>
                 </button>
               );
             })}
           </div>
 
-          <div className="flex justify-between items-center pt-4">
+          <div className="flex justify-between items-center pt-4 gap-4">
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5 shrink-0"
             >
               <ArrowLeft className="w-4 h-4" /> Back
             </button>
@@ -614,7 +616,7 @@ export default function QuoteCalculator() {
               type="button"
               disabled={!selectedGoal}
               onClick={() => setStep(3)}
-              className={`px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all ${
+              className={`w-full sm:w-auto px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
                 selectedGoal
                   ? "bg-black hover:bg-[#ff4500] text-white cursor-pointer"
                   : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
@@ -628,18 +630,18 @@ export default function QuoteCalculator() {
 
       {/* STEP 3: When do you need it? */}
       {step === 3 && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 sm:space-y-8 animate-fade-in">
           <div>
             <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">03</span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-black leading-tight">
               When do you need it?
             </h2>
-            <p className="text-neutral-500 text-sm mt-2">
+            <p className="text-neutral-500 text-xs sm:text-sm mt-2">
               Honest signal helps us scope this realistically.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
             {TIMELINES.map((t) => {
               const isSelected = selectedTimeline === t.id;
               return (
@@ -647,24 +649,24 @@ export default function QuoteCalculator() {
                   key={t.id}
                   type="button"
                   onClick={() => setSelectedTimeline(t.id)}
-                  className={`p-6 rounded-2xl border text-left transition-all duration-200 ${
+                  className={`p-4 sm:p-6 rounded-2xl border text-left transition-all duration-200 ${
                     isSelected
                       ? "border-[#ff4500] bg-[#ff4500]/[0.03] ring-1 ring-[#ff4500]"
                       : "border-neutral-200/80 bg-white hover:border-neutral-300"
                   }`}
                 >
-                  <h3 className="font-display font-bold text-base text-black mb-1.5">{t.title}</h3>
+                  <h3 className="font-display font-bold text-sm sm:text-base text-black mb-1">{t.title}</h3>
                   <p className="text-xs text-neutral-500 leading-relaxed font-sans">{t.desc}</p>
                 </button>
               );
             })}
           </div>
 
-          <div className="flex justify-between items-center pt-4">
+          <div className="flex justify-between items-center pt-4 gap-4">
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5 shrink-0"
             >
               <ArrowLeft className="w-4 h-4" /> Back
             </button>
@@ -672,7 +674,7 @@ export default function QuoteCalculator() {
               type="button"
               disabled={!selectedTimeline}
               onClick={() => setStep(4)}
-              className={`px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all ${
+              className={`w-full sm:w-auto px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all ${
                 selectedTimeline
                   ? "bg-black hover:bg-[#ff4500] text-white cursor-pointer"
                   : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
@@ -686,18 +688,18 @@ export default function QuoteCalculator() {
 
       {/* STEP 4: Pick what you actually need (Multi-select) */}
       {step === 4 && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 sm:space-y-8 animate-fade-in">
           <div>
             <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">04</span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-black leading-tight">
               Pick what you actually need.
             </h2>
-            <p className="text-neutral-500 text-sm mt-2">
+            <p className="text-neutral-500 text-xs sm:text-sm mt-2">
               Select items across categories. You can choose multiple options.
             </p>
           </div>
 
-          <div className="space-y-8 max-h-[480px] overflow-y-auto pr-2">
+          <div className="space-y-6 max-h-[420px] sm:max-h-[480px] overflow-y-auto pr-1">
             {SERVICE_GROUPS.map((group) => (
               <div key={group.category} className="space-y-3">
                 <h3 className="text-xs font-mono uppercase text-[#ff4500] tracking-wider font-semibold">
@@ -711,15 +713,15 @@ export default function QuoteCalculator() {
                         key={item.id}
                         type="button"
                         onClick={() => toggleService(item.id)}
-                        className={`p-4 rounded-xl border text-left transition-all duration-200 flex items-start justify-between gap-3 ${
+                        className={`p-3.5 sm:p-4 rounded-xl border text-left transition-all duration-200 flex items-start justify-between gap-3 ${
                           isSelected
                             ? "border-[#ff4500] bg-[#ff4500]/[0.04] ring-1 ring-[#ff4500]"
                             : "border-neutral-200/80 bg-white hover:border-neutral-300"
                         }`}
                       >
                         <div>
-                          <h4 className="font-display font-semibold text-sm text-black mb-1">{item.title}</h4>
-                          <p className="text-xs text-neutral-500 leading-relaxed font-sans">{item.desc}</p>
+                          <h4 className="font-display font-semibold text-xs sm:text-sm text-black mb-1">{item.title}</h4>
+                          <p className="text-[11px] sm:text-xs text-neutral-500 leading-relaxed font-sans">{item.desc}</p>
                         </div>
                         <div
                           className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5 ${
@@ -736,22 +738,22 @@ export default function QuoteCalculator() {
             ))}
           </div>
 
-          <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-neutral-100">
             <button
               type="button"
               onClick={() => setStep(3)}
-              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5 self-start sm:self-auto"
             >
               <ArrowLeft className="w-4 h-4" /> Back
             </button>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto">
               <span className="text-xs font-mono text-neutral-400">
-                {selectedServices.length} items selected
+                {selectedServices.length} selected
               </span>
               <button
                 type="button"
                 onClick={() => setStep(5)}
-                className="bg-black hover:bg-[#ff4500] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors"
+                className="bg-black hover:bg-[#ff4500] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
               >
                 Continue <ArrowRight className="w-4 h-4" />
               </button>
@@ -762,13 +764,13 @@ export default function QuoteCalculator() {
 
       {/* STEP 5: Project Context & Budget */}
       {step === 5 && (
-        <div className="space-y-8 animate-fade-in">
+        <div className="space-y-6 sm:space-y-8 animate-fade-in">
           <div>
             <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">05</span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-black leading-tight">
               Project Context & Budget
             </h2>
-            <p className="text-neutral-500 text-sm mt-2">
+            <p className="text-neutral-500 text-xs sm:text-sm mt-2">
               Optional details to help us refine the scope.
             </p>
           </div>
@@ -783,7 +785,7 @@ export default function QuoteCalculator() {
                 value={projectContext}
                 onChange={(e) => setProjectContext(e.target.value)}
                 placeholder="E.g., We're launching in 2 months and need a brand refresh + custom Next.js site to generate leads..."
-                className="w-full p-4 rounded-2xl border border-neutral-200 focus:border-[#ff4500] focus:ring-1 focus:ring-[#ff4500] text-sm text-black outline-none font-sans leading-relaxed"
+                className="w-full p-3.5 sm:p-4 rounded-2xl border border-neutral-200 focus:border-[#ff4500] focus:ring-1 focus:ring-[#ff4500] text-sm text-black outline-none font-sans leading-relaxed"
               />
             </div>
 
@@ -791,7 +793,7 @@ export default function QuoteCalculator() {
               <label className="block text-xs font-mono uppercase text-neutral-600 mb-2 font-medium">
                 Estimated Investment Target (Optional)
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                 {["₹25K – ₹50K", "₹50K – ₹1L", "₹1L – ₹2.5L", "₹2.5L+"].map((b) => (
                   <button
                     key={b}
@@ -810,18 +812,18 @@ export default function QuoteCalculator() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
+          <div className="flex justify-between items-center pt-4 gap-4 border-t border-neutral-100">
             <button
               type="button"
               onClick={() => setStep(4)}
-              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5 shrink-0"
             >
               <ArrowLeft className="w-4 h-4" /> Back
             </button>
             <button
               type="button"
               onClick={() => setStep(6)}
-              className="bg-black hover:bg-[#ff4500] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors"
+              className="w-full sm:w-auto bg-black hover:bg-[#ff4500] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
             >
               Final Step <ArrowRight className="w-4 h-4" />
             </button>
@@ -831,18 +833,18 @@ export default function QuoteCalculator() {
 
       {/* STEP 6: Contact Information */}
       {step === 6 && (
-        <form onSubmit={handleStep6Submit} className="space-y-8 animate-fade-in">
+        <form onSubmit={handleStep6Submit} className="space-y-6 sm:space-y-8 animate-fade-in">
           <div>
             <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">06</span>
-            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+            <h2 className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-black leading-tight">
               Where should we send your estimate?
             </h2>
-            <p className="text-neutral-500 text-sm mt-2">
+            <p className="text-neutral-500 text-xs sm:text-sm mt-2">
               Enter your contact details to verify and calculate your project range.
             </p>
           </div>
 
-          <div className="space-y-5 max-w-xl">
+          <div className="space-y-4 sm:space-y-5 max-w-xl">
             {formErrors.server && (
               <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-xs font-mono text-red-600">
                 {formErrors.server}
@@ -859,7 +861,7 @@ export default function QuoteCalculator() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. John Doe"
-                className={`w-full p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
+                className={`w-full p-3.5 sm:p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
                   formErrors.name ? "border-red-500 bg-red-50/20" : "border-neutral-200 focus:border-[#ff4500]"
                 }`}
               />
@@ -876,7 +878,7 @@ export default function QuoteCalculator() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="e.g. john@example.com"
-                className={`w-full p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
+                className={`w-full p-3.5 sm:p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
                   formErrors.email ? "border-red-500 bg-red-50/20" : "border-neutral-200 focus:border-[#ff4500]"
                 }`}
               />
@@ -893,7 +895,7 @@ export default function QuoteCalculator() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="e.g. +91 98765 43210"
-                className={`w-full p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
+                className={`w-full p-3.5 sm:p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
                   formErrors.phone ? "border-red-500 bg-red-50/20" : "border-neutral-200 focus:border-[#ff4500]"
                 }`}
               />
@@ -901,18 +903,18 @@ export default function QuoteCalculator() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
+          <div className="flex justify-between items-center pt-4 gap-4 border-t border-neutral-100">
             <button
               type="button"
               onClick={() => setStep(5)}
-              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5 shrink-0"
             >
               <ArrowLeft className="w-4 h-4" /> Back
             </button>
             <button
               type="submit"
               disabled={isSendingOtp}
-              className="bg-[#ff4500] hover:bg-[#e03d00] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors shadow-sm disabled:opacity-50"
+              className="w-full sm:w-auto bg-[#ff4500] hover:bg-[#e03d00] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-sm disabled:opacity-50"
             >
               {isSendingOtp ? (
                 <>
@@ -930,21 +932,21 @@ export default function QuoteCalculator() {
 
       {/* EMAIL VERIFICATION MODAL */}
       {showOtpModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl p-8 sm:p-10 max-w-md w-full border border-neutral-200 shadow-2xl relative space-y-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl p-6 sm:p-10 max-w-md w-full border border-neutral-200 shadow-2xl relative space-y-6">
             <button
               type="button"
               onClick={() => setShowOtpModal(false)}
-              className="absolute top-6 right-6 text-neutral-400 hover:text-black p-1"
+              className="absolute top-5 right-5 text-neutral-400 hover:text-black p-1"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="space-y-2">
+            <div className="space-y-2 pr-6">
               <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest font-semibold block">
                 [ SECURITY VERIFICATION ]
               </span>
-              <h3 className="font-display font-bold text-2xl text-black tracking-tight">
+              <h3 className="font-display font-bold text-xl sm:text-2xl text-black tracking-tight">
                 Verify your email.
               </h3>
               <p className="text-xs text-neutral-500 leading-relaxed font-sans">
@@ -954,7 +956,7 @@ export default function QuoteCalculator() {
 
             {/* 6-Digit OTP Inputs */}
             <div className="space-y-4">
-              <div className="flex justify-between gap-2">
+              <div className="flex justify-between gap-1.5 sm:gap-2">
                 {otpDigits.map((digit, idx) => (
                   <input
                     key={idx}
@@ -965,7 +967,7 @@ export default function QuoteCalculator() {
                     onChange={(e) => handleOtpChange(idx, e.target.value)}
                     onKeyDown={(e) => handleOtpKeyDown(idx, e)}
                     onPaste={handleOtpPaste}
-                    className="w-11 h-13 sm:w-12 sm:h-14 text-center font-mono font-bold text-xl text-black border border-neutral-200 rounded-xl focus:border-[#ff4500] focus:ring-1 focus:ring-[#ff4500] outline-none transition-all"
+                    className="w-10 h-12 sm:w-12 sm:h-14 text-center font-mono font-bold text-lg sm:text-xl text-black border border-neutral-200 rounded-xl focus:border-[#ff4500] focus:ring-1 focus:ring-[#ff4500] outline-none transition-all"
                   />
                 ))}
               </div>
@@ -995,15 +997,15 @@ export default function QuoteCalculator() {
                   type="button"
                   disabled={resendTimer > 0 || isSendingOtp}
                   onClick={requestOtpEmail}
-                  className="hover:text-black disabled:opacity-50"
+                  className="hover:text-black disabled:opacity-50 text-[11px] sm:text-xs"
                 >
-                  {resendTimer > 0 ? `Resend code in ${resendTimer}s` : "Resend code"}
+                  {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend code"}
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setShowOtpModal(false)}
-                  className="hover:text-black"
+                  className="hover:text-black text-[11px] sm:text-xs"
                 >
                   Change email
                 </button>
