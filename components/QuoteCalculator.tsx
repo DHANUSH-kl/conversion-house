@@ -189,37 +189,8 @@ export default function QuoteCalculator() {
     requestOtpEmail();
   };
 
-  // OTP Inputs handling
-  const handleOtpChange = (index: number, value: string) => {
-    if (!/^\d*$/.test(value)) return;
-
-    const newDigits = [...otpDigits];
-    newDigits[index] = value.slice(-1);
-    setOtpDigits(newDigits);
-    setOtpError("");
-
-    if (value && index < 5) {
-      otpInputRefs.current[index + 1]?.focus();
-    }
-  };
-
-  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Backspace" && !otpDigits[index] && index > 0) {
-      otpInputRefs.current[index - 1]?.focus();
-    }
-  };
-
-  const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
-    if (pastedData.length === 6) {
-      const newDigits = pastedData.split("");
-      setOtpDigits(newDigits);
-      otpInputRefs.current[5]?.focus();
-    }
-  };
-
   const verifyAndSubmitLead = async (enteredCode: string) => {
+    if (isVerifying) return;
     setIsVerifying(true);
     setOtpError("");
 
@@ -242,7 +213,7 @@ export default function QuoteCalculator() {
         return;
       }
 
-      // 2. Submit Lead Data & Generate PDF/Emails via Server Route /api/quote/submit
+      // 2. Submit Lead Data & Generate Emails via Server Route /api/quote/submit
       const submitRes = await fetch("/api/quote/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -280,6 +251,73 @@ export default function QuoteCalculator() {
       setIsVerifying(false);
       setShowOtpModal(false);
       setIsSubmitted(true);
+    }
+  };
+
+  // Improved iOS-Friendly OTP Input Handling with Auto-Submit & Auto-Fill Support
+  const handleOtpChange = (index: number, rawValue: string) => {
+    const cleanValue = rawValue.replace(/\D/g, "");
+
+    // Case A: iOS SMS/Mail Autofill or Copy-Pasted Code (multiple digits e.g. "123456")
+    if (cleanValue.length > 1) {
+      const digitsArr = cleanValue.slice(0, 6).split("");
+      const newDigits = ["", "", "", "", "", ""];
+      digitsArr.forEach((d, i) => {
+        newDigits[i] = d;
+      });
+      setOtpDigits(newDigits);
+      setOtpError("");
+
+      if (digitsArr.length === 6) {
+        otpInputRefs.current[5]?.focus();
+        verifyAndSubmitLead(digitsArr.join(""));
+      } else {
+        otpInputRefs.current[digitsArr.length]?.focus();
+      }
+      return;
+    }
+
+    // Case B: Single digit typing
+    const singleDigit = cleanValue.slice(-1);
+    const newDigits = [...otpDigits];
+    newDigits[index] = singleDigit;
+    setOtpDigits(newDigits);
+    setOtpError("");
+
+    const currentFullCode = newDigits.join("");
+
+    // Auto-trigger verification as soon as 6th digit is typed!
+    if (currentFullCode.length === 6) {
+      verifyAndSubmitLead(currentFullCode);
+    } else if (singleDigit && index < 5) {
+      otpInputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !otpDigits[index] && index > 0) {
+      otpInputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (pastedData.length > 0) {
+      const digitsArr = pastedData.split("");
+      const newDigits = ["", "", "", "", "", ""];
+      digitsArr.forEach((d, i) => {
+        newDigits[i] = d;
+      });
+      setOtpDigits(newDigits);
+      setOtpError("");
+
+      if (pastedData.length === 6) {
+        otpInputRefs.current[5]?.focus();
+        verifyAndSubmitLead(pastedData);
+      } else {
+        otpInputRefs.current[pastedData.length]?.focus();
+      }
     }
   };
 
@@ -340,7 +378,7 @@ export default function QuoteCalculator() {
         <div className="bg-[#ff4500]/[0.06] border border-[#ff4500]/30 rounded-2xl p-4 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5 text-xs font-mono text-black font-semibold">
             <CheckCircle className="w-4 h-4 text-[#ff4500] shrink-0" />
-            <span>Email verified. Your estimate & personalized PDF have been generated.</span>
+            <span>Email verified. Your estimate has been generated and sent to your email.</span>
           </div>
           <span className="text-[10px] font-mono text-[#ff4500] bg-white px-2.5 py-1 rounded-full border border-[#ff4500]/20 font-bold shrink-0">
             {quoteId}
@@ -356,7 +394,7 @@ export default function QuoteCalculator() {
             Your estimate is ready.
           </h2>
           <p className="text-neutral-500 text-xs sm:text-sm leading-relaxed">
-            Based on the scope you selected, here is your estimated investment range. A PDF copy has also been sent to <span className="text-black font-semibold">{email}</span>.
+            Based on the scope you selected, here is your estimated investment range. A summary has been emailed to <span className="text-black font-semibold">{email}</span>.
           </p>
         </div>
 
@@ -699,7 +737,7 @@ export default function QuoteCalculator() {
             </p>
           </div>
 
-          <div className="space-y-6 max-h-[420px] sm:max-h-[480px] overflow-y-auto pr-1">
+          <div className="space-y-6 max-h-[420px] sm:max-h-[480px] overflow-y-auto pr-1 no-scrollbar">
             {SERVICE_GROUPS.map((group) => (
               <div key={group.category} className="space-y-3">
                 <h3 className="text-xs font-mono uppercase text-[#ff4500] tracking-wider font-semibold">
@@ -930,7 +968,7 @@ export default function QuoteCalculator() {
         </form>
       )}
 
-      {/* EMAIL VERIFICATION MODAL */}
+      {/* EMAIL VERIFICATION MODAL - OPTIMIZED FOR iOS SAFARI AUTOFILL & AUTOMATIC VERIFICATION */}
       {showOtpModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
           <div className="bg-white rounded-3xl p-6 sm:p-10 max-w-md w-full border border-neutral-200 shadow-2xl relative space-y-6">
@@ -954,15 +992,18 @@ export default function QuoteCalculator() {
               </p>
             </div>
 
-            {/* 6-Digit OTP Inputs */}
+            {/* 6-Digit OTP Inputs with iOS inputMode="numeric", pattern="[0-9]*" & autoComplete="one-time-code" */}
             <div className="space-y-4">
               <div className="flex justify-between gap-1.5 sm:gap-2">
                 {otpDigits.map((digit, idx) => (
                   <input
                     key={idx}
                     ref={(el) => { otpInputRefs.current[idx] = el; }}
-                    type="text"
-                    maxLength={1}
+                    type="tel"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    autoComplete="one-time-code"
+                    maxLength={6}
                     value={digit}
                     onChange={(e) => handleOtpChange(idx, e.target.value)}
                     onKeyDown={(e) => handleOtpKeyDown(idx, e)}
@@ -983,10 +1024,12 @@ export default function QuoteCalculator() {
                 type="button"
                 disabled={isVerifying || otpDigits.join("").length < 6}
                 onClick={handleOtpSubmit}
-                className="w-full bg-black hover:bg-[#ff4500] text-white py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                className="w-full bg-black hover:bg-[#ff4500] text-white py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {isVerifying ? (
-                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <>
+                    <RefreshCw className="w-4 h-4 animate-spin" /> Verifying...
+                  </>
                 ) : (
                   "Verify & View Estimate"
                 )}
