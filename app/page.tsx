@@ -1,9 +1,12 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, Star, MessageSquare, ExternalLink } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, Star, MessageSquare, ExternalLink, Target, Cpu, TrendingUp, Zap, Users, Rocket, ShieldCheck } from "lucide-react";
 import Accordion from "@/components/Accordion";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+
 
 // 1. HERO
 const HERO_TITLE_LINE1 = "When someone searches for your business…";
@@ -160,65 +163,79 @@ const SERVICES = [
 const WHY_US = [
   {
     title: "Built around your business",
-    desc: "We don't force every business into the same package, template or strategy. Your goals determine what we build.",
+    desc: "We don't force every business into the same package, template or strategy. Your actual goals determine what we build.",
+    icon: Target,
+    badge: "Custom Architecture",
   },
   {
     title: "Brand meets technology",
     desc: "Your branding shouldn't live separately from your website. Your website shouldn't live separately from your marketing. We connect the pieces.",
+    icon: Cpu,
+    badge: "Unified System",
   },
   {
     title: "Built for conversion",
     desc: "Design matters. But design without action is decoration. We build experiences around what you want the customer to do next.",
+    icon: TrendingUp,
+    badge: "Action Driven UX",
   },
   {
-    title: "Search and performance from day one",
-    desc: "SEO, performance, analytics and conversion aren't things we want to bolt on after launch. They're considered while the experience is being built.",
+    title: "Search & performance from day 1",
+    desc: "SEO, performance, analytics and conversion aren't things we bolt on after launch. They're considered while the experience is being built.",
+    icon: Zap,
+    badge: "Native SEO Engine",
   },
   {
-    title: "One team",
-    desc: "Branding. Design. Development. SEO. Ads. Optimization. One partner.",
+    title: "One dedicated team",
+    desc: "Branding. Design. Development. SEO. Ads. Optimization. One partner accountable for the outcome.",
+    icon: Users,
+    badge: "Single Partner",
   },
   {
     title: "We stay after launch",
-    desc: "The launch is where most agencies finish. For us, it's where the next phase begins. You can continue working with ConversionHouse for ongoing growth support.",
+    desc: "The launch is where most agencies finish. For us, it's where the next phase begins. You can continue working with us for ongoing growth.",
+    icon: Rocket,
+    badge: "Continuous Growth",
   },
   {
     title: "Straightforward communication",
     desc: "Clear scope. Clear deliverables. Clear timelines. Clear communication. No unnecessary agency jargon.",
+    icon: ShieldCheck,
+    badge: "Zero Jargon",
   },
 ];
 
 // 5. SELECTED WORK
 const CASE_STUDIES = [
   {
-    name: "SHEEN",
+    name: "sheen.co.in",
+    title: "SHEEN — Mobile Car Care",
+    badge: "LIVE • PUBLICLY AVAILABLE",
     tag: "From brand identity to digital launch.",
-    desc: "Sheen wanted to introduce a new mobile car-care experience to Mysuru. ConversionHouse helped bring the brand to life across the places customers would actually encounter it.",
-    bullets: ["Branding", "Digital Experience", "Meta Ads"],
+    desc: "Sheen wanted to introduce a new mobile car-care experience to Mysuru. ConversionHouse helped bring the brand to life across the places customers would actually encounter it — building the identity, digital presence, and Meta acquisition campaigns.",
+    highlightPill: "Brand & Digital Launch",
+    pills: ["Branding", "Digital Experience", "Meta Ads"],
     statement: "We didn't just design the brand. We built the identity, digital presence and acquisition foundation around it.",
     slug: "sheen",
     website: "sheen.co.in",
     url: "https://sheen.co.in",
+    gradient: "from-[#1a1c1e] via-[#0d0e10] to-[#000000]",
+    mockupType: "sheen",
   },
   {
-    name: "RACE DIVISION",
+    name: "racedivision.in",
+    title: "RACE DIVISION — Performance Digital",
+    badge: "LIVE • PUBLICLY AVAILABLE",
     tag: "A website built to be found.",
-    desc: "Race Division needed more than an attractive website. The objective was to create a digital presence capable of competing for search queries while communicating clearly.",
-    bullets: ["SEO-first architecture", "On-page SEO", "Performance optimization"],
+    desc: "Race Division needed more than an attractive website. The objective was to create a high-performance digital presence capable of competing for search queries while communicating clearly and driving intent.",
+    highlightPill: "SEO & Search Engine Visibility",
+    pills: ["SEO Architecture", "On-page SEO", "Performance"],
     statement: "Built for people. Structured for search. Optimized for performance.",
     slug: "race-division",
     website: "racedivision.in",
     url: "https://racedivision.in",
-  },
-  {
-    name: "IRANI MOTOHUB",
-    tag: "Flexible custom e-commerce stores.",
-    desc: "Irani MotoHub needed a modern e-commerce experience built on Shopify while giving the frontend greater flexibility and performance.",
-    bullets: ["Headless Shopify storefront", "Product experience", "Advanced analytics"],
-    statement: "A headless Shopify experience designed to give the brand more control over performance, experience and future growth.",
-    slug: "irani-motohub",
-    website: "iranimotohub.in",
-    url: "https://iranimotohub.in",
+    gradient: "from-[#0f172a] via-[#090d16] to-[#000000]",
+    mockupType: "racedivision",
   },
 ];
 
@@ -233,12 +250,12 @@ const PROOF_CARDS = [
 
 // 7. THE LOOP
 const PROCESS_STEPS = [
-  { num: "01", title: "Discover", desc: "We learn about your business, customers, competition, goals and current digital presence." },
-  { num: "02", title: "Define", desc: "We identify the positioning, user journey, growth opportunities and priorities that matter most." },
-  { num: "03", title: "Build", desc: "Brand identity, website, store, landing pages and tracking are designed and developed around the strategy." },
-  { num: "04", title: "Launch", desc: "We launch the digital experience, tracking and acquisition campaigns where required." },
-  { num: "05", title: "Measure", desc: "We track traffic, enquiries, conversions, rankings, campaign performance and user behaviour." },
-  { num: "06", title: "Optimize", desc: "We use the data to improve SEO, advertising, conversion rates, performance and the overall customer journey." },
+  { num: "01", title: "Discover", subtitle: "Audit & Insight", desc: "We learn about your business, customers, competition, goals and current digital presence." },
+  { num: "02", title: "Define", subtitle: "Positioning & Roadmap", desc: "We identify the positioning, user journey, growth opportunities and priorities that matter most." },
+  { num: "03", title: "Build", subtitle: "Engineering & Design", desc: "Brand identity, website, store, landing pages and tracking are designed and developed around the strategy." },
+  { num: "04", title: "Launch", subtitle: "Deployment & Tracking", desc: "We launch the digital experience, tracking and acquisition campaigns where required." },
+  { num: "05", title: "Measure", subtitle: "Attribution & Data", desc: "We track traffic, enquiries, conversions, rankings, campaign performance and user behaviour." },
+  { num: "06", title: "Optimize", subtitle: "Continuous Growth", desc: "We use data to improve SEO, advertising, conversion rates, performance and the overall customer journey." },
 ];
 
 // 8. PACKAGES
@@ -308,6 +325,159 @@ const FAQ_ITEMS = [
   { question: "How long does a website take?", answer: "The timeline depends on the scope, number of pages, content, integrations and approval cycles. Once we understand your requirements, we'll provide a realistic timeline before development begins." },
 ];
 
+interface TimelineRowProps {
+  step: {
+    num: string;
+    title: string;
+    subtitle: string;
+    desc: string;
+  };
+  idx: number;
+  total: number;
+}
+
+function TimelineRow({ step, idx, total }: TimelineRowProps) {
+  const rowRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: rowRef,
+    offset: ["start 85%", "start 35%"],
+  });
+  const tickHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const isLast = idx === total - 1;
+
+  return (
+    <div ref={rowRef} className="relative">
+      {/* MOBILE LAYOUT (below md) */}
+      <div
+        className={`md:hidden relative pl-6 pr-4 py-10 ${
+          !isLast ? "border-b border-neutral-100" : ""
+        }`}
+      >
+        {/* Rail + progress fill — always visible on mobile */}
+        <div className="absolute left-0 top-10 bottom-10 w-px bg-neutral-150">
+          <div className="absolute inset-0 w-px bg-neutral-100" />
+          <motion.div
+            style={{ height: tickHeight }}
+            className="absolute top-0 left-0 w-px bg-[#ff4500] origin-top"
+          />
+        </div>
+
+        {/* Decorative ghost numeral, corner-anchored, out of flow */}
+        <span
+          aria-hidden
+          className="pointer-events-none select-none absolute -top-2 right-2 font-display text-[88px] leading-none font-extralight tracking-tighter"
+          style={{ color: "rgba(0,0,0,0.02)", WebkitTextStroke: "1.5px #d6d6d6" }}
+        >
+          {step.num}
+        </span>
+
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="relative"
+        >
+          <div className="flex items-center gap-3 mb-3">
+            <span className="text-[10px] font-mono text-[#ff4500] uppercase tracking-[0.2em]">
+              Stage {step.num}
+            </span>
+            <span className="w-5 h-px bg-neutral-300" />
+            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-[0.2em]">
+              {step.subtitle}
+            </span>
+          </div>
+
+          <h3 className="font-display text-[28px] sm:text-3xl text-black tracking-tight leading-[1.08] mb-3">
+            {step.title}
+          </h3>
+
+          <p className="text-sm text-neutral-500 leading-relaxed font-sans max-w-md">
+            {step.desc}
+          </p>
+
+          <div className="mt-5 h-px w-14 bg-[#ff4500]/70" />
+        </motion.div>
+      </div>
+
+      {/* DESKTOP LAYOUT (md and up) */}
+      <div
+        className={`hidden md:grid grid-cols-12 gap-4 md:gap-10 py-14 md:py-20 ${
+          !isLast ? "border-b border-neutral-100" : ""
+        }`}
+      >
+        <div className="col-span-3 lg:col-span-2 relative">
+          <div className="sticky top-32">
+            <motion.span
+              initial={{ opacity: 0, x: -12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="block font-display text-[96px] lg:text-[112px] leading-none font-extralight tracking-tighter select-none"
+              style={{ color: "rgba(0,0,0,0.025)", WebkitTextStroke: "2px #d4d4d4" }}
+            >
+              {step.num}
+            </motion.span>
+          </div>
+        </div>
+
+        <div className="col-span-9 lg:col-span-10 flex gap-10">
+          <div className="relative w-px shrink-0 bg-neutral-100">
+            <motion.div
+              style={{ height: tickHeight }}
+              className="absolute top-0 left-0 w-px bg-[#ff4500] origin-top"
+            />
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+            className="group max-w-2xl"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-[10px] font-mono text-[#ff4500] uppercase tracking-[0.2em]">
+                Stage {step.num}
+              </span>
+              <span className="w-6 h-px bg-neutral-300" />
+              <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-[0.2em]">
+                {step.subtitle}
+              </span>
+            </div>
+
+            <h3 className="font-display text-4xl md:text-[42px] text-black tracking-tight leading-[1.05] mb-4 transition-colors duration-500 group-hover:text-[#ff4500]">
+              {step.title}
+            </h3>
+
+            <p className="text-base text-neutral-500 leading-relaxed font-sans max-w-xl">
+              {step.desc}
+            </p>
+
+            <motion.div
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+              className="mt-6 h-px w-16 bg-neutral-200 origin-left group-hover:bg-[#ff4500] group-hover:w-24 transition-all duration-500"
+            />
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GrowthTimeline() {
+  return (
+    <div className="max-w-4xl mx-auto">
+      {PROCESS_STEPS.map((step, idx) => (
+        <TimelineRow key={step.num} step={step} idx={idx} total={PROCESS_STEPS.length} />
+      ))}
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <main className="bg-white text-black">
@@ -320,12 +490,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="font-display tracking-tight text-black leading-tight mb-8">
-              <span className="block text-2xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[62px] text-black font-semibold tracking-tight leading-none mb-2">
+              <span className="font-display block text-2xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[62px] text-black font-semibold tracking-tight leading-none mb-2">
                 When people search for your business,
               </span>
-              <span className="block text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[54px] tracking-tight leading-none">
-                will <span className="text-[#ff4500] font-semibold">they find you</span>{" "}
-                <span className="text-neutral-800 font-medium">or your competitors?</span>
+              <span className="font-display block text-2xl sm:text-3xl md:text-4xl lg:text-[46px] xl:text-[54px] tracking-tight leading-none">
+                will <span className="font-display text-[#ff4500] font-semibold">they find you</span>{" "}
+                <span className="font-display text-neutral-800 font-medium">or your competitors?</span>
               </span>
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed mb-10 font-normal">
@@ -681,34 +851,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* D. WHY CONVERSIONHOUSE */}
-      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
-        <div className="container-x">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            <div className="lg:col-span-4 space-y-4">
-              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Difference ]</span>
-              <h2 className="font-display text-3xl sm:text-4xl text-black">
-                Why work with us?
-              </h2>
-              <p className="text-lg text-neutral-600 font-display">
-                We think beyond the deliverable.
-              </p>
-              <p className="text-sm text-neutral-500 leading-relaxed max-w-xs">
-                You don't need someone who simply completes a checklist. You need someone who understands why the work exists in the first place.
-              </p>
-            </div>
 
-            <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {WHY_US.map((item, idx) => (
-                <div key={idx} className="border-l-2 border-[#ff4500] pl-6 py-2">
-                  <h3 className="font-display text-lg text-black mb-2">{item.title}</h3>
-                  <p className="text-sm text-neutral-500 leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* E. SELECTED WORK */}
       <section className="py-24 border-t border-neutral-100 bg-white">
@@ -731,45 +874,99 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
             {CASE_STUDIES.map((cs) => (
               <div
-                key={cs.name}
-                className="bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl flex flex-col justify-between group hover:border-[#ff4500] transition-all"
+                key={cs.slug}
+                className="border border-neutral-200/80 rounded-[32px] overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between group"
               >
-                <div>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {cs.bullets.map((b) => (
-                      <span key={b} className="text-[10px] font-mono bg-white text-neutral-500 border border-neutral-100 px-2 py-0.5 rounded">
-                        {b}
-                      </span>
-                    ))}
+                {/* Upper Half: Image Showcase Placeholder */}
+                <div className={`h-[340px] sm:h-[400px] w-full relative overflow-hidden bg-gradient-to-br ${cs.gradient} p-6 sm:p-8 flex flex-col justify-between group/hero`}>
+                  {/* Top Bar inside mockup */}
+                  <div className="flex justify-between items-center z-10">
+                    <span className="text-[11px] font-mono text-neutral-400 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                      [ Live Platform ]
+                    </span>
+                    <span className="text-[11px] font-mono text-[#ff4500] bg-[#ff4500]/10 backdrop-blur-md px-3 py-1 rounded-full border border-[#ff4500]/20 font-medium">
+                      {cs.website}
+                    </span>
                   </div>
-                  <h3 className="font-display text-2xl text-black group-hover:text-[#ff4500] transition-colors mb-2">
-                    {cs.name}
-                  </h3>
-                  <p className="text-xs font-mono text-[#ff4500] mb-4">{cs.tag}</p>
-                  <p className="text-sm text-neutral-600 leading-relaxed mb-6">{cs.desc}</p>
-                  <p className="text-xs italic text-neutral-400 border-t border-neutral-100 pt-4">
-                    "{cs.statement}"
-                  </p>
+
+                  {/* Center Mockup UI Content */}
+                  <div className="relative z-10 my-auto text-center space-y-3 group-hover/hero:scale-[1.03] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    {cs.mockupType === "sheen" ? (
+                      <div className="bg-black/60 backdrop-blur-xl border border-white/15 rounded-2xl p-6 sm:p-8 max-w-md mx-auto shadow-2xl space-y-3">
+                        <div className="text-xs font-mono text-[#ff4500] uppercase tracking-widest">✦ SHEEN CAR CARE</div>
+                        <h4 className="font-display text-2xl sm:text-3xl text-white tracking-tight">Brand Identity & Digital Launch</h4>
+                        <div className="flex justify-center gap-2 text-[10px] font-mono text-neutral-400 pt-2">
+                          <span className="bg-white/10 px-2.5 py-1 rounded">Mysuru</span>
+                          <span className="bg-white/10 px-2.5 py-1 rounded">Mobile App</span>
+                          <span className="bg-[#ff4500]/20 text-[#ff4500] px-2.5 py-1 rounded">Meta Ads</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="bg-slate-900/80 backdrop-blur-xl border border-white/15 rounded-2xl p-6 sm:p-8 max-w-md mx-auto shadow-2xl space-y-3">
+                        <div className="text-xs font-mono text-cyan-400 uppercase tracking-widest">✦ RACE DIVISION</div>
+                        <h4 className="font-display text-2xl sm:text-3xl text-white tracking-tight">SEO & High-Performance Web</h4>
+                        <div className="flex justify-center gap-2 text-[10px] font-mono text-neutral-400 pt-2">
+                          <span className="bg-white/10 px-2.5 py-1 rounded">SEO Architecture</span>
+                          <span className="bg-white/10 px-2.5 py-1 rounded">Fast Core Vitals</span>
+                          <span className="bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">Top 10 Rankings</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Subtle Grid Background Pattern Overlay */}
+                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
                 </div>
 
-                <div className="mt-8 pt-4 border-t border-neutral-100 flex items-center justify-between gap-3 flex-wrap">
-                  <Link
-                    href={`/work/${cs.slug}`}
-                    className="text-xs font-mono uppercase text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
-                  >
-                    View Case Study <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                  <a
-                    href={cs.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-mono text-[#ff4500] hover:underline flex items-center gap-1 font-medium"
-                  >
-                    Visit Website <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                {/* Lower Half: Content Details (Matching Reference Image) */}
+                <div className="p-8 sm:p-10 flex flex-col justify-between flex-1 space-y-6 bg-white">
+                  <div className="space-y-4">
+                    <span className="text-[#ff4500] text-xs font-mono font-semibold uppercase tracking-wider block">
+                      {cs.badge}
+                    </span>
+
+                    <h3 className="font-display text-3xl sm:text-4xl text-black tracking-tight group-hover:text-[#ff4500] transition-colors">
+                      {cs.name}
+                    </h3>
+
+                    <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-sans">
+                      {cs.desc}
+                    </p>
+
+                    {/* Pill Badges Row */}
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      <span className="bg-[#ff4500] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full flex items-center gap-1.5">
+                        ⚡ {cs.highlightPill}
+                      </span>
+                      {cs.pills.map((pill) => (
+                        <span key={pill} className="bg-neutral-100 text-neutral-700 text-xs font-medium px-3.5 py-1.5 rounded-full">
+                          {pill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom Action Links */}
+                  <div className="pt-6 border-t border-neutral-100 flex items-center justify-between gap-4 flex-wrap">
+                    <Link
+                      href={`/work/${cs.slug}`}
+                      className="text-xs sm:text-sm font-sans font-semibold text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
+                    >
+                      View Case Study <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    
+                    <a
+                      href={cs.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs sm:text-sm font-sans font-semibold text-[#ff4500] hover:underline flex items-center gap-1.5"
+                    >
+                      Visit Website <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
@@ -812,96 +1009,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* G. HOW WE WORK (PROCESS) */}
-      <section className="py-24 border-t border-neutral-100 bg-white">
-        <div className="container-x">
-          <div className="mb-16 text-center space-y-4">
-            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Operating System ]</span>
-            <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
-              The ConversionHouse Growth Loop
-            </h2>
-            <p className="text-xs text-[#ff4500] font-mono">
-              Build → Measure → Learn → Improve → Repeat.
-            </p>
-          </div>
+     {/* G. HOW WE WORK (PROCESS TIMELINE) */}
+{/* G. HOW WE WORK (PROCESS TIMELINE) */}
+<section className="relative py-28 md:py-36 border-t border-neutral-100 bg-white overflow-hidden">
+  {/* Ambient background layer */}
+  <div className="absolute inset-0 pointer-events-none">
+    <div className="absolute -top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[#ff4500]/[0.035] blur-3xl" />
+    <div className="absolute top-1/2 -right-40 w-[520px] h-[520px] rounded-full bg-[#ff4500]/[0.03] blur-3xl" />
+    <div
+      className="absolute inset-0 opacity-[0.5]"
+      style={{
+        backgroundImage: "radial-gradient(#00000009 1px, transparent 1px)",
+        backgroundSize: "28px 28px",
+      }}
+    />
+  </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
-            {PROCESS_STEPS.map((step) => (
-              <div key={step.num} className="bg-neutral-50/40 border border-neutral-100 p-6 rounded-2xl flex flex-col justify-between">
-                <div>
-                  <span className="text-xs font-mono text-[#ff4500]">{step.num}</span>
-                  <h3 className="font-display text-lg text-black mt-2 mb-2">{step.title}</h3>
-                </div>
-                <p className="text-xs text-neutral-500 leading-relaxed">{step.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+  <div className="container-x relative z-10">
+    <div className="mb-20 md:mb-28 max-w-2xl">
+      <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block mb-4">
+        [ Operating System ]
+      </span>
+      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl text-black tracking-tight leading-[1.05] mb-6">
+        The ConversionHouse <span className="text-[#ff4500]">Growth Loop</span>
+      </h2>
+      <div className="flex items-center gap-3">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#ff4500]" />
+        <span className="text-xs sm:text-sm font-mono text-neutral-500 tracking-wide">
+          Build → Measure → Learn → Improve → Repeat.
+        </span>
+      </div>
+    </div>
 
-      {/* H. PACKAGES / SOLUTIONS */}
-      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
-        <div className="container-x">
-          <div className="mb-16 text-center space-y-4">
-            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Transparent Packaging ]</span>
-            <h2 className="font-display text-4xl sm:text-5xl text-black leading-none">
-              Packages built around outcomes.
-            </h2>
-            <p className="text-neutral-500 text-sm max-w-md mx-auto">
-              We focus on building long-term growth channels, avoiding simple one-off commodity tiers.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {PACKAGES.map((pkg) => (
-              <div
-                key={pkg.title}
-                className={`border rounded-2xl p-6 flex flex-col justify-between relative ${
-                  pkg.popular
-                    ? "border-[#ff4500] bg-[#ff4500]/5"
-                    : "border-neutral-200 bg-white shadow-sm"
-                }`}
-              >
-                {pkg.popular && (
-                  <span className="absolute -top-3 right-6 bg-[#ff4500] text-white text-[10px] uppercase font-mono tracking-widest px-3 py-1 rounded-full">
-                    Most Popular
-                  </span>
-                )}
-                <div>
-                  <h3 className="font-display text-2xl mb-2 text-black">{pkg.title}</h3>
-                  <p className="text-xs text-neutral-500 leading-relaxed mb-6">{pkg.desc}</p>
-                  
-                  <ul className="space-y-2 mb-8 border-t border-neutral-100 pt-4">
-                    {pkg.bullets.map((b) => (
-                      <li key={b} className="text-xs text-neutral-500 flex items-start gap-2">
-                        <span className="text-[#ff4500] font-semibold">•</span>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="border-t border-neutral-100 pt-4 mt-auto">
-                  <p className="text-[10px] uppercase tracking-widest text-[#ff4500] font-mono mb-4">
-                    Best For:
-                  </p>
-                  <p className="text-xs text-neutral-600 leading-relaxed mb-6">{pkg.best}</p>
-                  <Link
-                    href="/contact"
-                    className={`block w-full text-center py-3 rounded-full text-xs font-semibold uppercase tracking-wider transition-colors ${
-                      pkg.popular
-                        ? "bg-[#ff4500] hover:bg-[#e03d00] text-white"
-                        : "bg-black hover:bg-[#ff4500] text-white border border-neutral-200"
-                    }`}
-                  >
-                    Select Plan
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+    <GrowthTimeline />
+  </div>
+</section>
 
       {/* I. QUOTE CALCULATOR TEASER */}
       <section className="py-24 border-t border-neutral-100 bg-white">
@@ -921,7 +1063,7 @@ export default function Home() {
               Get a Quote
             </Link>
             <a
-              href="https://wa.me/919999999999"
+              href="https://wa.me/919900447762"
               target="_blank"
               rel="noreferrer"
               className="btn-ghost text-black font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full flex items-center justify-center gap-2 w-full sm:w-auto"
@@ -967,54 +1109,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* K. WHO WE WORK WITH */}
-      <section className="py-24 border-t border-neutral-100 bg-white">
-        <div className="container-x">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            
-            {/* Suitable For */}
-            <div className="lg:col-span-7 space-y-8">
-              <div>
-                <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Ideal Fits ]</span>
-                <h2 className="font-display text-3xl sm:text-4xl text-black mt-2">
-                  Built for businesses ready to take digital seriously.
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {AUDIENCES.map((aud) => (
-                  <div key={aud.title} className="bg-neutral-50/40 border border-neutral-100 p-6 rounded-xl">
-                    <h3 className="font-display text-base text-black mb-2">{aud.title}</h3>
-                    <p className="text-xs text-neutral-500 leading-relaxed">{aud.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* NOT For */}
-            <div className="lg:col-span-5 bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl">
-              <h3 className="font-display text-lg text-[#ff4500] mb-6">
-                We're probably not the right fit if...
-              </h3>
-              <ul className="space-y-3">
-                {NOT_FOR.map((item, idx) => (
-                  <li key={idx} className="text-xs text-neutral-500 flex items-start gap-2.5">
-                    <span className="text-neutral-400 font-semibold">[✕]</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="border-t border-neutral-100 pt-6 mt-6">
-                <p className="text-xs italic text-neutral-400">
-                  "We'd rather build something meaningful with the right clients than take every project that comes our way."
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
       {/* L. CLIENT SUPPORT */}
       <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
         <div className="container-x text-center max-w-2xl mx-auto space-y-6">
@@ -1031,56 +1125,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* M. TESTIMONIALS */}
-      <section className="py-24 border-t border-neutral-100 bg-white">
-        <div className="container-x">
-          <div className="mb-16 text-center space-y-4">
-            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Feedback ]</span>
-            <h2 className="font-display text-3xl sm:text-4xl text-black">
-              Don't take our word for it.
-            </h2>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl relative">
-              <div className="flex gap-1 mb-4 text-[#ff4500]">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
-                ))}
-              </div>
-              <p className="text-neutral-600 text-sm leading-relaxed mb-6 italic">
-                "Work with ConversionHouse was completely seamless. They took down our outdated business profile and restructured our website around customer leads."
-              </p>
-              <div>
-                <h4 className="text-sm font-semibold text-black">Customer Launch Retainer</h4>
-                <p className="text-xs text-neutral-400 font-mono">Mysuru, IN</p>
-              </div>
-            </div>
-            <div className="bg-neutral-50/40 border border-neutral-100 p-8 rounded-2xl relative">
-              <div className="flex gap-1 mb-4 text-[#ff4500]">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
-                ))}
-              </div>
-              <p className="text-neutral-600 text-sm leading-relaxed mb-6 italic">
-                "They didn't just build a gorgeous headless storefront, they made sure technical SEO rankings were active immediately post-launch."
-              </p>
-              <div>
-                <h4 className="text-sm font-semibold text-black">E-commerce Founder</h4>
-                <p className="text-xs text-neutral-400 font-mono">Retail Brand</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* N. FAQ */}
-      <section id="faq" className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+      <section id="faq" className="py-28 border-t border-neutral-100 bg-white">
         <div className="container-x">
-          <div className="mb-16 text-center space-y-4">
-            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Clear Answers ]</span>
-            <h2 className="font-display text-3xl sm:text-4xl text-black">
-              Questions before we start?
+          <div className="mb-16 max-w-5xl mx-auto space-y-4">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block">[ Clear Answers ]</span>
+            <h2 className="font-display font-bold text-4xl sm:text-5xl text-black tracking-tight">
+              Frequently Asked Questions
             </h2>
           </div>
           <Accordion items={FAQ_ITEMS} />
@@ -1105,7 +1158,7 @@ export default function Home() {
               Get a Quote
             </Link>
             <a
-              href="https://wa.me/919999999999"
+              href="https://wa.me/919900447762"
               target="_blank"
               rel="noreferrer"
               className="btn-ghost text-black font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full flex items-center justify-center gap-2 w-full sm:w-auto"

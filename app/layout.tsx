@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+const clashDisplay = localFont({
+  src: "../public/fonts/ClashDisplay-Variable.woff2",
+  variable: "--font-clash-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "ConversionHouse — Brand. Build. Convert. Grow.",
@@ -22,11 +29,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className="antialiased bg-white text-black selection:bg-[#ff4500] selection:text-white">
+    <html lang="en" className={`${clashDisplay.variable} scroll-smooth`}>
+      <body className="antialiased bg-white text-black selection:bg-[#ff4500] selection:text-white font-sans">
         <Header />
         {children}
         <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface FAQItem {
@@ -14,44 +13,46 @@ interface AccordionProps {
 }
 
 export default function Accordion({ items }: AccordionProps) {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
   return (
-    <div className="space-y-4 max-w-3xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto border-t border-neutral-200">
       {items.map((item, index) => {
         const isOpen = openIndex === index;
         return (
           <div
             key={index}
-            className="border-b border-neutral-200 dark:border-neutral-800 pb-4 transition-colors"
+            className="border-b border-neutral-200/80 transition-colors"
           >
             <button
               onClick={() => toggle(index)}
-              className="w-full flex items-center justify-between py-4 text-left font-display font-medium text-lg md:text-xl transition-colors hover:text-[#ff5722]"
+              className="w-full flex items-center justify-between py-7 sm:py-9 text-left group cursor-pointer select-none"
             >
-              <span>{item.question}</span>
-              <ChevronDown
-                className={`w-5 h-5 text-neutral-400 transition-transform duration-300 ${
-                  isOpen ? "rotate-180 text-[#ff5722]" : ""
-                }`}
-              />
+              <h3 className="font-display font-semibold text-2xl sm:text-3xl text-black tracking-tight group-hover:text-[#ff4500] transition-colors pr-6">
+                {item.question}
+              </h3>
+              
+              <span className={`text-[#ff4500] font-light text-3xl sm:text-4xl transition-transform duration-300 shrink-0 ${isOpen ? "rotate-45" : "rotate-0"}`}>
+                +
+              </span>
             </button>
+            
             <AnimatePresence initial={false}>
               {isOpen && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.25, ease: "easeInOut" }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="text-neutral-600 dark:text-neutral-400 text-sm md:text-base leading-relaxed pt-2 pb-4">
+                  <div className="pb-8 text-neutral-700 font-sans text-base sm:text-lg leading-relaxed max-w-4xl">
                     {item.answer}
-                  </p>
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>

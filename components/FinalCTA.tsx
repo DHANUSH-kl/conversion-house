@@ -17,13 +17,15 @@ export default function FinalCTA() {
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
             <a
-              href="mailto:hello@conversionhouse.in"
+              href="mailto:contact@conversionhouse.in"
               className="rounded-full bg-white text-[var(--ink)] px-6 py-3 text-[14px] font-medium hover:bg-[var(--accent-tint)] transition-colors"
             >
-              Book a free call
+              Email Us
             </a>
             <a
-              href="https://wa.me/910000000000"
+              href="https://wa.me/919900447762"
+              target="_blank"
+              rel="noreferrer"
               className="rounded-full border border-white/25 px-6 py-3 text-[14px] font-medium hover:bg-white/10 transition-colors"
             >
               Message on WhatsApp

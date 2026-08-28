@@ -359,7 +359,7 @@ export default function QuoteCalculator() {
 
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
             <a
-              href={`https://wa.me/919999999999?text=Hi%20ConversionHouse,%20I%20just%20calculated%20my%20digital%20scope:%20${encodeURIComponent(
+              href={`https://wa.me/919900447762?text=Hi%20ConversionHouse,%20I%20just%20calculated%20my%20digital%20scope:%20${encodeURIComponent(
                 selectedServices.join(", ")
               )}%20and%20need%20a%20quote.`}
               target="_blank"
@@ -369,12 +369,14 @@ export default function QuoteCalculator() {
               <MessageSquare className="w-4 h-4 text-[#ff4500]" /> Talk to us on WhatsApp
             </a>
             
-            <button
-              onClick={() => alert("Scope submitted! Our studio strategist will contact you shortly.")}
-              className="bg-black hover:bg-[#ff4500] text-white px-8 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider transition-all"
+            <a
+              href={`mailto:projects@conversionhouse.in?subject=New%20Project%20Quote%20Request&body=Hi%20ConversionHouse%20Team,%0A%0AI%20would%20like%20to%20request%20a%20quote%20for%20the%20following%20services:%20${encodeURIComponent(
+                selectedServices.join(", ")
+              )}.`}
+              className="bg-black hover:bg-[#ff4500] text-white px-8 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider transition-all text-center flex items-center justify-center"
             >
-              Get My Final Quote
-            </button>
+              Email Projects Team
+            </a>
           </div>
         </div>
       )}

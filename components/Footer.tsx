@@ -22,6 +22,22 @@ export default function Footer() {
               <p className="text-neutral-500 text-sm max-w-sm leading-relaxed mt-4">
                 We build brands, websites, e-commerce experiences and growth systems designed to help businesses move forward.
               </p>
+              
+              {/* Contact Information */}
+              <div className="mt-6 space-y-1.5 text-xs text-neutral-600 font-mono">
+                <p>
+                  <span className="text-[#ff4500]">Email:</span>{" "}
+                  <a href="mailto:contact@conversionhouse.in" className="hover:underline hover:text-black">
+                    contact@conversionhouse.in
+                  </a>
+                </p>
+                <p>
+                  <span className="text-[#ff4500]">WhatsApp:</span>{" "}
+                  <a href="https://wa.me/919900447762" target="_blank" rel="noreferrer" className="hover:underline hover:text-black">
+                    +91 99004 47762
+                  </a>
+                </p>
+              </div>
             </div>
             
             <div className="mt-8 md:mt-0 pt-4">
@@ -88,15 +104,18 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* CTA Block */}
+          {/* CTA & Contact Block */}
           <div className="md:col-span-3 flex flex-col justify-between bg-neutral-50 p-6 rounded-2xl border border-neutral-100">
             <div>
               <h4 className="text-lg font-display font-semibold mb-2 text-black">
-                Have a project in mind?
+                Direct Department Contacts
               </h4>
-              <p className="text-xs text-neutral-500 mb-6">
-                Tell us about the brand, website, or growth system you're trying to build.
-              </p>
+              <ul className="space-y-1.5 text-[11px] font-mono text-neutral-500 mb-6">
+                <li><span className="text-black font-semibold">Projects:</span> <a href="mailto:projects@conversionhouse.in" className="hover:text-[#ff4500]">projects@conversionhouse.in</a></li>
+                <li><span className="text-black font-semibold">Support:</span> <a href="mailto:support@conversionhouse.in" className="hover:text-[#ff4500]">support@conversionhouse.in</a></li>
+                <li><span className="text-black font-semibold">Accounts:</span> <a href="mailto:accounts@conversionhouse.in" className="hover:text-[#ff4500]">accounts@conversionhouse.in</a></li>
+                <li><span className="text-black font-semibold">Direct:</span> <a href="mailto:dhanush@conversionhouse.in" className="hover:text-[#ff4500]">dhanush@conversionhouse.in</a></li>
+              </ul>
             </div>
             <Link
               href="/contact"
