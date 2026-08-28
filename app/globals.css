@@ -86,6 +86,36 @@ html, body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   width: 100%;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Completely Hide Scrollbars Globally across all Browsers & Webkit Engine */
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent !important;
+}
+
+/* Utility to remove scrollbars from inner containers while retaining scrolling capability */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0px !important;
+  height: 0px !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Global Font Display & Letter Spacing Rules - Prevents Character Collisions */
@@ -160,17 +190,6 @@ h1, h2, h3, h4, h5, h6 {
 .btn-ghost:hover {
   background: #000000;
   color: #ffffff;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #ffffff;
-}
-::-webkit-scrollbar-thumb {
-  background: #000000;
 }
 
 @media (prefers-reduced-motion: reduce) {

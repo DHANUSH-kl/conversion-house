@@ -112,7 +112,7 @@ export async function POST(req: Request) {
       submittedAt,
     };
 
-    // 2. Generate PDF Buffer for Attachments
+    // 2. Generate PDF Buffer for Internal Agency Attachment
     let pdfBuffer: Buffer | undefined;
     try {
       pdfBuffer = await generateQuotePdfBuffer(pdfPayload);
@@ -120,7 +120,7 @@ export async function POST(req: Request) {
       console.error("[PDF Generation Error]:", pdfErr);
     }
 
-    // 3. Await Internal Lead Email to contact@conversionhouse.in (with PDF attached)
+    // 3. Await Internal Lead Email to dhanush@conversionhouse.in (with PDF attached)
     try {
       const internalEmailSent = await sendLeadNotificationEmail(pdfPayload, pdfBuffer);
       console.log(`[Internal Lead Email Status]: ${internalEmailSent ? "SUCCESS" : "FAILED"}`);
@@ -128,17 +128,18 @@ export async function POST(req: Request) {
       console.error("[Internal Lead Email Dispatch Exception]:", emailErr);
     }
 
-    // 4. Await Client Estimate Email to verified user email (with PDF attached)
+    // 4. Await Client Estimate Email (Clean text format, no PDF attachment)
     try {
-      const clientEmailSent = await sendClientEstimateEmail(
-        {
-          quoteId,
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          estimatedRange: estimatedRangeStr,
-        },
-        pdfBuffer
-      );
+      const clientEmailSent = await sendClientEstimateEmail({
+        quoteId,
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        estimatedRange: estimatedRangeStr,
+        industry,
+        goal,
+        timeline,
+        selectedServices,
+      });
       console.log(`[Client Estimate Email Status]: ${clientEmailSent ? "SUCCESS" : "FAILED"}`);
     } catch (clientEmailErr) {
       console.error("[Client Estimate Email Dispatch Exception]:", clientEmailErr);

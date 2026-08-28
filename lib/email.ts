@@ -232,66 +232,44 @@ export async function sendClientEstimateEmail(payload: {
   name: string;
   email: string;
   estimatedRange: string;
-}, pdfBuffer?: Buffer): Promise<boolean> {
+  industry?: string;
+  goal?: string;
+  timeline?: string;
+  selectedServices?: string[];
+}): Promise<boolean> {
   const firstName = payload.name.split(" ")[0] || payload.name;
-  const subject = `Your ConversionHouse Estimate — ${payload.name}`;
-  const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL || "https://conversionhouse.in/contact";
+  const subject = "Your ConversionHouse estimate is ready";
+  const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL || "https://cal.com/conversionhouse/20min";
 
-  const htmlContent = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8">
-        <title>Your ConversionHouse Estimate</title>
-      </head>
-      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #ffffff; color: #000000; margin: 0; padding: 40px 20px;">
-        <div style="max-width: 520px; margin: 0 auto; border: 1px solid #eaeaea; border-radius: 16px; padding: 40px; background-color: #ffffff;">
-          <div style="font-size: 20px; font-weight: 700; font-family: monospace; color: #000000; margin-bottom: 24px;">
-            ConversionHouse<span style="color: #ff4500;">.</span>
-          </div>
+  const servicesStr = payload.selectedServices?.length
+    ? payload.selectedServices.join(", ")
+    : "Website & Digital Scope";
+  const projectStr = [payload.industry, payload.goal].filter(Boolean).join(" - ") || "Website & Growth";
+  const timelineStr = payload.timeline || "1–3 months";
 
-          <p style="font-size: 16px; font-weight: 600; color: #000000; margin: 0 0 16px 0;">
-            Hi ${firstName},
-          </p>
+  const textContent = `Hi ${firstName},
 
-          <p style="font-size: 14px; color: #444444; line-height: 1.6; margin: 0 0 20px 0;">
-            Your project estimate is ready. Based on the requirements you selected, we've prepared an estimated investment range for your project:
-          </p>
+Thanks for taking the time to tell us about your project.
 
-          <div style="background-color: #fafafa; border: 1px solid #eaeaea; border-radius: 12px; padding: 24px; text-align: center; margin-bottom: 24px;">
-            <span style="font-size: 11px; font-family: monospace; color: #888888; letter-spacing: 1px; display: block; margin-bottom: 6px;">ESTIMATED INVESTMENT</span>
-            <span style="font-size: 32px; font-weight: 700; color: #ff4500; letter-spacing: -0.5px;">
-              ${payload.estimatedRange}
-            </span>
-          </div>
+We've reviewed the information you submitted and prepared your initial project estimate.
 
-          <p style="font-size: 13px; color: #555555; line-height: 1.6; margin: 0 0 24px 0;">
-            We've attached your personalized project estimate PDF with the full scope you selected.
-          </p>
+Your estimated range
+${payload.estimatedRange}
 
-          <p style="font-size: 13px; color: #555555; line-height: 1.6; margin: 0 0 28px 0;">
-            The next step is a short 20-minute conversation where we can understand the project in more detail, refine the scope and confirm the final quote.
-          </p>
+Project: ${projectStr}
+Timeline: ${timelineStr}
+Services: ${servicesStr}
 
-          <div style="text-align: center; margin-bottom: 32px;">
-            <a href="${bookingUrl}" target="_blank" style="background-color: #ff4500; color: #ffffff; font-size: 12px; font-weight: 700; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; padding: 14px 28px; border-radius: 30px; text-decoration: none; display: inline-block;">
-              Book a 20-minute call &rarr;
-            </a>
-          </div>
+If you'd like to discuss the scope, you can book a 20-minute conversation with us:
 
-          <div style="border-top: 1px solid #f0f0f0; padding-top: 20px; font-size: 12px; color: #888888; font-family: monospace;">
-            Best,<br>
-            <strong>ConversionHouse.</strong><br>
-            <span style="color: #aaaaaa;">Branding • Technology • Growth</span>
-          </div>
-        </div>
-      </body>
-    </html>
-  `;
+Book a 20-minute call → ${bookingUrl}
 
-  const attachments = pdfBuffer
-    ? [{ filename: `conversionhouse-estimate-${payload.quoteId}.pdf`, content: pdfBuffer }]
-    : [];
+We'll use the call to understand your requirements, refine the scope and give you a final proposal.
+
+Regards,
+Dhanush
+ConversionHouse
+conversionhouse.in`;
 
   if (resend) {
     try {
@@ -300,8 +278,7 @@ export async function sendClientEstimateEmail(payload: {
         to: [payload.email],
         replyTo: SENDER_EMAIL,
         subject,
-        html: htmlContent,
-        attachments,
+        text: textContent,
       });
 
       if (result.error) {
@@ -309,6 +286,7 @@ export async function sendClientEstimateEmail(payload: {
         return false;
       }
 
+      console.log(`[Resend Client Email SUCCESS] Plain text estimate delivered to ${payload.email}`);
       return true;
     } catch (err) {
       console.error(`[Client Estimate Email Exception] Quote ID: ${payload.quoteId} | Target: ${payload.email} | Exception:`, err);
