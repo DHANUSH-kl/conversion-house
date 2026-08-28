@@ -8,118 +8,51 @@ export const metadata = {
 
 const SERVICES = [
   {
-    title: "Branding",
-    tag: "Build a brand people remember.",
+    title: "Branding & Rebranding",
+    tag: "Make them remember you.",
     desc: "We create identities that give your business a clear presence across digital and physical touchpoints.",
-    bullets: [
-      "Logo design",
-      "Brand identity setup",
-      "Brand strategy development",
-      "Full rebranding campaigns",
-      "Visual identity systems & templates",
-      "Brand guidelines & specs",
-      "Social media visual identity",
-      "Vehicle & physical store branding",
+    engagement: "Typical engagement ₹35K – ₹1.5L",
+    cards: [
+      { title: "Brand Identity", desc: "Logo, colour, typography and visual systems that make your brand recognizable." },
+      { title: "Rebranding", desc: "Refresh how your business looks, feels and is perceived." },
+      { title: "Visual Systems", desc: "Create a consistent language across every brand touchpoint." },
+      { title: "Brand Applications", desc: "Social media, packaging, vehicles, marketing materials and more." },
     ],
   },
   {
-    title: "Websites",
-    tag: "Not another template. A website built around your business.",
-    desc: "We design and develop high-performance websites that communicate your value clearly, build trust and guide visitors towards action.",
-    bullets: [
-      "Website design strategy",
-      "UX/UI custom layout design",
-      "Next.js / custom responsive build",
-      "High performance landing pages",
-      "Conversion-focused layouts",
-      "SEO-ready technical structure",
-      "Core Web Vitals optimization",
-      "Google Analytics 4 setup",
-      "Website support & maintenance",
+    title: "Digital Experiences",
+    tag: "Give them somewhere to go.",
+    desc: "We turn your brand into fast, purposeful digital experiences built to earn trust and drive action.",
+    engagement: "Typical engagement ₹25K – ₹1L+",
+    cards: [
+      { title: "Websites", desc: "Custom-designed websites built around your business and customers." },
+      { title: "Landing Pages", desc: "Focused experiences designed around one clear action." },
+      { title: "E-commerce", desc: "Scalable Shopify stores built for seamless shopping experiences." },
+      { title: "Headless Commerce", desc: "High-performance Shopify storefronts with complete frontend flexibility." },
     ],
   },
   {
-    title: "E-commerce",
-    tag: "Build an online store that is made to sell.",
-    desc: "From Shopify stores to advanced headless commerce experiences, we build e-commerce systems designed around performance, usability and growth.",
-    bullets: [
-      "Shopify customization & setup",
-      "Headless Shopify store architecture",
-      "Tailored custom frontend designs",
-      "Product collection templates",
-      "Cart & checkout optimization",
-      "Technical store e-commerce SEO",
-      "Integrations & payment gateways",
-      "Advanced tracking & data tracking",
+    title: "Visibility & Growth",
+    tag: "Make sure they find you.",
+    desc: "We put your business in front of the right people through search, social and performance-driven campaigns.",
+    engagement: "Ongoing engagement ₹30K – ₹60K+ / month",
+    cards: [
+      { title: "SEO", desc: "Build sustainable organic visibility and attract relevant traffic." },
+      { title: "Local SEO", desc: "Get discovered by customers searching for businesses like yours nearby." },
+      { title: "Meta Ads", desc: "Reach the right audiences and turn attention into enquiries." },
+      { title: "Google Ads", desc: "Capture high-intent searches when customers are ready to act." },
     ],
   },
   {
-    title: "SEO",
-    tag: "Get found when your customers are searching.",
-    desc: "We build search visibility into your digital presence — then continuously improve it. We don't promise a magic ranking. We build the systems that give your business a better chance of earning sustainable search visibility.",
-    bullets: [
-      "Keyword research & maps",
-      "SEO-first site architecture",
-      "On-page layout optimizations",
-      "Technical audits & indexing",
-      "Local SEO maps optimization",
-      "Content plans & page structures",
-      "Search Console setup & reporting",
-      "Google Business Profile settings",
-      "Monthly SEO campaign tracking",
-    ],
-  },
-  {
-    title: "Paid Growth",
-    tag: "Turn advertising spend into measurable opportunities.",
-    desc: "We create, launch and optimize paid campaigns designed around your actual business goals. Meta ads strategy and Google ads setup.",
-    bullets: [
-      "Meta Ads campaign management",
-      "Google Search keywords alignment",
-      "Creative layout configurations",
-      "Audience custom targeting segments",
-      "Retargeting funnels setup",
-      "Conversion tracking pixels integration",
-      "Landing page visual optimizations",
-      "Monthly ad performance reports",
-    ],
-  },
-  {
-    title: "Conversion Optimization (CRO)",
-    tag: "More visitors aren't always the answer. Better conversion is.",
-    desc: "We analyze how people interact with your digital experience and identify opportunities to turn more of that traffic into action.",
-    bullets: [
-      "Landing page optimizations",
-      "CTA copy & positions alignment",
-      "User session behavior analysis",
-      "Lead forms optimization",
-      "Checkout conversion rate tests",
-      "Copy adjustments & key messaging",
-      "Page hierarchy adjustments",
-    ],
-  },
-  {
-    title: "Analytics & Tracking",
-    tag: "If you can't measure it, you can't improve it.",
-    desc: "We connect the right analytics and tracking systems so you can understand where your customers come from, what they do and where they drop off.",
-    bullets: [
-      "Google Tag Manager custom events",
-      "GA4 conversion custom settings",
-      "E-commerce purchase trackers setup",
-      "Form submission triggers setup",
-      "User path drops dashboard",
-    ],
-  },
-  {
-    title: "Ongoing Support",
-    tag: "Launching isn't the finish line. We don't disappear.",
-    desc: "After your website goes live, we can continue supporting your business with website maintenance, SEO, Meta Ads, Google Ads, conversion optimization, performance improvements, analytics, and growth recommendations.",
-    bullets: [
-      "Monthly server health updates",
-      "SEO indexing fixes",
-      "Paid ads audience tuning",
-      "Conversion tracking validations",
-      "Growth updates and strategy sessions",
+    title: "Conversion & Intelligence",
+    tag: "Give them a reason to choose you.",
+    desc: "We turn clicks into customers by understanding what people do, where they drop off and what makes them act.",
+    engagement: "Engagements from ₹20K+",
+    cards: [
+      { title: "CRO", desc: "Remove friction and make more visitors take action." },
+      { title: "Analytics", desc: "Understand how people actually interact with your digital experience." },
+      { title: "Tracking", desc: "Measure the actions that matter — from clicks to enquiries and purchases." },
+      { title: "Optimization", desc: "Test, learn and continuously improve what isn't performing." },
     ],
   },
 ];
@@ -155,6 +88,7 @@ export default function ServicesPage() {
                 <h2 className="font-display text-2xl sm:text-3xl text-white">{s.title}</h2>
                 <p className="text-xs font-mono text-[#ff5722]">{s.tag}</p>
                 <p className="text-sm text-neutral-400 leading-relaxed">{s.desc}</p>
+                <p className="text-xs font-mono text-neutral-500 pt-1">{s.engagement}</p>
                 
                 <div className="pt-4">
                   <Link
@@ -169,10 +103,13 @@ export default function ServicesPage() {
               <div className="lg:col-span-6 bg-neutral-950 p-6 md:p-8 rounded-2xl border border-neutral-900">
                 <h3 className="text-xs font-mono uppercase text-neutral-500 mb-4">Included Capabilities</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {s.bullets.map((b) => (
-                    <div key={b} className="text-xs text-neutral-400 flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-[#ff5722] shrink-0" />
-                      <span>{b}</span>
+                  {s.cards.map((c) => (
+                    <div key={c.title} className="space-y-1">
+                      <div className="text-xs text-white font-medium flex items-center gap-2">
+                        <Check className="w-3.5 h-3.5 text-[#ff5722] shrink-0" />
+                        <span>{c.title}</span>
+                      </div>
+                      <p className="text-[11px] text-neutral-500 pl-5 leading-relaxed">{c.desc}</p>
                     </div>
                   ))}
                 </div>

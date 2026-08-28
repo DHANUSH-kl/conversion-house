@@ -39,52 +39,120 @@ const PILLARS = [
 // 3. SERVICES (Adapted style matching reference image)
 const SERVICES = [
   {
-    title: "Branding",
-    tag: "Build a brand people remember.",
+    title: "Branding & Rebranding",
+    tag: "Make them remember you.",
     desc: "We create identities that give your business a clear presence across digital and physical touchpoints.",
+    engagement: "Typical engagement ₹35K – ₹1.5L",
     cta: "Build My Brand",
+    cards: [
+      {
+        title: "Brand Identity",
+        desc: "Logo, colour, typography and visual systems that make your brand recognizable.",
+        bg: "bg-[#f4f3ef]",
+      },
+      {
+        title: "Rebranding",
+        desc: "Refresh how your business looks, feels and is perceived.",
+        bg: "bg-[#ecebe5]",
+      },
+      {
+        title: "Visual Systems",
+        desc: "Create a consistent language across every brand touchpoint.",
+        bg: "bg-[#e5e4de]",
+      },
+      {
+        title: "Brand Applications",
+        desc: "Social media, packaging, vehicles, marketing materials and more.",
+        bg: "bg-[#dfded8]",
+      },
+    ],
   },
   {
-    title: "Websites",
-    tag: "Not another template. A website built around your business.",
-    desc: "We design and develop high-performance websites that communicate your value clearly, build trust and guide visitors towards action.",
+    title: "Digital Experiences",
+    tag: "Give them somewhere to go.",
+    desc: "We turn your brand into fast, purposeful digital experiences built to earn trust and drive action.",
+    engagement: "Typical engagement ₹25K – ₹1L+",
     cta: "Build My Website",
+    cards: [
+      {
+        title: "Websites",
+        desc: "Custom-designed websites built around your business and customers.",
+        bg: "bg-[#f4f3ef]",
+      },
+      {
+        title: "Landing Pages",
+        desc: "Focused experiences designed around one clear action.",
+        bg: "bg-[#ecebe5]",
+      },
+      {
+        title: "E-commerce",
+        desc: "Scalable Shopify stores built for seamless shopping experiences.",
+        bg: "bg-[#e5e4de]",
+      },
+      {
+        title: "Headless Commerce",
+        desc: "High-performance Shopify storefronts with complete frontend flexibility.",
+        bg: "bg-[#dfded8]",
+      },
+    ],
   },
   {
-    title: "E-commerce",
-    tag: "Build an online store that is made to sell.",
-    desc: "From Shopify stores to advanced headless commerce experiences, we build e-commerce systems designed around performance, usability and growth.",
-    cta: "Build My Store",
+    title: "Visibility & Growth",
+    tag: "Make sure they find you.",
+    desc: "We put your business in front of the right people through search, social and performance-driven campaigns.",
+    engagement: "Ongoing engagement ₹30K – ₹60K+ / month",
+    cta: "Grow My Business",
+    cards: [
+      {
+        title: "SEO",
+        desc: "Build sustainable organic visibility and attract relevant traffic.",
+        bg: "bg-[#f4f3ef]",
+      },
+      {
+        title: "Local SEO",
+        desc: "Get discovered by customers searching for businesses like yours nearby.",
+        bg: "bg-[#ecebe5]",
+      },
+      {
+        title: "Meta Ads",
+        desc: "Reach the right audiences and turn attention into enquiries.",
+        bg: "bg-[#e5e4de]",
+      },
+      {
+        title: "Google Ads",
+        desc: "Capture high-intent searches when customers are ready to act.",
+        bg: "bg-[#dfded8]",
+      },
+    ],
   },
   {
-    title: "SEO",
-    tag: "Get found when your customers are searching.",
-    desc: "We build search visibility into your digital presence — then continuously improve it.",
-    cta: "Grow My Search Visibility",
-  },
-  {
-    title: "Paid Growth",
-    tag: "Turn advertising spend into measurable opportunities.",
-    desc: "We create, launch and optimize paid campaigns designed around your actual business goals.",
-    cta: "Start Growing",
-  },
-  {
-    title: "Conversion Optimization",
-    tag: "More visitors aren't always the answer. Better conversion is.",
-    desc: "We analyze how people interact with your digital experience and identify opportunities to turn more of that traffic into action.",
-    cta: "Optimize My Traffic",
-  },
-  {
-    title: "Analytics & Tracking",
-    tag: "If you can't measure it, you can't improve it.",
-    desc: "We connect the right analytics and tracking systems so you can understand where your customers come from, what they do and where they drop off.",
-    cta: "Connect Tracking",
-  },
-  {
-    title: "Ongoing Support",
-    tag: "Launching isn't the finish line.",
-    desc: "After your website goes live, we can continue supporting your business with website maintenance, SEO, ads, analytics, and growth recommendations.",
-    cta: "Get Support",
+    title: "Conversion & Intelligence",
+    tag: "Give them a reason to choose you.",
+    desc: "We turn clicks into customers by understanding what people do, where they drop off and what makes them act.",
+    engagement: "Engagements from ₹20K+",
+    cta: "Improve My Results",
+    cards: [
+      {
+        title: "CRO",
+        desc: "Remove friction and make more visitors take action.",
+        bg: "bg-[#f4f3ef]",
+      },
+      {
+        title: "Analytics",
+        desc: "Understand how people actually interact with your digital experience.",
+        bg: "bg-[#ecebe5]",
+      },
+      {
+        title: "Tracking",
+        desc: "Measure the actions that matter — from clicks to enquiries and purchases.",
+        bg: "bg-[#e5e4de]",
+      },
+      {
+        title: "Optimization",
+        desc: "Test, learn and continuously improve what isn't performing.",
+        bg: "bg-[#dfded8]",
+      },
+    ],
   },
 ];
 
@@ -238,8 +306,8 @@ export default function Home() {
   return (
     <main className="bg-white text-black">
       {/* A. HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-12 overflow-hidden">
+        <div className="container-x text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -525,7 +593,7 @@ export default function Home() {
           <div className="mb-24 text-left max-w-4xl space-y-6">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Capabilities ]</span>
             <h2 className="font-display text-5xl sm:text-7xl text-black leading-[0.95] tracking-tighter">
-              Four services.<br />One operating model.
+              From first impression<br />to <span className="text-[#ff4500]">final click.</span>
             </h2>
             <p className="text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed pt-2">
               We don't promise a magic ranking. We build the systems that give your business a better chance of earning sustainable search visibility.
@@ -538,64 +606,69 @@ export default function Home() {
                 key={s.title}
                 className="pb-16 space-y-10 group relative border-b border-neutral-100/80"
               >
-                {/* Top Row: Left Title & Serial (Expanded col span to prevent text wrap), Right Description */}
+                {/* Top Row: Left Title & Serial, Tag/Subtitle, Right Description */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
-                  <div className="lg:col-span-8 flex items-baseline gap-4 md:gap-6">
+                  <div className="lg:col-span-7 flex items-baseline gap-4 md:gap-6 min-w-0">
                     <span className="text-5xl md:text-7xl font-display font-light text-[#ff4500] leading-none select-none tracking-tight shrink-0">
                       0{idx + 1}
                     </span>
-                    <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-black tracking-tight leading-tight transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-[#ff4500] cursor-pointer">
-                      {s.title}
-                    </h3>
+                    <div className="space-y-1.5 min-w-0">
+                      <h3 className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-[36px] xl:text-[40px] text-black tracking-tight leading-tight transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-[#ff4500] cursor-pointer sm:whitespace-nowrap">
+                        {s.title}
+                      </h3>
+                      <p className="text-sm md:text-base font-mono text-[#ff4500] font-medium">
+                        {s.tag}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="lg:col-span-4 text-sm md:text-base text-neutral-600 leading-relaxed font-sans pt-1">
+                  <div className="lg:col-span-5 max-w-lg text-sm md:text-base text-neutral-600 leading-relaxed font-sans pt-1">
                     {s.desc}
                   </div>
                 </div>
 
-                {/* Middle Row: 4 Portfolio Cards with rounded corners (No auto-scaling on parent hover) */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 w-full pt-4">
-                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
-                    <div className="absolute inset-0 bg-[#f4f3ef] flex items-center justify-center p-4 text-center">
-                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
+                {/* Middle Row: 4 Portfolio/Feature Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 w-full pt-4">
+                  {s.cards.map((card, cIdx) => (
+                    <div
+                      key={card.title}
+                      className="aspect-[4/3] sm:aspect-square rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm group/card"
+                    >
+                      <div className={`absolute inset-0 ${card.bg} p-5 flex flex-col justify-between transition-all duration-300`}>
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-mono text-[#ff4500] font-medium tracking-wider block">
+                            [ 0{cIdx + 1} ]
+                          </span>
+                          <h4 className="font-display text-base sm:text-lg text-black font-semibold tracking-tight">
+                            {card.title}
+                          </h4>
+                        </div>
+                        <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+                          {card.desc}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
-                    <div className="absolute inset-0 bg-[#ecebe5] flex items-center justify-center p-4 text-center">
-                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
-                    </div>
-                  </div>
-                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
-                    <div className="absolute inset-0 bg-[#e5e4de] flex items-center justify-center p-4 text-center">
-                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
-                    </div>
-                  </div>
-                  <div className="aspect-[4/3] sm:aspect-square bg-neutral-100 rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm">
-                    <div className="absolute inset-0 bg-[#dfded8] flex items-center justify-center p-4 text-center">
-                      <span className="text-xs text-neutral-400 font-mono">[ Visual Mockup ]</span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
 
-                {/* Bottom Row: Typical Engagement Bar */}
-                <div className="group/bar relative overflow-hidden rounded-2xl transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] p-6 bg-transparent hover:bg-[#fff2ed]">
+                {/* Bottom Row: Typical Engagement Bar (Whole box is clickable Link) */}
+                <Link
+                  href="/contact"
+                  className="group/bar block relative overflow-hidden rounded-2xl transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] p-6 bg-transparent hover:bg-[#fff2ed] cursor-pointer"
+                >
                   <div className="flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
                     <span className="text-xs md:text-sm font-sans text-neutral-700 font-medium">
-                      Typical engagement <span className="font-semibold text-black">₹35K to ₹1.5L</span> <span className="text-neutral-400 font-normal">($500 to $2K USD)</span>
+                      {s.engagement}
                     </span>
 
-                    <Link
-                      href="/contact"
-                      className="text-xs md:text-sm font-sans font-semibold text-black group-hover/bar:text-[#ff4500] flex items-center gap-2 transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                    >
+                    <span className="text-xs md:text-sm font-sans font-semibold text-black group-hover/bar:text-[#ff4500] flex items-center gap-2 transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]">
                       {s.cta} <span className="transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/bar:translate-x-1.5">→</span>
-                    </Link>
+                    </span>
                   </div>
 
-                  {/* Thick Bottom Orange Border Line (Appears on section hover with ultra smooth velocity) */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[3.5px] bg-[#ff4500] origin-left scale-x-0 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100" />
-                </div>
+                  {/* Thick Bottom Orange Border Line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[3.5px] bg-[#ff4500] origin-left scale-x-0 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/bar:scale-x-100" />
+                </Link>
               </div>
             ))}
           </div>
