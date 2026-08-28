@@ -343,123 +343,70 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
   const isLast = idx === total - 1;
 
   return (
-    <div ref={rowRef} className="relative">
-      {/* MOBILE LAYOUT (below md) */}
-      <div
-        className={`md:hidden relative pl-6 pr-4 py-10 ${
-          !isLast ? "border-b border-neutral-100" : ""
-        }`}
-      >
-        {/* Rail + progress fill — always visible on mobile */}
-        <div className="absolute left-0 top-10 bottom-10 w-px bg-neutral-150">
-          <div className="absolute inset-0 w-px bg-neutral-100" />
+    <div
+      ref={rowRef}
+      className={`grid grid-cols-12 gap-1.5 sm:gap-4 md:gap-8 lg:gap-10 py-8 sm:py-14 md:py-20 ${
+        !isLast ? "border-b border-neutral-100" : ""
+      }`}
+    >
+      {/* Numeral column — tight alignment to rail */}
+      <div className="col-span-2 sm:col-span-2 lg:col-span-2 relative flex justify-start sm:justify-end pr-1 sm:pr-2">
+        <div className="sticky top-24 md:top-32">
+          <motion.span
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="block font-display text-[32px] sm:text-[64px] md:text-[96px] lg:text-[112px] leading-none font-extralight tracking-tighter select-none"
+            style={{ color: "rgba(0,0,0,0.025)", WebkitTextStroke: "1.25px #d4d4d4" }}
+          >
+            {step.num}
+          </motion.span>
+        </div>
+      </div>
+
+      {/* Rail + content column */}
+      <div className="col-span-10 sm:col-span-10 lg:col-span-10 flex gap-2.5 sm:gap-6 md:gap-10">
+        <div className="relative w-px shrink-0 bg-neutral-100">
           <motion.div
             style={{ height: tickHeight }}
             className="absolute top-0 left-0 w-px bg-[#ff4500] origin-top"
           />
         </div>
 
-        {/* Decorative ghost numeral, corner-anchored, out of flow */}
-        <span
-          aria-hidden
-          className="pointer-events-none select-none absolute -top-2 right-2 font-display text-[88px] leading-none font-extralight tracking-tighter"
-          style={{ color: "rgba(0,0,0,0.02)", WebkitTextStroke: "1.5px #d6d6d6" }}
-        >
-          {step.num}
-        </span>
-
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="relative"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
+          className="group max-w-2xl min-w-0"
         >
-          <div className="flex items-center gap-3 mb-3">
-            <span className="text-[10px] font-mono text-[#ff4500] uppercase tracking-[0.2em]">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4 flex-wrap">
+            <span className="text-[9px] sm:text-[10px] font-mono text-[#ff4500] uppercase tracking-[0.15em] sm:tracking-[0.2em] whitespace-nowrap">
               Stage {step.num}
             </span>
-            <span className="w-5 h-px bg-neutral-300" />
-            <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-[0.2em]">
+            <span className="w-3 sm:w-6 h-px bg-neutral-300" />
+            <span className="text-[9px] sm:text-[10px] font-mono text-neutral-400 uppercase tracking-[0.15em] sm:tracking-[0.2em]">
               {step.subtitle}
             </span>
           </div>
 
-          <h3 className="font-display text-[28px] sm:text-3xl text-black tracking-tight leading-[1.08] mb-3">
+          <h3 className="font-display font-bold text-2xl sm:text-3xl md:text-[42px] text-black tracking-tight leading-[1.08] mb-2 sm:mb-4 transition-colors duration-500 group-hover:text-[#ff4500]">
             {step.title}
           </h3>
 
-          <p className="text-sm text-neutral-500 leading-relaxed font-sans max-w-md">
+          <p className="text-xs sm:text-sm md:text-base text-neutral-500 leading-relaxed font-sans max-w-xl">
             {step.desc}
           </p>
 
-          <div className="mt-5 h-px w-14 bg-[#ff4500]/70" />
-        </motion.div>
-      </div>
-
-      {/* DESKTOP LAYOUT (md and up) */}
-      <div
-        className={`hidden md:grid grid-cols-12 gap-4 md:gap-10 py-14 md:py-20 ${
-          !isLast ? "border-b border-neutral-100" : ""
-        }`}
-      >
-        <div className="col-span-3 lg:col-span-2 relative">
-          <div className="sticky top-32">
-            <motion.span
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              className="block font-display text-[96px] lg:text-[112px] leading-none font-extralight tracking-tighter select-none"
-              style={{ color: "rgba(0,0,0,0.025)", WebkitTextStroke: "2px #d4d4d4" }}
-            >
-              {step.num}
-            </motion.span>
-          </div>
-        </div>
-
-        <div className="col-span-9 lg:col-span-10 flex gap-10">
-          <div className="relative w-px shrink-0 bg-neutral-100">
-            <motion.div
-              style={{ height: tickHeight }}
-              className="absolute top-0 left-0 w-px bg-[#ff4500] origin-top"
-            />
-          </div>
-
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
-            className="group max-w-2xl"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-[10px] font-mono text-[#ff4500] uppercase tracking-[0.2em]">
-                Stage {step.num}
-              </span>
-              <span className="w-6 h-px bg-neutral-300" />
-              <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-[0.2em]">
-                {step.subtitle}
-              </span>
-            </div>
-
-            <h3 className="font-display text-4xl md:text-[42px] text-black tracking-tight leading-[1.05] mb-4 transition-colors duration-500 group-hover:text-[#ff4500]">
-              {step.title}
-            </h3>
-
-            <p className="text-base text-neutral-500 leading-relaxed font-sans max-w-xl">
-              {step.desc}
-            </p>
-
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-              className="mt-6 h-px w-16 bg-neutral-200 origin-left group-hover:bg-[#ff4500] group-hover:w-24 transition-all duration-500"
-            />
-          </motion.div>
-        </div>
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            className="mt-4 sm:mt-6 h-px w-10 sm:w-16 bg-neutral-200 origin-left group-hover:bg-[#ff4500] group-hover:w-16 sm:group-hover:w-24 transition-all duration-500"
+          />
+        </motion.div>
       </div>
     </div>
   );

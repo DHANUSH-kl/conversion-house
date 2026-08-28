@@ -105,21 +105,41 @@ export default function Footer() {
           </div>
 
           {/* CTA & Contact Block */}
-          <div className="md:col-span-3 flex flex-col justify-between bg-neutral-50 p-6 rounded-2xl border border-neutral-100">
+          <div className="md:col-span-3 flex flex-col justify-between bg-neutral-50/70 p-6 sm:p-7 rounded-2xl border border-neutral-200/60 shadow-sm">
             <div>
-              <h4 className="text-lg font-display font-semibold mb-2 text-black">
-                Direct Department Contacts
+              <h4 className="text-lg font-display font-semibold mb-4 text-black tracking-normal">
+                Talk to the right person.
               </h4>
-              <ul className="space-y-1.5 text-[11px] font-mono text-neutral-500 mb-6">
-                <li><span className="text-black font-semibold">Projects:</span> <a href="mailto:projects@conversionhouse.in" className="hover:text-[#ff4500]">projects@conversionhouse.in</a></li>
-                <li><span className="text-black font-semibold">Support:</span> <a href="mailto:support@conversionhouse.in" className="hover:text-[#ff4500]">support@conversionhouse.in</a></li>
-                <li><span className="text-black font-semibold">Accounts:</span> <a href="mailto:accounts@conversionhouse.in" className="hover:text-[#ff4500]">accounts@conversionhouse.in</a></li>
-                <li><span className="text-black font-semibold">Direct:</span> <a href="mailto:dhanush@conversionhouse.in" className="hover:text-[#ff4500]">dhanush@conversionhouse.in</a></li>
+              <ul className="divide-y divide-neutral-200/80 text-[11px] font-mono text-neutral-600 mb-6">
+                <li className="pb-2.5 flex items-center justify-between gap-2">
+                  <span className="text-[#ff4500] font-bold">Projects:</span>
+                  <a href="mailto:projects@conversionhouse.in" className="hover:text-black transition-colors font-mono">
+                    projects@conversionhouse.in
+                  </a>
+                </li>
+                <li className="py-2.5 flex items-center justify-between gap-2">
+                  <span className="text-[#ff4500] font-bold">Support:</span>
+                  <a href="mailto:support@conversionhouse.in" className="hover:text-black transition-colors font-mono">
+                    support@conversionhouse.in
+                  </a>
+                </li>
+                <li className="py-2.5 flex items-center justify-between gap-2">
+                  <span className="text-[#ff4500] font-bold">Accounts:</span>
+                  <a href="mailto:accounts@conversionhouse.in" className="hover:text-black transition-colors font-mono">
+                    accounts@conversionhouse.in
+                  </a>
+                </li>
+                <li className="pt-2.5 flex items-center justify-between gap-2">
+                  <span className="text-[#ff4500] font-bold">Direct:</span>
+                  <a href="mailto:dhanush@conversionhouse.in" className="hover:text-black transition-colors font-mono">
+                    dhanush@conversionhouse.in
+                  </a>
+                </li>
               </ul>
             </div>
             <Link
               href="/contact"
-              className="bg-black hover:bg-[#ff4500] text-white text-center py-3 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors"
+              className="bg-black hover:bg-[#ff4500] text-white text-center py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-colors"
             >
               Get a quote
             </Link>
