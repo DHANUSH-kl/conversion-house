@@ -217,7 +217,7 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
   return (
     <div
       ref={rowRef}
-      className={`grid grid-cols-12 gap-2 sm:gap-4 md:gap-8 lg:gap-10 py-8 sm:py-14 md:py-20 ${
+      className={`grid grid-cols-12 gap-2 sm:gap-4 md:gap-8 lg:gap-10 py-6 sm:py-10 md:py-14 ${
         !isLast ? "border-b border-neutral-100" : ""
       }`}
     >
@@ -253,7 +253,7 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.08 }}
           className="group max-w-2xl min-w-0"
         >
-          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4 flex-wrap">
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 flex-wrap">
             <span className="text-[9px] sm:text-[10px] font-mono text-[#ff4500] uppercase tracking-[0.15em] sm:tracking-[0.2em] whitespace-nowrap">
               Stage {step.num}
             </span>
@@ -263,7 +263,7 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
             </span>
           </div>
 
-          <h3 className="font-display font-bold text-2xl sm:text-3xl md:text-[42px] text-black leading-[1.1] mb-2 sm:mb-4 transition-colors duration-500 group-hover:text-[#ff4500]">
+          <h3 className="font-display font-bold text-2xl sm:text-3xl md:text-[42px] text-black leading-[1.1] mb-2 sm:mb-3 transition-colors duration-500 group-hover:text-[#ff4500]">
             {step.title}
           </h3>
 
@@ -276,7 +276,7 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
             whileInView={{ scaleX: 1 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            className="mt-4 sm:mt-6 h-px w-10 sm:w-16 bg-neutral-200 origin-left group-hover:bg-[#ff4500] group-hover:w-16 sm:group-hover:w-24 transition-all duration-500"
+            className="mt-3 sm:mt-4 h-px w-10 sm:w-16 bg-neutral-200 origin-left group-hover:bg-[#ff4500] group-hover:w-16 sm:group-hover:w-24 transition-all duration-500"
           />
         </motion.div>
       </div>
@@ -337,8 +337,8 @@ export default function Home() {
       </section>
 
       {/* A2. SHOWCASE CAROUSEL - "A look at the work." */}
-      <section className="py-16 overflow-hidden relative border-t border-neutral-100 bg-white">
-        <ScrollReveal className="container-x mb-12 relative z-30">
+      <section className="py-12 sm:py-16 overflow-hidden relative border-t border-neutral-100 bg-white">
+        <ScrollReveal className="container-x mb-8 sm:mb-10 relative z-30">
           <h2 className="font-display text-4xl md:text-6xl font-semibold text-black leading-none">
             A look at the <span className="text-[#ff4500] font-bold">work.</span>
           </h2>
@@ -465,9 +465,9 @@ export default function Home() {
       </section>
 
       {/* B. CORE IDEA SECTION */}
-      <section className="py-28 border-t border-neutral-900 bg-black text-white overflow-hidden">
+      <section className="py-16 sm:py-20 border-t border-neutral-900 bg-black text-white overflow-hidden">
         <div className="container-x">
-          <ScrollReveal className="max-w-4xl space-y-4 mb-20">
+          <ScrollReveal className="max-w-4xl space-y-4 mb-12 sm:mb-16">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Core Philosophy ]</span>
             <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold text-white leading-[1.02]">
               Your business has one goal. Your digital presence should work <span className="text-[#ff4500] font-bold">towards it.</span>
@@ -479,7 +479,7 @@ export default function Home() {
               <ScrollReveal
                 key={pillar.num}
                 delay={idx * 0.1}
-                className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 py-10 md:py-12 group transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-neutral-950/90 rounded-2xl px-3 md:px-6 cursor-pointer"
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-6 md:py-8 group transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-neutral-950/90 rounded-2xl px-3 md:px-6 cursor-pointer"
               >
                 <div className="md:col-span-3 lg:col-span-2 flex items-start pt-1">
                   <span className="text-xl sm:text-2xl md:text-3xl font-display font-medium text-[#ff4500] leading-none select-none opacity-90 group-hover:opacity-100 transition-opacity">
@@ -487,7 +487,7 @@ export default function Home() {
                   </span>
                 </div>
 
-                <div className="md:col-span-9 lg:col-span-10 space-y-2 md:space-y-3">
+                <div className="md:col-span-9 lg:col-span-10 space-y-1.5 md:space-y-2">
                   <h3 className="font-display text-2xl sm:text-3xl md:text-4xl text-white leading-tight transition-all duration-500 group-hover:text-[#ff4500] group-hover:translate-x-1">
                     {pillar.title}.
                   </h3>
@@ -501,32 +501,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* C. WHAT WE DO (SERVICES OVERVIEW) */}
-      <section className="py-28 sm:py-32 border-t border-neutral-100 bg-white">
+      {/* C. WHAT WE DO (SERVICES OVERVIEW - REDUCED GAP) */}
+      <section className="py-16 sm:py-20 border-t border-neutral-100 bg-white">
         <div className="container-x">
-          <ScrollReveal className="mb-24 text-left max-w-4xl space-y-6">
+          <ScrollReveal className="mb-12 sm:mb-16 text-left max-w-4xl space-y-4">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Capabilities ]</span>
             <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold text-black leading-[1.02]">
               From first impression<br />to <span className="text-[#ff4500] font-bold">final click.</span>
             </h2>
-            <p className="text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed pt-2">
+            <p className="text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed pt-1">
               We don't promise a magic ranking. We build the systems that give your business a better chance of earning sustainable search visibility.
             </p>
           </ScrollReveal>
 
-          <div className="space-y-28 sm:space-y-32">
+          <div className="space-y-12 sm:space-y-16">
             {SERVICES.map((s, idx) => (
               <ScrollReveal
                 key={s.title}
                 delay={0.1}
-                className="pb-16 space-y-10 group relative border-b border-neutral-100/80"
+                className="pb-8 sm:pb-10 space-y-6 group relative border-b border-neutral-100/80"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-8 items-start">
                   <div className="lg:col-span-7 flex items-start gap-4 md:gap-6 min-w-0">
                     <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-display font-light text-[#ff4500] leading-none select-none shrink-0 pt-1">
                       0{idx + 1}
                     </span>
-                    <div className="space-y-2.5 min-w-0">
+                    <div className="space-y-2 min-w-0">
                       <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[58px] font-bold text-black leading-none transition-colors duration-500 hover:text-[#ff4500] cursor-pointer">
                         {s.title}
                       </h3>
@@ -543,7 +543,7 @@ export default function Home() {
 
                 {s.images && s.images.length > 0 && (
                   <div
-                    className={`grid gap-4 md:gap-5 w-full pt-4 ${
+                    className={`grid gap-4 md:gap-5 w-full pt-2 ${
                       s.images.length === 3
                         ? "grid-cols-1 sm:grid-cols-3"
                         : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4"
@@ -566,9 +566,9 @@ export default function Home() {
 
                 <Link
                   href="/contact"
-                  className="group/bar block relative overflow-hidden rounded-2xl transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] p-6 bg-transparent hover:bg-[#fff2ed] cursor-pointer"
+                  className="group/bar block relative overflow-hidden rounded-2xl transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] p-4 sm:p-5 bg-transparent hover:bg-[#fff2ed] cursor-pointer"
                 >
-                  <div className="flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
+                  <div className="flex flex-col sm:flex-row justify-between items-center gap-3 relative z-10">
                     <span className="text-xs md:text-sm font-sans text-neutral-700 font-medium">
                       {s.engagement}
                     </span>
@@ -587,10 +587,10 @@ export default function Home() {
       </section>
 
       {/* E. SELECTED WORK */}
-      <section className="py-24 border-t border-neutral-100 bg-white">
+      <section className="py-16 sm:py-20 border-t border-neutral-100 bg-white">
         <div className="container-x">
-          <ScrollReveal className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-            <div className="space-y-4">
+          <ScrollReveal className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-12 gap-6">
+            <div className="space-y-3">
               <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Shipped Projects ]</span>
               <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black leading-none">
                 We build. Here's the <span className="text-[#ff4500] font-bold">proof.</span>
@@ -607,7 +607,7 @@ export default function Home() {
             </Link>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {CASE_STUDIES.map((cs, idx) => (
               <ScrollReveal key={cs.slug} delay={idx * 0.15}>
                 <div className="border border-neutral-200/80 rounded-[32px] overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between group">
@@ -627,8 +627,8 @@ export default function Home() {
                     </div>
                   </div>
 
-                  <div className="p-8 sm:p-10 flex flex-col justify-between flex-1 space-y-6 bg-white">
-                    <div className="space-y-4">
+                  <div className="p-6 sm:p-8 flex flex-col justify-between flex-1 space-y-5 bg-white">
+                    <div className="space-y-3">
                       <span className="text-[#ff4500] text-xs font-mono font-semibold uppercase tracking-wider block">
                         {cs.badge}
                       </span>
@@ -641,7 +641,7 @@ export default function Home() {
                         {cs.desc}
                       </p>
 
-                      <div className="flex flex-wrap gap-2 pt-2">
+                      <div className="flex flex-wrap gap-2 pt-1">
                         {cs.pills.map((pill, pIdx) => (
                           <span
                             key={pill}
@@ -657,7 +657,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="pt-6 border-t border-neutral-100 flex items-center justify-between gap-4 flex-wrap">
+                    <div className="pt-5 border-t border-neutral-100 flex items-center justify-between gap-4 flex-wrap">
                       <Link
                         href={`/work/${cs.slug}`}
                         className="text-xs sm:text-sm font-sans font-semibold text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
@@ -680,7 +680,7 @@ export default function Home() {
             ))}
           </div>
 
-          <ScrollReveal delay={0.2} className="mt-16 text-center bg-neutral-50/40 p-8 rounded-2xl border border-neutral-100 max-w-xl mx-auto space-y-4">
+          <ScrollReveal delay={0.2} className="mt-12 text-center bg-neutral-50/40 p-6 rounded-2xl border border-neutral-100 max-w-xl mx-auto space-y-3">
             <h3 className="font-display text-xl text-black">Have a project that belongs here?</h3>
             <p className="text-neutral-500 text-xs">Let's build it.</p>
             <Link
@@ -694,21 +694,21 @@ export default function Home() {
       </section>
 
       {/* F. RESULTS / PROOF SECTION */}
-      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+      <section className="py-16 sm:py-20 border-t border-neutral-100 bg-neutral-50/30">
         <div className="container-x">
-          <ScrollReveal className="mb-16 max-w-xl">
+          <ScrollReveal className="mb-10 max-w-xl">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Sustainable Growth ]</span>
-            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black mt-4 leading-none">
+            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black mt-3 leading-none">
               We care about what happens <span className="text-[#ff4500] font-bold">after launch.</span>
             </h2>
-            <p className="text-neutral-500 text-sm mt-4 leading-relaxed">
+            <p className="text-neutral-500 text-sm mt-3 leading-relaxed">
               The work isn't finished when the website goes live. A successful project should create something measurable: More visibility, enquiries, sales, conversions, and a stronger brand.
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {PROOF_CARDS.map((card, idx) => (
-              <ScrollReveal key={card.title} delay={idx * 0.08} className="bg-white border border-neutral-105 p-6 rounded-2xl shadow-sm">
+              <ScrollReveal key={card.title} delay={idx * 0.08} className="bg-white border border-neutral-105 p-5 rounded-2xl shadow-sm">
                 <h3 className="font-display text-lg text-black mb-2">{card.title}</h3>
                 <p className="text-xs text-neutral-500 leading-relaxed">{card.desc}</p>
               </ScrollReveal>
@@ -718,7 +718,7 @@ export default function Home() {
       </section>
 
       {/* G. HOW WE WORK (PROCESS TIMELINE) */}
-      <section className="relative py-28 md:py-36 border-t border-neutral-100 bg-white overflow-hidden">
+      <section className="relative py-20 md:py-28 border-t border-neutral-100 bg-white overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[#ff4500]/[0.035] blur-3xl" />
           <div className="absolute top-1/2 -right-40 w-[520px] h-[520px] rounded-full bg-[#ff4500]/[0.03] blur-3xl" />
@@ -732,11 +732,11 @@ export default function Home() {
         </div>
 
         <div className="container-x relative z-10">
-          <ScrollReveal className="mb-20 md:mb-28 max-w-2xl">
-            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block mb-4">
+          <ScrollReveal className="mb-14 md:mb-20 max-w-2xl">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block mb-3">
               [ Operating System ]
             </span>
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-black leading-[1.05] mb-6">
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-black leading-[1.05] mb-4">
               The ConversionHouse <span className="text-[#ff4500] font-bold">Growth Loop</span>
             </h2>
             <div className="flex items-center gap-3">
@@ -752,8 +752,8 @@ export default function Home() {
       </section>
 
       {/* I. QUOTE CALCULATOR TEASER */}
-      <section className="py-24 border-t border-neutral-100 bg-white">
-        <ScrollReveal className="container-x text-center max-w-xl mx-auto space-y-6">
+      <section className="py-16 sm:py-20 border-t border-neutral-100 bg-white">
+        <ScrollReveal className="container-x text-center max-w-xl mx-auto space-y-5">
           <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Dynamic Estimator ]</span>
           <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black leading-none">
             Tell us what you're <span className="text-[#ff4500] font-bold">building.</span>
@@ -761,7 +761,7 @@ export default function Home() {
           <p className="text-neutral-500 text-sm">
             Select what you need. Get an estimated investment.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-3">
             <Link
               href="/contact"
               className="bg-black hover:bg-[#ff4500] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors w-full sm:w-auto"
@@ -781,10 +781,10 @@ export default function Home() {
       </section>
 
       {/* J. ABOUT TEASER */}
-      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
+      <section className="py-16 sm:py-20 border-t border-neutral-100 bg-neutral-50/30">
         <div className="container-x">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <ScrollReveal className="lg:col-span-6 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <ScrollReveal className="lg:col-span-6 space-y-5">
               <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Who We Are ]</span>
               <h2 className="font-display text-4xl sm:text-5xl font-semibold leading-tight text-black">
                 Pretty is good. <span className="text-[#ff4500] font-bold">Purpose is better.</span>
@@ -816,9 +816,9 @@ export default function Home() {
       </section>
 
       {/* N. FAQ */}
-      <section id="faq" className="py-28 border-t border-neutral-100 bg-white">
+      <section id="faq" className="py-20 border-t border-neutral-100 bg-white">
         <div className="container-x">
-          <ScrollReveal className="mb-16 max-w-5xl mx-auto space-y-4">
+          <ScrollReveal className="mb-12 max-w-5xl mx-auto space-y-3">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block">[ Clear Answers ]</span>
             <h2 className="font-display font-semibold text-4xl sm:text-6xl text-black leading-tight">
               Things founders ask before <span className="text-[#ff4500] font-bold">hiring us.</span>
@@ -829,8 +829,8 @@ export default function Home() {
       </section>
 
       {/* O. FINAL CTA */}
-      <section className="py-32 border-t border-neutral-100 bg-white relative overflow-hidden">
-        <ScrollReveal className="container-x relative z-10 text-center max-w-3xl space-y-8">
+      <section className="py-24 border-t border-neutral-100 bg-white relative overflow-hidden">
+        <ScrollReveal className="container-x relative z-10 text-center max-w-3xl space-y-6">
           <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Get Started ]</span>
           <h2 className="font-display text-4xl sm:text-6xl font-semibold text-black leading-tight">
             Ready to turn your digital presence into a <span className="text-[#ff4500] font-bold">growth engine?</span>
@@ -838,7 +838,7 @@ export default function Home() {
           <p className="text-neutral-500 text-sm max-w-lg mx-auto leading-relaxed">
             Whether you're building a brand from scratch, replacing an outdated website, launching an e-commerce store or looking for more customers — let's figure out what you actually need.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
             <Link
               href="/contact"
               className="bg-black hover:bg-[#ff4500] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors w-full sm:w-auto"
