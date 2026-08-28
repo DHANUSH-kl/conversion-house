@@ -32,10 +32,10 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white border-b ${
         scrolled
-          ? "bg-white/90 backdrop-blur border-b border-neutral-100 py-4"
-          : "bg-transparent py-6"
+          ? "border-neutral-200/80 py-3.5 shadow-sm"
+          : "border-neutral-100 py-5"
       }`}
     >
       <div className="container-x flex items-center justify-between">
@@ -65,9 +65,6 @@ export default function Header() {
 
         {/* Right Action Button */}
         <div className="hidden md:flex items-center gap-6">
-          <span className="text-[12px] text-neutral-400 font-mono">
-            [ Client login ]
-          </span>
           <Link
             href="/contact"
             className="bg-black hover:bg-[#ff4500] text-white text-[13px] font-semibold px-6 py-3 rounded-full transition-all duration-200"
@@ -102,7 +99,7 @@ export default function Header() {
 
       {/* Mobile Drawer menu */}
       {open && (
-        <div className="md:hidden fixed inset-x-0 top-[72px] bottom-0 bg-white/95 backdrop-blur z-40 border-t border-neutral-100 animate-fade-in">
+        <div className="md:hidden fixed inset-x-0 top-[65px] bottom-0 bg-white z-40 border-t border-neutral-100 animate-fade-in">
           <div className="flex flex-col p-8 gap-6 h-full justify-between pb-24">
             <div className="flex flex-col gap-6">
               {LINKS.map((link) => (
@@ -116,7 +113,6 @@ export default function Header() {
               ))}
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-sm text-neutral-500 font-mono">[ Client login ]</div>
               <Link
                 href="/contact"
                 className="bg-black hover:bg-[#ff4500] text-white text-center py-4 rounded-full font-semibold transition-colors"

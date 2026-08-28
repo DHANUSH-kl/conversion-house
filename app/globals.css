@@ -89,7 +89,7 @@ body {
 
 .font-display {
   font-family: 'Clash Display', var(--font-clash-display), sans-serif !important;
-  letter-spacing: -0.03em;
+  letter-spacing: normal;
 }
 
 .container-x {

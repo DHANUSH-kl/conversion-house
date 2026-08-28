@@ -47,27 +47,10 @@ const SERVICES = [
     desc: "We create identities that give your business a clear presence across digital and physical touchpoints.",
     engagement: "Typical engagement ₹35K – ₹1.5L",
     cta: "Build My Brand",
-    cards: [
-      {
-        title: "Brand Identity",
-        desc: "Logo, colour, typography and visual systems that make your brand recognizable.",
-        bg: "bg-[#f4f3ef]",
-      },
-      {
-        title: "Rebranding",
-        desc: "Refresh how your business looks, feels and is perceived.",
-        bg: "bg-[#ecebe5]",
-      },
-      {
-        title: "Visual Systems",
-        desc: "Create a consistent language across every brand touchpoint.",
-        bg: "bg-[#e5e4de]",
-      },
-      {
-        title: "Brand Applications",
-        desc: "Social media, packaging, vehicles, marketing materials and more.",
-        bg: "bg-[#dfded8]",
-      },
+    images: [
+      "/a look at work/sheen logo mockup (branding).jpeg",
+      "/a look at work/sheen van mockup (branding).jpeg",
+      "/a look at work/sheen visiting card mockup (branding).jpeg",
     ],
   },
   {
@@ -76,27 +59,11 @@ const SERVICES = [
     desc: "We turn your brand into fast, purposeful digital experiences built to earn trust and drive action.",
     engagement: "Typical engagement ₹25K – ₹1L+",
     cta: "Build My Website",
-    cards: [
-      {
-        title: "Websites",
-        desc: "Custom-designed websites built around your business and customers.",
-        bg: "bg-[#f4f3ef]",
-      },
-      {
-        title: "Landing Pages",
-        desc: "Focused experiences designed around one clear action.",
-        bg: "bg-[#ecebe5]",
-      },
-      {
-        title: "E-commerce",
-        desc: "Scalable Shopify stores built for seamless shopping experiences.",
-        bg: "bg-[#e5e4de]",
-      },
-      {
-        title: "Headless Commerce",
-        desc: "High-performance Shopify storefronts with complete frontend flexibility.",
-        bg: "bg-[#dfded8]",
-      },
+    images: [
+      "/a look at work/sheen landing page mockup (Digital Experiences).jpeg",
+      "/a look at work/racedivision lanind page mockup (Digital Experiences).jpeg",
+      "/a look at work/iranimotohub shopify website mockup (Digital Experiences).jpeg",
+      "/a look at work/rewio landing page mockup (Digital Experiences).jpeg",
     ],
   },
   {
@@ -105,28 +72,7 @@ const SERVICES = [
     desc: "We put your business in front of the right people through search, social and performance-driven campaigns.",
     engagement: "Ongoing engagement ₹30K – ₹60K+ / month",
     cta: "Grow My Business",
-    cards: [
-      {
-        title: "SEO",
-        desc: "Build sustainable organic visibility and attract relevant traffic.",
-        bg: "bg-[#f4f3ef]",
-      },
-      {
-        title: "Local SEO",
-        desc: "Get discovered by customers searching for businesses like yours nearby.",
-        bg: "bg-[#ecebe5]",
-      },
-      {
-        title: "Meta Ads",
-        desc: "Reach the right audiences and turn attention into enquiries.",
-        bg: "bg-[#e5e4de]",
-      },
-      {
-        title: "Google Ads",
-        desc: "Capture high-intent searches when customers are ready to act.",
-        bg: "bg-[#dfded8]",
-      },
-    ],
+    images: [],
   },
   {
     title: "Conversion & Intelligence",
@@ -134,28 +80,7 @@ const SERVICES = [
     desc: "We turn clicks into customers by understanding what people do, where they drop off and what makes them act.",
     engagement: "Engagements from ₹20K+",
     cta: "Improve My Results",
-    cards: [
-      {
-        title: "CRO",
-        desc: "Remove friction and make more visitors take action.",
-        bg: "bg-[#f4f3ef]",
-      },
-      {
-        title: "Analytics",
-        desc: "Understand how people actually interact with your digital experience.",
-        bg: "bg-[#ecebe5]",
-      },
-      {
-        title: "Tracking",
-        desc: "Measure the actions that matter — from clicks to enquiries and purchases.",
-        bg: "bg-[#e5e4de]",
-      },
-      {
-        title: "Optimization",
-        desc: "Test, learn and continuously improve what isn't performing.",
-        bg: "bg-[#dfded8]",
-      },
-    ],
+    images: [],
   },
 ];
 
@@ -218,7 +143,7 @@ const CASE_STUDIES = [
     website: "sheen.co.in",
     url: "https://sheen.co.in",
     gradient: "from-[#1a1c1e] via-[#0d0e10] to-[#000000]",
-    mockupType: "sheen",
+    image: "/a look at work/sheen landing page mockup (Digital Experiences).jpeg",
   },
   {
     name: "racedivision.in",
@@ -232,7 +157,7 @@ const CASE_STUDIES = [
     website: "racedivision.in",
     url: "https://racedivision.in",
     gradient: "from-[#0f172a] via-[#090d16] to-[#000000]",
-    mockupType: "racedivision",
+    image: "/a look at work/racedivision lanind page mockup (Digital Experiences).jpeg",
   },
 ];
 
@@ -466,190 +391,133 @@ export default function Home() {
 
       {/* A2. SHOWCASE CAROUSEL - "A look at the work." */}
       <section className="py-16 overflow-hidden relative border-t border-neutral-100 bg-white">
-        <div className="container-x mb-12">
+        {/* Headline container - Elevated Z-index so it sits above side blurs */}
+        <div className="container-x mb-12 relative z-30">
           <h2 className="font-display text-4xl md:text-6xl font-semibold text-black tracking-tight leading-none">
             A look at the <span className="text-[#ff4500] font-bold">work.</span>
           </h2>
         </div>
 
-        {/* Side Gradient Blurs */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 md:w-40 bg-gradient-to-r from-white via-white/80 to-transparent z-20" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-40 bg-gradient-to-l from-white via-white/80 to-transparent z-20" />
+        <div className="relative">
+          {/* Side Gradient Blurs - Positioned over marquee cards only */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white via-white/80 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white via-white/80 to-transparent z-20" />
 
-        {/* Infinite Moving Marquee */}
-        <div className="flex overflow-hidden select-none">
-          <motion.div
-            className="flex gap-6 shrink-0 pr-6"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              ease: "linear",
-              duration: 35,
-            }}
-          >
-            {[
-              {
-                bg: "bg-[#2d3a2e]",
-                title: "BRASSA",
-                type: "Brand Identity",
-                content: (
-                  <div className="h-full flex flex-col items-center justify-center text-white space-y-4 p-8 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-900 via-neutral-900 to-black">
-                    <div className="w-16 h-16 border-2 border-white/80 rounded-2xl flex items-center justify-center text-2xl font-display">
-                      B
-                    </div>
-                    <span className="font-display tracking-[0.3em] text-xl font-light">BRASSA</span>
+          {/* Infinite Moving Marquee */}
+          <div className="flex overflow-hidden select-none">
+            <motion.div
+              className="flex gap-6 shrink-0 pr-6"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{
+                repeat: Infinity,
+                ease: "linear",
+                duration: 35,
+              }}
+            >
+              {[
+                {
+                  title: "Sheen Mobile Car Care",
+                  type: "Brand Identity & Digital Launch",
+                  src: "/a look at work/sheen landing page mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Race Division",
+                  type: "SEO & High-Performance Web",
+                  src: "/a look at work/racedivision lanind page mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Irani MotoHub",
+                  type: "Shopify E-Commerce Storefront",
+                  src: "/a look at work/iranimotohub shopify website mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Join Our Tour",
+                  type: "Travel & Experience Platform",
+                  src: "/a look at work/join our tour website mockup.jpeg",
+                },
+                {
+                  title: "Rewio",
+                  type: "AI & Growth Platform",
+                  src: "/a look at work/rewio landing page mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Sheen Logo Identity",
+                  type: "Visual Identity & Brand System",
+                  src: "/a look at work/sheen logo mockup (branding).jpeg",
+                },
+                {
+                  title: "Sheen Vehicle Branding",
+                  type: "Fleet & Physical Brand System",
+                  src: "/a look at work/sheen van mockup (branding).jpeg",
+                },
+                {
+                  title: "Sheen Business Cards",
+                  type: "Print & Stationery Collateral",
+                  src: "/a look at work/sheen visiting card mockup (branding).jpeg",
+                },
+                // Duplicated array for smooth infinite looping
+                {
+                  title: "Sheen Mobile Car Care",
+                  type: "Brand Identity & Digital Launch",
+                  src: "/a look at work/sheen landing page mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Race Division",
+                  type: "SEO & High-Performance Web",
+                  src: "/a look at work/racedivision lanind page mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Irani MotoHub",
+                  type: "Shopify E-Commerce Storefront",
+                  src: "/a look at work/iranimotohub shopify website mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Join Our Tour",
+                  type: "Travel & Experience Platform",
+                  src: "/a look at work/join our tour website mockup.jpeg",
+                },
+                {
+                  title: "Rewio",
+                  type: "AI & Growth Platform",
+                  src: "/a look at work/rewio landing page mockup (Digital Experiences).jpeg",
+                },
+                {
+                  title: "Sheen Logo Identity",
+                  type: "Visual Identity & Brand System",
+                  src: "/a look at work/sheen logo mockup (branding).jpeg",
+                },
+                {
+                  title: "Sheen Vehicle Branding",
+                  type: "Fleet & Physical Brand System",
+                  src: "/a look at work/sheen van mockup (branding).jpeg",
+                },
+                {
+                  title: "Sheen Business Cards",
+                  type: "Print & Stationery Collateral",
+                  src: "/a look at work/sheen visiting card mockup (branding).jpeg",
+                },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className="w-[280px] sm:w-[360px] md:w-[420px] h-[360px] sm:h-[440px] rounded-3xl overflow-hidden shadow-md shrink-0 relative group border border-neutral-200/80 bg-neutral-950"
+                >
+                  <img
+                    src={item.src}
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 text-white pt-16 flex flex-col justify-end">
+                    <span className="text-[10px] font-mono text-[#ff4500] uppercase tracking-wider block mb-1">
+                      {item.type}
+                    </span>
+                    <h3 className="font-display text-lg sm:text-xl font-semibold tracking-tight text-white">
+                      {item.title}
+                    </h3>
                   </div>
-                ),
-              },
-              {
-                bg: "bg-[#f8f8f8]",
-                title: "DNA",
-                type: "Minimalist Identity",
-                content: (
-                  <div className="h-full flex flex-col items-center justify-center text-black p-8 bg-white border border-neutral-200">
-                    <div className="flex items-center gap-2 text-4xl font-display tracking-widest">
-                      <span className="text-[#ff4500]">✦</span> DNA
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                bg: "bg-[#ff4500]",
-                title: "Stationery & Brand",
-                type: "Print & Collateral",
-                content: (
-                  <div className="h-full flex flex-col justify-between p-8 bg-[#ff4500] text-white">
-                    <div className="text-xs font-mono uppercase tracking-widest opacity-80">[ Identity System ]</div>
-                    <div className="space-y-2">
-                      <h4 className="font-display text-2xl">Brand Collateral</h4>
-                      <p className="text-xs opacity-90 font-sans">Business cards, letterheads & brand guidelines.</p>
-                    </div>
-                    <div className="text-3xl font-display">✦</div>
-                  </div>
-                ),
-              },
-              {
-                bg: "bg-[#1a1a1a]",
-                title: "Architectural UX",
-                type: "Digital Design",
-                content: (
-                  <div className="h-full flex flex-col items-center justify-center text-white p-8 bg-neutral-900">
-                    <div className="w-full h-48 border border-neutral-700 rounded-2xl p-4 flex flex-col justify-between font-mono text-[10px] text-neutral-400">
-                      <div className="flex justify-between">
-                        <span>Wireframe v2.4</span>
-                        <span>[UI/UX]</span>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-2 bg-neutral-700 rounded w-3/4" />
-                        <div className="h-2 bg-neutral-800 rounded w-1/2" />
-                      </div>
-                      <div className="h-10 bg-[#ff4500]/20 border border-[#ff4500]/40 rounded-xl flex items-center justify-center text-[#ff4500]">
-                        Interactive Engine
-                      </div>
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                bg: "bg-[#f4efe8]",
-                title: "LUCKY CHAN",
-                type: "E-commerce & Storefront",
-                content: (
-                  <div className="h-full flex flex-col justify-between p-8 bg-[#f5ebd9] text-neutral-900 border border-amber-950/10">
-                    <div className="text-xs font-mono uppercase text-[#ff4500] tracking-wider">LUCKY CHAN</div>
-                    <div className="font-display text-3xl leading-tight">
-                      Craft Hospitality & Retail
-                    </div>
-                    <div className="text-xs font-mono text-neutral-500">Mysuru / Bangalore</div>
-                  </div>
-                ),
-              },
-              // Duplicate set for seamless looping
-              {
-                bg: "bg-[#2d3a2e]",
-                title: "BRASSA",
-                type: "Brand Identity",
-                content: (
-                  <div className="h-full flex flex-col items-center justify-center text-white space-y-4 p-8 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-900 via-neutral-900 to-black">
-                    <div className="w-16 h-16 border-2 border-white/80 rounded-2xl flex items-center justify-center text-2xl font-display">
-                      B
-                    </div>
-                    <span className="font-display tracking-[0.3em] text-xl font-light">BRASSA</span>
-                  </div>
-                ),
-              },
-              {
-                bg: "bg-[#f8f8f8]",
-                title: "DNA",
-                type: "Minimalist Identity",
-                content: (
-                  <div className="h-full flex flex-col items-center justify-center text-black p-8 bg-white border border-neutral-200">
-                    <div className="flex items-center gap-2 text-4xl font-display tracking-widest">
-                      <span className="text-[#ff4500]">✦</span> DNA
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                bg: "bg-[#ff4500]",
-                title: "Stationery & Brand",
-                type: "Print & Collateral",
-                content: (
-                  <div className="h-full flex flex-col justify-between p-8 bg-[#ff4500] text-white">
-                    <div className="text-xs font-mono uppercase tracking-widest opacity-80">[ Identity System ]</div>
-                    <div className="space-y-2">
-                      <h4 className="font-display text-2xl">Brand Collateral</h4>
-                      <p className="text-xs opacity-90 font-sans">Business cards, letterheads & brand guidelines.</p>
-                    </div>
-                    <div className="text-3xl font-display">✦</div>
-                  </div>
-                ),
-              },
-              {
-                bg: "bg-[#1a1a1a]",
-                title: "Architectural UX",
-                type: "Digital Design",
-                content: (
-                  <div className="h-full flex flex-col items-center justify-center text-white p-8 bg-neutral-900">
-                    <div className="w-full h-48 border border-neutral-700 rounded-2xl p-4 flex flex-col justify-between font-mono text-[10px] text-neutral-400">
-                      <div className="flex justify-between">
-                        <span>Wireframe v2.4</span>
-                        <span>[UI/UX]</span>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-2 bg-neutral-700 rounded w-3/4" />
-                        <div className="h-2 bg-neutral-800 rounded w-1/2" />
-                      </div>
-                      <div className="h-10 bg-[#ff4500]/20 border border-[#ff4500]/40 rounded-xl flex items-center justify-center text-[#ff4500]">
-                        Interactive Engine
-                      </div>
-                    </div>
-                  </div>
-                ),
-              },
-              {
-                bg: "bg-[#f4efe8]",
-                title: "LUCKY CHAN",
-                type: "E-commerce & Storefront",
-                content: (
-                  <div className="h-full flex flex-col justify-between p-8 bg-[#f5ebd9] text-neutral-900 border border-amber-950/10">
-                    <div className="text-xs font-mono uppercase text-[#ff4500] tracking-wider">LUCKY CHAN</div>
-                    <div className="font-display text-3xl leading-tight">
-                      Craft Hospitality & Retail
-                    </div>
-                    <div className="text-xs font-mono text-neutral-500">Mysuru / Bangalore</div>
-                  </div>
-                ),
-              },
-            ].map((item, idx) => (
-              <div
-                key={idx}
-                className="w-72 sm:w-80 h-[400px] rounded-3xl overflow-hidden shadow-sm shrink-0 relative group border border-neutral-200/60"
-              >
-                {item.content}
-              </div>
-            ))}
-          </motion.div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -747,29 +615,29 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Middle Row: 4 Portfolio/Feature Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-5 w-full pt-4">
-                  {s.cards.map((card, cIdx) => (
-                    <div
-                      key={card.title}
-                      className="aspect-[4/3] sm:aspect-square rounded-3xl overflow-hidden relative border border-neutral-200/50 shadow-sm group/card"
-                    >
-                      <div className={`absolute inset-0 ${card.bg} p-5 flex flex-col justify-between transition-all duration-300`}>
-                        <div className="space-y-1.5">
-                          <span className="text-[10px] font-mono text-[#ff4500] font-medium tracking-wider block">
-                            [ 0{cIdx + 1} ]
-                          </span>
-                          <h4 className="font-display text-base sm:text-lg text-black font-semibold tracking-tight">
-                            {card.title}
-                          </h4>
-                        </div>
-                        <p className="text-xs text-neutral-600 leading-relaxed font-sans">
-                          {card.desc}
-                        </p>
+                {/* Middle Row: Image Cards (3 cards for Branding, 4 cards for Websites, ONLY images - NO text inside) */}
+                {s.images && s.images.length > 0 && (
+                  <div
+                    className={`grid gap-4 md:gap-5 w-full pt-4 ${
+                      s.images.length === 3
+                        ? "grid-cols-1 sm:grid-cols-3"
+                        : "grid-cols-1 sm:grid-cols-2 md:grid-cols-4"
+                    }`}
+                  >
+                    {s.images.map((imgSrc, imgIdx) => (
+                      <div
+                        key={imgIdx}
+                        className="aspect-[4/3] rounded-3xl overflow-hidden relative border border-neutral-200/60 shadow-sm group/card bg-neutral-950"
+                      >
+                        <img
+                          src={imgSrc}
+                          alt=""
+                          className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                        />
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Bottom Row: Typical Engagement Bar (Whole box is clickable Link) */}
                 <Link
@@ -824,45 +692,22 @@ export default function Home() {
                 key={cs.slug}
                 className="border border-neutral-200/80 rounded-[32px] overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between group"
               >
-                {/* Upper Half: Image Showcase Placeholder */}
-                <div className={`h-[340px] sm:h-[400px] w-full relative overflow-hidden bg-gradient-to-br ${cs.gradient} p-6 sm:p-8 flex flex-col justify-between group/hero`}>
-                  {/* Top Bar inside mockup */}
-                  <div className="flex justify-between items-center z-10">
-                    <span className="text-[11px] font-mono text-neutral-400 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/10">
+                {/* Upper Half: Mockup Image Showcase */}
+                <div className="h-[280px] sm:h-[340px] md:h-[380px] w-full relative overflow-hidden bg-neutral-950 group/hero">
+                  <img
+                    src={cs.image}
+                    alt={cs.name}
+                    className="w-full h-full object-cover group-hover/hero:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                  />
+                  {/* Top Bar Overlay */}
+                  <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+                    <span className="text-[11px] font-mono text-white bg-black/60 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/20">
                       [ Live Platform ]
                     </span>
-                    <span className="text-[11px] font-mono text-[#ff4500] bg-[#ff4500]/10 backdrop-blur-md px-3 py-1 rounded-full border border-[#ff4500]/20 font-medium">
+                    <span className="text-[11px] font-mono text-[#ff4500] bg-black/70 backdrop-blur-md px-3.5 py-1 rounded-full border border-[#ff4500]/30 font-medium">
                       {cs.website}
                     </span>
                   </div>
-
-                  {/* Center Mockup UI Content */}
-                  <div className="relative z-10 my-auto text-center space-y-3 group-hover/hero:scale-[1.03] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                    {cs.mockupType === "sheen" ? (
-                      <div className="bg-black/60 backdrop-blur-xl border border-white/15 rounded-2xl p-6 sm:p-8 max-w-md mx-auto shadow-2xl space-y-3">
-                        <div className="text-xs font-mono text-[#ff4500] uppercase tracking-widest">✦ SHEEN CAR CARE</div>
-                        <h4 className="font-display text-2xl sm:text-3xl text-white tracking-tight">Brand Identity & Digital Launch</h4>
-                        <div className="flex justify-center gap-2 text-[10px] font-mono text-neutral-400 pt-2">
-                          <span className="bg-white/10 px-2.5 py-1 rounded">Mysuru</span>
-                          <span className="bg-white/10 px-2.5 py-1 rounded">Mobile App</span>
-                          <span className="bg-[#ff4500]/20 text-[#ff4500] px-2.5 py-1 rounded">Meta Ads</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="bg-slate-900/80 backdrop-blur-xl border border-white/15 rounded-2xl p-6 sm:p-8 max-w-md mx-auto shadow-2xl space-y-3">
-                        <div className="text-xs font-mono text-cyan-400 uppercase tracking-widest">✦ RACE DIVISION</div>
-                        <h4 className="font-display text-2xl sm:text-3xl text-white tracking-tight">SEO & High-Performance Web</h4>
-                        <div className="flex justify-center gap-2 text-[10px] font-mono text-neutral-400 pt-2">
-                          <span className="bg-white/10 px-2.5 py-1 rounded">SEO Architecture</span>
-                          <span className="bg-white/10 px-2.5 py-1 rounded">Fast Core Vitals</span>
-                          <span className="bg-cyan-500/20 text-cyan-400 px-2.5 py-1 rounded">Top 10 Rankings</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Subtle Grid Background Pattern Overlay */}
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
                 </div>
 
                 {/* Lower Half: Content Details (Matching Reference Image) */}
@@ -872,7 +717,7 @@ export default function Home() {
                       {cs.badge}
                     </span>
 
-                    <h3 className="font-display font-bold text-3xl sm:text-4xl text-black tracking-tight group-hover:text-[#ff4500] transition-colors">
+                    <h3 className="font-display font-bold text-3xl sm:text-4xl text-black tracking-normal sm:tracking-wide group-hover:text-[#ff4500] transition-colors">
                       {cs.name}
                     </h3>
 

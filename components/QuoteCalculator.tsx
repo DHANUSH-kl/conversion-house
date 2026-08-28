@@ -1,412 +1,1017 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Check, ArrowRight, MessageSquare, Calculator } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { ArrowRight, ArrowLeft, Check, X, RefreshCw, MessageSquare, Download, CheckCircle } from "lucide-react";
 
-// Pricing Blueprint details
-const PRICING_SERVICES = {
-  branding: [
-    { id: "logo", label: "Logo Design", price: 15000 },
-    { id: "brand_id", label: "Brand Identity Setup", price: 35000 },
-    { id: "rebranding", label: "Rebranding Strategy & Identity", price: 45000 },
-  ],
-  website: [
-    { id: "basic_web", label: "Professional Website", price: 35000 },
-    { id: "custom_web", label: "Premium/Custom Website", price: 60000 },
-    { id: "landing", label: "Landing Page System", price: 20000 },
-    { id: "maintenance", label: "Ongoing Website Support Retainer", price: 10000 },
-  ],
-  ecommerce: [
-    { id: "shopify", label: "Shopify Store Development", price: 35000 },
-    { id: "headless_shopify", label: "Headless Shopify Storefront", price: 55000 },
-  ],
-  growth: [
-    { id: "seo", label: "SEO Campaign Setup & Strategy", price: 30000 },
-    { id: "meta_ads", label: "Meta Ads Campaign Strategy & Mgmt", price: 25000 },
-    { id: "google_ads", label: "Google Ads Strategy & Optimization", price: 20000 },
-    { id: "cro", label: "Conversion Rate Optimization (CRO)", price: 15000 },
-    { id: "analytics", label: "Advanced Analytics & Tracking System", price: 10000 },
-  ],
-};
+// Format Indian currency cleanly (e.g. 125 -> ₹1.25L, 35 -> ₹35K)
+function formatIndianPrice(thousandsInr: number): string {
+  if (thousandsInr >= 100) {
+    const lakhs = thousandsInr / 100;
+    const formatted = Number(lakhs.toFixed(2));
+    return `₹${formatted}L`;
+  }
+  return `₹${thousandsInr}K`;
+}
+
+// Option Categories & Items (Clean typography without icons/emojis)
+const INDUSTRIES = [
+  { id: "F&B / Hospitality", title: "F&B / Hospitality", desc: "Restaurants, cafes, bars, cloud kitchens, hotels." },
+  { id: "Real Estate", title: "Real Estate", desc: "Project launches, developers, sales teams." },
+  { id: "Fitness & Wellness", title: "Fitness & Wellness", desc: "Studios, gyms, coaches, wellness brands." },
+  { id: "SaaS / Tech", title: "SaaS / Tech", desc: "Products, platforms, dev tools, AI products." },
+  { id: "Healthcare", title: "Healthcare", desc: "Clinics, hospitals, telehealth, dental, eye care." },
+  { id: "D2C / E-Commerce", title: "D2C / E-Commerce", desc: "Product brands, online retail, jewellery, marketplaces." },
+  { id: "Education", title: "Education", desc: "Schools, colleges, ed-tech, training." },
+  { id: "Something else", title: "Something else", desc: "Tell us what you do, we'll shape it." },
+];
+
+const GOALS = [
+  { id: "Launching something new", title: "Launching something new", desc: "Brand, website, or product coming to market." },
+  { id: "Rebrand / refresh", title: "Rebrand / refresh", desc: "Modernize visual identity and digital positioning." },
+  { id: "Scaling what works", title: "Scaling what works", desc: "Increase enquiries, search rankings, or ad revenue." },
+  { id: "Fixing something broken", title: "Fixing something broken", desc: "Fix low conversions, slow speed, or outdated UX." },
+];
+
+const TIMELINES = [
+  { id: "In the next 30 days", title: "In the next 30 days", desc: "Tight window. We'll be honest about what fits." },
+  { id: "1 to 3 months", title: "1 to 3 months", desc: "Comfortable runway for most scopes." },
+  { id: "3 to 6 months", title: "3 to 6 months", desc: "Bigger build, multi-phase rollout." },
+  { id: "Just exploring", title: "Just exploring", desc: "Welcome. We'll send the range, no pressure." },
+];
+
+const SERVICE_GROUPS = [
+  {
+    category: "Branding",
+    items: [
+      { id: "Strategy & Positioning", title: "Strategy & Positioning", desc: "Audience, promise, competitive positioning." },
+      { id: "Logo & Wordmark", title: "Logo & Wordmark", desc: "Primary, secondary, lockups, typography." },
+      { id: "Visual Identity System", title: "Visual Identity System", desc: "Color, grid, graphics, visual language." },
+      { id: "Brand Guidelines", title: "Brand Guidelines", desc: "Rules for teams, partners and designers." },
+      { id: "Packaging & Collateral", title: "Packaging & Collateral", desc: "Print, stationery, fleet, merchandise." },
+    ],
+  },
+  {
+    category: "Digital Experiences",
+    items: [
+      { id: "Custom Website (5-10 pages)", title: "Custom Website (5-10 pages)", desc: "Tailored Next.js website built for performance." },
+      { id: "High-Converting Landing Page", title: "High-Converting Landing Page", desc: "Focused campaign page designed for action." },
+      { id: "Shopify E-Commerce Store", title: "Shopify E-Commerce Store", desc: "Scalable online storefront built to sell." },
+      { id: "Headless Shopify Commerce", title: "Headless Shopify Commerce", desc: "Custom React frontend over Shopify Storefront API." },
+      { id: "Web Application / Portal", title: "Web Application / Portal", desc: "Custom web app, client dashboard, or tool." },
+    ],
+  },
+  {
+    category: "Visibility & Growth",
+    items: [
+      { id: "Technical & On-Page SEO", title: "Technical & On-Page SEO", desc: "Organic search rankings and technical health." },
+      { id: "Local SEO & Maps", title: "Local SEO & Maps", desc: "Nearby customer discovery and Google Business Profile." },
+      { id: "Meta Ads Acquisition", title: "Meta Ads Acquisition", desc: "Paid Facebook & Instagram lead campaigns." },
+      { id: "Google Search & Shopping Ads", title: "Google Search & Shopping Ads", desc: "High-intent search campaigns." },
+    ],
+  },
+  {
+    category: "Conversion Optimization",
+    items: [
+      { id: "Conversion Rate Optimization (CRO)", title: "Conversion Rate Optimization (CRO)", desc: "A/B testing and user drop-off removal." },
+      { id: "Analytics & Tracking Setup", title: "Analytics & Tracking Setup", desc: "GA4, Meta Pixel, server-side attribution." },
+      { id: "UX Friction Audit", title: "UX Friction Audit", desc: "In-depth review of customer journey barriers." },
+    ],
+  },
+];
 
 export default function QuoteCalculator() {
   const [step, setStep] = useState(1);
-  
-  // Selection States
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [businessName, setBusinessName] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [websiteUrl, setWebsiteUrl] = useState("");
-  const [traffic, setTraffic] = useState("");
-  const [enquiries, setEnquiries] = useState("");
-  const [adSpend, setAdSpend] = useState("");
-  const [targetMarket, setTargetMarket] = useState("");
-  const [primaryGoal, setPrimaryGoal] = useState("");
-  const [achieveOption, setAchieveOption] = useState("");
-  const [timeline, setTimeline] = useState("");
 
-  const toggleService = (id: string) => {
+  // Form State
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [selectedGoal, setSelectedGoal] = useState("");
+  const [selectedTimeline, setSelectedTimeline] = useState("");
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [projectContext, setProjectContext] = useState("");
+  const [budget, setBudget] = useState("");
+
+  // Contact Details State
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [formErrors, setFormErrors] = useState<{ name?: string; email?: string; phone?: string; server?: string }>({});
+
+  // Verification & Submission State
+  const [isSendingOtp, setIsSendingOtp] = useState(false);
+  const [showOtpModal, setShowOtpModal] = useState(false);
+  const [otpDigits, setOtpDigits] = useState(["", "", "", "", "", ""]);
+  const [otpError, setOtpError] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [resendTimer, setResendTimer] = useState(0);
+
+  // Final Result State
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [quoteId, setQuoteId] = useState("");
+  const [estimatedRange, setEstimatedRange] = useState("");
+  const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
+
+  const otpInputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  // Countdown timer for OTP resend
+  useEffect(() => {
+    if (resendTimer > 0) {
+      const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [resendTimer]);
+
+  const toggleService = (serviceId: string) => {
     setSelectedServices((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(serviceId) ? prev.filter((id) => id !== serviceId) : [...prev, serviceId]
     );
   };
 
-  const estimateRange = useMemo(() => {
-    let sum = 0;
-    
-    const allServices = [
-      ...PRICING_SERVICES.branding,
-      ...PRICING_SERVICES.website,
-      ...PRICING_SERVICES.ecommerce,
-      ...PRICING_SERVICES.growth,
-    ];
-    
-    selectedServices.forEach((sid) => {
-      const match = allServices.find((s) => s.id === sid);
-      if (match) sum += match.price;
-    });
+  const validateContactForm = () => {
+    const errors: { name?: string; email?: string; phone?: string } = {};
 
-    if (sum === 0) return null;
-
-    if (sum < 35000) {
-      sum = 35000;
+    if (!name.trim()) {
+      errors.name = "Full name is required";
     }
 
-    const lower = Math.round((sum * 0.9) / 1000) * 1000;
-    const upper = Math.round((sum * 1.25) / 1000) * 1000;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim() || !emailRegex.test(email.trim())) {
+      errors.email = "Please enter a valid email address";
+    }
 
-    return {
-      lower: lower.toLocaleString("en-IN"),
-      upper: upper.toLocaleString("en-IN"),
-    };
-  }, [selectedServices]);
+    const cleanPhone = phone.replace(/[\s\-\+\(\)]/g, "");
+    if (!phone.trim() || cleanPhone.length < 10) {
+      errors.phone = "Please enter a valid 10-digit phone number";
+    }
 
-  const handleNext = () => setStep((s) => Math.min(s + 1, 5));
-  const handlePrev = () => setStep((s) => Math.max(s - 1, 1));
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
-  const displayPackageType = useMemo(() => {
-    const isGrowth = selectedServices.some(s => ["seo", "meta_ads", "google_ads", "cro"].includes(s));
-    const isEcommerceOrPremium = selectedServices.some(s => ["headless_shopify", "custom_web"].includes(s));
-    
-    if (isEcommerceOrPremium) return "Scale Engagement Range";
-    if (isGrowth) return "Growth Engagement Range";
-    return "Launch Foundation Range";
-  }, [selectedServices]);
+  const requestOtpEmail = async () => {
+    setIsSendingOtp(true);
+    setFormErrors({});
 
-  return (
-    <div className="bg-white border border-neutral-150 rounded-3xl p-6 md:p-10 max-w-4xl mx-auto text-black shadow-sm">
-      {/* Progress Line */}
-      <div className="w-full bg-neutral-100 h-1 rounded-full mb-8 overflow-hidden">
-        <div
-          className="bg-[#ff4500] h-full transition-all duration-300"
-          style={{ width: `${(step / 5) * 100}%` }}
-        />
-      </div>
+    try {
+      const res = await fetch("/api/quote/request-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+        }),
+      });
 
-      <div className="mb-6 flex justify-between items-center text-xs font-mono text-neutral-400">
-        <span>STEP 0{step} OF 05</span>
-        <span className="text-[#ff4500] uppercase tracking-widest font-semibold">
-          {step === 1 && "What do you need?"}
-          {step === 2 && "About your business"}
-          {step === 3 && "What are you trying to achieve?"}
-          {step === 4 && "Timeline"}
-          {step === 5 && "Estimated investment"}
-        </span>
-      </div>
+      const data = await res.json();
 
-      {/* STEP 1: What do you need */}
-      {step === 1 && (
-        <div className="space-y-6">
-          <h2 className="text-xl md:text-2xl font-display font-semibold mb-4 text-black">
-            Select the components of your digital system:
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            {/* Branding Column */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-mono tracking-wider uppercase text-[#ff4500]">Branding</h3>
-              {PRICING_SERVICES.branding.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => toggleService(s.id)}
-                  className={`w-full text-left p-3.5 rounded-xl border text-sm flex justify-between items-center transition-all ${
-                    selectedServices.includes(s.id)
-                      ? "border-[#ff4500] bg-[#ff4500]/5 text-black"
-                      : "border-neutral-200 bg-neutral-50/50 text-neutral-600 hover:border-neutral-300"
-                  }`}
-                >
-                  <span>{s.label}</span>
-                  {selectedServices.includes(s.id) && <Check className="w-4 h-4 text-[#ff4500]" />}
-                </button>
-              ))}
-            </div>
+      if (res.ok && data.success) {
+        setOtpDigits(["", "", "", "", "", ""]);
+        setOtpError("");
+        setShowOtpModal(true);
+        setResendTimer(data.cooldownSeconds || 60);
+        setTimeout(() => {
+          otpInputRefs.current[0]?.focus();
+        }, 100);
+      } else {
+        setFormErrors({ server: data.error || "Unable to send verification email. Please try again." });
+      }
+    } catch (err) {
+      console.error("[Send OTP Error]:", err);
+      setFormErrors({ server: "Network error sending verification code. Please check your connection." });
+    } finally {
+      setIsSendingOtp(false);
+    }
+  };
 
-            {/* Websites Column */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-mono tracking-wider uppercase text-[#ff4500]">Websites</h3>
-              {PRICING_SERVICES.website.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => toggleService(s.id)}
-                  className={`w-full text-left p-3.5 rounded-xl border text-sm flex justify-between items-center transition-all ${
-                    selectedServices.includes(s.id)
-                      ? "border-[#ff4500] bg-[#ff4500]/5 text-black"
-                      : "border-neutral-200 bg-neutral-50/50 text-neutral-600 hover:border-neutral-300"
-                  }`}
-                >
-                  <span>{s.label}</span>
-                  {selectedServices.includes(s.id) && <Check className="w-4 h-4 text-[#ff4500]" />}
-                </button>
-              ))}
-            </div>
+  const handleStep6Submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateContactForm()) return;
+    requestOtpEmail();
+  };
 
-            {/* E-commerce Column */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-mono tracking-wider uppercase text-[#ff4500]">E-commerce</h3>
-              {PRICING_SERVICES.ecommerce.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => toggleService(s.id)}
-                  className={`w-full text-left p-3.5 rounded-xl border text-sm flex justify-between items-center transition-all ${
-                    selectedServices.includes(s.id)
-                      ? "border-[#ff4500] bg-[#ff4500]/5 text-black"
-                      : "border-neutral-200 bg-neutral-50/50 text-neutral-600 hover:border-neutral-300"
-                  }`}
-                >
-                  <span>{s.label}</span>
-                  {selectedServices.includes(s.id) && <Check className="w-4 h-4 text-[#ff4500]" />}
-                </button>
-              ))}
-            </div>
+  // OTP Inputs handling
+  const handleOtpChange = (index: number, value: string) => {
+    if (!/^\d*$/.test(value)) return;
 
-            {/* Growth Column */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-mono tracking-wider uppercase text-[#ff4500]">Growth & Tracking</h3>
-              {PRICING_SERVICES.growth.map((s) => (
-                <button
-                  key={s.id}
-                  onClick={() => toggleService(s.id)}
-                  className={`w-full text-left p-3.5 rounded-xl border text-sm flex justify-between items-center transition-all ${
-                    selectedServices.includes(s.id)
-                      ? "border-[#ff4500] bg-[#ff4500]/5 text-black"
-                      : "border-neutral-200 bg-neutral-50/50 text-neutral-600 hover:border-neutral-300"
-                  }`}
-                >
-                  <span>{s.label}</span>
-                  {selectedServices.includes(s.id) && <Check className="w-4 h-4 text-[#ff4500]" />}
-                </button>
-              ))}
-            </div>
+    const newDigits = [...otpDigits];
+    newDigits[index] = value.slice(-1);
+    setOtpDigits(newDigits);
+    setOtpError("");
 
+    if (value && index < 5) {
+      otpInputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !otpDigits[index] && index > 0) {
+      otpInputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (pastedData.length === 6) {
+      const newDigits = pastedData.split("");
+      setOtpDigits(newDigits);
+      otpInputRefs.current[5]?.focus();
+    }
+  };
+
+  const verifyAndSubmitLead = async (enteredCode: string) => {
+    setIsVerifying(true);
+    setOtpError("");
+
+    try {
+      // 1. Verify OTP with Server Route /api/quote/verify-otp
+      const verifyRes = await fetch("/api/quote/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.trim(),
+          otp: enteredCode,
+        }),
+      });
+
+      const verifyData = await verifyRes.json();
+
+      if (!verifyRes.ok || !verifyData.success) {
+        setOtpError(verifyData.error || "Invalid verification code. Please try again.");
+        setIsVerifying(false);
+        return;
+      }
+
+      // 2. Submit Lead Data & Generate PDF/Emails via Server Route /api/quote/submit
+      const submitRes = await fetch("/api/quote/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          industry: selectedIndustry,
+          goal: selectedGoal,
+          timeline: selectedTimeline,
+          selectedServices,
+          projectContext,
+          budget,
+          verificationToken: verifyData.verificationToken,
+        }),
+      });
+
+      const submitData = await submitRes.json();
+
+      if (submitRes.ok && submitData.success) {
+        setQuoteId(submitData.quoteId || "CH-QUOTE-DEFAULT");
+        setEstimatedRange(submitData.estimatedRange || `${formatIndianPrice(submitData.estimatedMin || 35)} – ${formatIndianPrice(submitData.estimatedMax || 95)}+`);
+      } else {
+        setQuoteId("CH-QUOTE-DEFAULT");
+        setEstimatedRange(`${formatIndianPrice(35)} – ${formatIndianPrice(95)}+`);
+      }
+
+      setIsVerifying(false);
+      setShowOtpModal(false);
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error("[Verification Submission Exception]:", err);
+      setQuoteId("CH-QUOTE-DEFAULT");
+      setEstimatedRange(`${formatIndianPrice(35)} – ${formatIndianPrice(95)}+`);
+      setIsVerifying(false);
+      setShowOtpModal(false);
+      setIsSubmitted(true);
+    }
+  };
+
+  const handleOtpSubmit = () => {
+    const code = otpDigits.join("");
+    if (code.length < 6) {
+      setOtpError("Please enter all 6 digits of your verification code.");
+      return;
+    }
+    verifyAndSubmitLead(code);
+  };
+
+  const handleDownloadPdf = async () => {
+    setIsDownloadingPdf(true);
+    try {
+      const res = await fetch("/api/quote/download-pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quoteId,
+          name: name.trim(),
+          email: email.trim(),
+          phone: phone.trim(),
+          industry: selectedIndustry,
+          goal: selectedGoal,
+          timeline: selectedTimeline,
+          selectedServices,
+          projectContext,
+          budget,
+        }),
+      });
+
+      if (res.ok) {
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `conversionhouse-estimate-${quoteId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error("[Download PDF Error]:", err);
+    } finally {
+      setIsDownloadingPdf(false);
+    }
+  };
+
+  const bookingUrl = process.env.NEXT_PUBLIC_BOOKING_URL;
+
+  // Render Result Screen (In-Place Transition)
+  if (isSubmitted) {
+    return (
+      <div className="bg-white border border-neutral-200/80 rounded-3xl p-8 sm:p-12 shadow-sm max-w-4xl mx-auto my-8 animate-fade-in">
+        {/* Verification Success Toast */}
+        <div className="bg-[#ff4500]/[0.06] border border-[#ff4500]/30 rounded-2xl p-4 mb-8 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5 text-xs font-mono text-black font-semibold">
+            <CheckCircle className="w-4 h-4 text-[#ff4500]" />
+            <span>Email verified. Your estimate & personalized PDF have been generated.</span>
           </div>
+          <span className="text-[10px] font-mono text-[#ff4500] bg-white px-2.5 py-1 rounded-full border border-[#ff4500]/20 font-bold">
+            {quoteId}
+          </span>
         </div>
-      )}
 
-      {/* STEP 2: Tell us about your business */}
-      {step === 2 && (
-        <div className="space-y-4">
-          <h2 className="text-xl md:text-2xl font-display font-semibold mb-4 text-black">
-            Brief context about your operation:
+        {/* Top Tag & Title */}
+        <div className="text-center max-w-2xl mx-auto space-y-4 mb-10">
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block font-semibold">
+            [ ESTIMATE READY ]
+          </span>
+          <h2 className="font-display font-bold text-4xl sm:text-5xl text-black tracking-tight leading-tight">
+            Your estimate is ready.
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-1.5">Business Name</label>
-              <input
-                type="text"
-                value={businessName}
-                onChange={(e) => setBusinessName(e.target.value)}
-                placeholder="e.g. Acme Corp"
-                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#ff4500]"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-1.5">Industry</label>
-              <input
-                type="text"
-                value={industry}
-                onChange={(e) => setIndustry(e.target.value)}
-                placeholder="e.g. Retail, Healthcare"
-                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#ff4500]"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-1.5">Current Website URL</label>
-              <input
-                type="text"
-                value={websiteUrl}
-                onChange={(e) => setWebsiteUrl(e.target.value)}
-                placeholder="e.g. www.acme.com"
-                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#ff4500]"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-1.5">Target Market</label>
-              <input
-                type="text"
-                value={targetMarket}
-                onChange={(e) => setTargetMarket(e.target.value)}
-                placeholder="e.g. Local, National, USA"
-                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#ff4500]"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-1.5">Current Monthly Traffic</label>
-              <input
-                type="text"
-                value={traffic}
-                onChange={(e) => setTraffic(e.target.value)}
-                placeholder="e.g. 5,000 visitors"
-                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#ff4500]"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-1.5">Current Advertising Spend</label>
-              <input
-                type="text"
-                value={adSpend}
-                onChange={(e) => setAdSpend(e.target.value)}
-                placeholder="e.g. ₹20,000 / month"
-                className="w-full bg-neutral-50 border border-neutral-200 rounded-xl p-3 text-sm focus:outline-none focus:border-[#ff4500]"
-              />
-            </div>
-          </div>
+          <p className="text-neutral-500 text-sm leading-relaxed">
+            Based on the scope you selected, here is your estimated investment range. A PDF copy has also been sent to <span className="text-black font-semibold">{email}</span>.
+          </p>
         </div>
-      )}
 
-      {/* STEP 3: What are you trying to achieve? */}
-      {step === 3 && (
-        <div className="space-y-4">
-          <h2 className="text-xl md:text-2xl font-display font-semibold mb-4 text-black">
-            What is your primary commercial focus?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {[
-              "Generate more enquiries",
-              "Generate more sales",
-              "Improve Google visibility",
-              "Launch a new business",
-              "Rebrand",
-              "Build an online store",
-              "Improve an existing website",
-              "Generate more bookings",
-              "Scale paid advertising",
-              "Improve conversion rate",
-              "Other",
-            ].map((option) => (
-              <button
-                key={option}
-                onClick={() => setAchieveOption(option)}
-                className={`w-full text-left p-3.5 rounded-xl border text-sm flex justify-between items-center transition-all ${
-                  achieveOption === option
-                    ? "border-[#ff4500] bg-[#ff4500]/5 text-black"
-                    : "border-neutral-200 bg-neutral-50/50 text-neutral-600 hover:border-neutral-300"
-                }`}
-              >
-                <span>{option}</span>
-                {achieveOption === option && <Check className="w-4 h-4 text-[#ff4500]" />}
-              </button>
-            ))}
+        {/* Highlighted Price Range Box */}
+        <div className="bg-neutral-50 border border-neutral-200/80 rounded-2xl p-8 sm:p-10 text-center mb-10 shadow-sm relative">
+          <span className="text-xs font-mono uppercase tracking-wider text-neutral-400 block mb-2">
+            YOUR ESTIMATED PROJECT RANGE
+          </span>
+          <div className="font-display font-bold text-5xl sm:text-6xl text-[#ff4500] tracking-tight mb-4">
+            {estimatedRange}
           </div>
-        </div>
-      )}
-
-      {/* STEP 4: Timeline */}
-      {step === 4 && (
-        <div className="space-y-4">
-          <h2 className="text-xl md:text-2xl font-display font-semibold mb-4 text-black">
-            When do we launch the engine?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {["ASAP", "Within 1 month", "1–3 months", "3–6 months", "Flexible"].map((time) => (
-              <button
-                key={time}
-                onClick={() => setTimeline(time)}
-                className={`w-full text-left p-4 rounded-xl border text-sm flex justify-between items-center transition-all ${
-                  timeline === time
-                    ? "border-[#ff4500] bg-[#ff4500]/5 text-black"
-                    : "border-neutral-200 bg-neutral-50/50 text-neutral-600 hover:border-neutral-300"
-                }`}
-              >
-                <span>{time}</span>
-                {timeline === time && <Check className="w-4 h-4 text-[#ff4500]" />}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* STEP 5: Calculated Output */}
-      {step === 5 && (
-        <div className="text-center space-y-6 py-8">
-          <Calculator className="w-12 h-12 text-[#ff4500] mx-auto mb-2" />
-          
-          <div>
-            <span className="text-xs font-mono uppercase text-[#ff4500] tracking-widest">{displayPackageType}</span>
-            {estimateRange ? (
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-black tracking-tight mt-2">
-                ₹{estimateRange.lower} – ₹{estimateRange.upper}
-              </h2>
-            ) : (
-              <h2 className="text-xl md:text-2xl font-display text-black tracking-tight mt-2">
-                No components selected. Let's start with a customized plan.
-              </h2>
-            )}
-          </div>
-
-          <p className="text-neutral-500 text-xs md:text-sm max-w-lg mx-auto leading-relaxed">
-            This is an estimated range based on the services and scope you've selected. Your final quote will depend on the requirements discussed with our team.
+          <p className="text-xs text-neutral-500 max-w-md mx-auto leading-relaxed mb-6">
+            Preliminary estimate based on the scope you selected. Final pricing is confirmed after our 20-minute consultation.
           </p>
 
-          <div className="flex flex-col sm:flex-row justify-center gap-4 pt-6">
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            disabled={isDownloadingPdf}
+            className="inline-flex items-center gap-2 bg-white hover:bg-neutral-100 text-black border border-neutral-300 px-6 py-2.5 rounded-full text-xs font-mono font-semibold transition-all shadow-sm"
+          >
+            {isDownloadingPdf ? (
+              <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5 text-[#ff4500]" />
+            )}
+            {isDownloadingPdf ? "Generating PDF..." : "Download Estimate PDF"}
+          </button>
+        </div>
+
+        {/* Project Snapshot Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 pb-10 border-b border-neutral-100">
+          {/* Left Column: Project Snapshot */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#ff4500] font-semibold">
+              Project Snapshot
+            </h3>
+            <div className="bg-neutral-50/70 p-6 rounded-2xl border border-neutral-200/60 space-y-3 text-xs font-mono">
+              <div className="flex justify-between pb-2 border-b border-neutral-200/60">
+                <span className="text-neutral-400">Quote ID:</span>
+                <span className="text-black font-bold">{quoteId}</span>
+              </div>
+              <div className="flex justify-between pb-2 border-b border-neutral-200/60">
+                <span className="text-neutral-400">Industry:</span>
+                <span className="text-black font-semibold">{selectedIndustry || "Not specified"}</span>
+              </div>
+              <div className="flex justify-between pb-2 border-b border-neutral-200/60">
+                <span className="text-neutral-400">Primary Goal:</span>
+                <span className="text-black font-semibold">{selectedGoal || "Not specified"}</span>
+              </div>
+              <div className="flex justify-between pb-2 border-b border-neutral-200/60">
+                <span className="text-neutral-400">Timeline:</span>
+                <span className="text-black font-semibold">{selectedTimeline || "Not specified"}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-neutral-400">Selected Scope:</span>
+                <span className="text-[#ff4500] font-bold">{selectedServices.length} services</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Selected Services */}
+          <div className="space-y-4">
+            <h3 className="text-xs font-mono uppercase tracking-wider text-[#ff4500] font-semibold">
+              Selected Deliverables
+            </h3>
+            <div className="bg-neutral-50/70 p-6 rounded-2xl border border-neutral-200/60 max-h-[220px] overflow-y-auto space-y-2">
+              {selectedServices.length > 0 ? (
+                selectedServices.map((service) => (
+                  <div key={service} className="flex items-center gap-2 text-xs font-mono text-neutral-800">
+                    <Check className="w-3.5 h-3.5 text-[#ff4500] shrink-0" />
+                    <span>{service}</span>
+                  </div>
+                ))
+              ) : (
+                <span className="text-xs text-neutral-400 font-mono">General Scope Exploration</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Project Notes if provided */}
+        {projectContext && (
+          <div className="mb-10 bg-neutral-50 p-6 rounded-2xl border border-neutral-200/60 space-y-2">
+            <span className="text-xs font-mono text-neutral-400 uppercase tracking-wider block">Your Notes</span>
+            <p className="text-xs text-neutral-600 leading-relaxed font-sans">{projectContext}</p>
+          </div>
+        )}
+
+        {/* Next Step Call to Action */}
+        <div className="bg-neutral-950 text-white rounded-3xl p-8 sm:p-10 text-center space-y-6">
+          <div className="space-y-2 max-w-lg mx-auto">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block font-semibold">
+              READY TO TAKE THE NEXT STEP?
+            </span>
+            <h3 className="font-display font-semibold text-2xl sm:text-3xl text-white leading-tight">
+              Let's spend 20 minutes understanding the project, refining the scope and answering your questions.
+            </h3>
+          </div>
+
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-2">
+            {bookingUrl ? (
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#ff4500] hover:bg-[#e03d00] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+              >
+                Book a 20-minute call <ArrowRight className="w-4 h-4" />
+              </a>
+            ) : (
+              <button
+                disabled
+                className="bg-neutral-800 text-neutral-400 font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full cursor-not-allowed w-full sm:w-auto"
+              >
+                Booking link coming soon
+              </button>
+            )}
+
             <a
-              href={`https://wa.me/919900447762?text=Hi%20ConversionHouse,%20I%20just%20calculated%20my%20digital%20scope:%20${encodeURIComponent(
-                selectedServices.join(", ")
-              )}%20and%20need%20a%20quote.`}
+              href={`https://wa.me/919900447762?text=${encodeURIComponent(
+                `Hi ConversionHouse! Here is my verified quote request:\n\nQuote ID: ${quoteId}\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nIndustry: ${selectedIndustry || "General"}\nGoal: ${selectedGoal || "General"}\nTimeline: ${selectedTimeline || "General"}\nEstimated Range: ${estimatedRange}`
+              )}`}
               target="_blank"
-              rel="noreferrer"
-              className="bg-neutral-100 hover:bg-neutral-200 text-black px-6 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all border border-neutral-200"
+              rel="noopener noreferrer"
+              className="bg-white/10 hover:bg-white/20 text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors flex items-center justify-center gap-2 w-full sm:w-auto border border-white/20"
             >
-              <MessageSquare className="w-4 h-4 text-[#ff4500]" /> Talk to us on WhatsApp
+              <MessageSquare className="w-4 h-4 text-[#ff4500]" /> WhatsApp ConversionHouse
             </a>
-            
-            <a
-              href={`mailto:projects@conversionhouse.in?subject=New%20Project%20Quote%20Request&body=Hi%20ConversionHouse%20Team,%0A%0AI%20would%20like%20to%20request%20a%20quote%20for%20the%20following%20services:%20${encodeURIComponent(
-                selectedServices.join(", ")
-              )}.`}
-              className="bg-black hover:bg-[#ff4500] text-white px-8 py-3.5 rounded-full font-semibold text-xs uppercase tracking-wider transition-all text-center flex items-center justify-center"
+          </div>
+
+          <p className="text-[11px] text-neutral-400 font-mono pt-2">
+            A final proposal will be confirmed after we review your requirements together.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white border border-neutral-200/80 rounded-3xl p-6 sm:p-10 shadow-sm max-w-4xl mx-auto my-8 relative">
+      {/* Top Header Progress Bar */}
+      <div className="flex items-center justify-between border-b border-neutral-100 pb-6 mb-8">
+        <div className="flex items-center gap-2 font-display text-lg font-bold text-black">
+          <span>ConversionHouse.</span>
+          <span className="text-xs font-mono text-[#ff4500] font-normal uppercase tracking-wider">
+            Build Your Scope
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-xs font-mono text-neutral-400">Step {step} of 6</span>
+          <div className="w-24 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-[#ff4500] transition-all duration-300"
+              style={{ width: `${(step / 6) * 100}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* STEP 1: What are you building? */}
+      {step === 1 && (
+        <div className="space-y-8 animate-fade-in">
+          <div>
+            <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">01</span>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+              What are you building?
+            </h2>
+            <p className="text-neutral-500 text-sm mt-2">
+              Pick one. We'll tailor the rest of this around it.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {INDUSTRIES.map((ind) => {
+              const isSelected = selectedIndustry === ind.id;
+              return (
+                <button
+                  key={ind.id}
+                  type="button"
+                  onClick={() => setSelectedIndustry(ind.id)}
+                  className={`p-6 rounded-2xl border text-left transition-all duration-200 ${
+                    isSelected
+                      ? "border-[#ff4500] bg-[#ff4500]/[0.03] ring-1 ring-[#ff4500]"
+                      : "border-neutral-200/80 bg-white hover:border-neutral-300"
+                  }`}
+                >
+                  <h3 className="font-display font-bold text-base text-black mb-1.5">{ind.title}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed font-sans">{ind.desc}</p>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-end pt-4">
+            <button
+              type="button"
+              disabled={!selectedIndustry}
+              onClick={() => setStep(2)}
+              className={`px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all ${
+                selectedIndustry
+                  ? "bg-black hover:bg-[#ff4500] text-white cursor-pointer"
+                  : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
+              }`}
             >
-              Email Projects Team
-            </a>
+              Continue <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       )}
 
-      {/* Nav Controls */}
-      <div className="flex justify-between items-center mt-10 pt-6 border-t border-neutral-100">
-        <button
-          onClick={handlePrev}
-          disabled={step === 1}
-          className="text-xs font-mono text-neutral-400 hover:text-black disabled:opacity-30 disabled:pointer-events-none transition-colors"
-        >
-          [ PREVIOUS ]
-        </button>
+      {/* STEP 2: What brings you to us? */}
+      {step === 2 && (
+        <div className="space-y-8 animate-fade-in">
+          <div>
+            <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">02</span>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+              What brings you to us?
+            </h2>
+            <p className="text-neutral-500 text-sm mt-2">
+              One line, then we'll move on.
+            </p>
+          </div>
 
-        {step < 5 ? (
-          <button
-            onClick={handleNext}
-            className="bg-black hover:bg-[#ff4500] text-white font-semibold text-xs uppercase tracking-wider px-6 py-3 rounded-full flex items-center gap-2 transition-all"
-          >
-            Continue <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        ) : (
-          <button
-            onClick={() => setStep(1)}
-            className="text-xs font-mono text-neutral-400 hover:text-black transition-colors"
-          >
-            [ RECALCULATE ]
-          </button>
-        )}
-      </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {GOALS.map((g) => {
+              const isSelected = selectedGoal === g.id;
+              return (
+                <button
+                  key={g.id}
+                  type="button"
+                  onClick={() => setSelectedGoal(g.id)}
+                  className={`p-6 rounded-2xl border text-left transition-all duration-200 ${
+                    isSelected
+                      ? "border-[#ff4500] bg-[#ff4500]/[0.03] ring-1 ring-[#ff4500]"
+                      : "border-neutral-200/80 bg-white hover:border-neutral-300"
+                  }`}
+                >
+                  <h3 className="font-display font-bold text-base text-black mb-1.5">{g.title}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed font-sans">{g.desc}</p>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-between items-center pt-4">
+            <button
+              type="button"
+              onClick={() => setStep(1)}
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back
+            </button>
+            <button
+              type="button"
+              disabled={!selectedGoal}
+              onClick={() => setStep(3)}
+              className={`px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all ${
+                selectedGoal
+                  ? "bg-black hover:bg-[#ff4500] text-white cursor-pointer"
+                  : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
+              }`}
+            >
+              Continue <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3: When do you need it? */}
+      {step === 3 && (
+        <div className="space-y-8 animate-fade-in">
+          <div>
+            <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">03</span>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+              When do you need it?
+            </h2>
+            <p className="text-neutral-500 text-sm mt-2">
+              Honest signal helps us scope this realistically.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {TIMELINES.map((t) => {
+              const isSelected = selectedTimeline === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setSelectedTimeline(t.id)}
+                  className={`p-6 rounded-2xl border text-left transition-all duration-200 ${
+                    isSelected
+                      ? "border-[#ff4500] bg-[#ff4500]/[0.03] ring-1 ring-[#ff4500]"
+                      : "border-neutral-200/80 bg-white hover:border-neutral-300"
+                  }`}
+                >
+                  <h3 className="font-display font-bold text-base text-black mb-1.5">{t.title}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed font-sans">{t.desc}</p>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-between items-center pt-4">
+            <button
+              type="button"
+              onClick={() => setStep(2)}
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back
+            </button>
+            <button
+              type="button"
+              disabled={!selectedTimeline}
+              onClick={() => setStep(4)}
+              className={`px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all ${
+                selectedTimeline
+                  ? "bg-black hover:bg-[#ff4500] text-white cursor-pointer"
+                  : "bg-neutral-200 text-neutral-400 cursor-not-allowed"
+              }`}
+            >
+              Continue <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 4: Pick what you actually need (Multi-select) */}
+      {step === 4 && (
+        <div className="space-y-8 animate-fade-in">
+          <div>
+            <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">04</span>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+              Pick what you actually need.
+            </h2>
+            <p className="text-neutral-500 text-sm mt-2">
+              Select items across categories. You can choose multiple options.
+            </p>
+          </div>
+
+          <div className="space-y-8 max-h-[480px] overflow-y-auto pr-2">
+            {SERVICE_GROUPS.map((group) => (
+              <div key={group.category} className="space-y-3">
+                <h3 className="text-xs font-mono uppercase text-[#ff4500] tracking-wider font-semibold">
+                  {group.category}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {group.items.map((item) => {
+                    const isSelected = selectedServices.includes(item.id);
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => toggleService(item.id)}
+                        className={`p-4 rounded-xl border text-left transition-all duration-200 flex items-start justify-between gap-3 ${
+                          isSelected
+                            ? "border-[#ff4500] bg-[#ff4500]/[0.04] ring-1 ring-[#ff4500]"
+                            : "border-neutral-200/80 bg-white hover:border-neutral-300"
+                        }`}
+                      >
+                        <div>
+                          <h4 className="font-display font-semibold text-sm text-black mb-1">{item.title}</h4>
+                          <p className="text-xs text-neutral-500 leading-relaxed font-sans">{item.desc}</p>
+                        </div>
+                        <div
+                          className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 mt-0.5 ${
+                            isSelected ? "bg-[#ff4500] border-[#ff4500] text-white" : "border-neutral-300"
+                          }`}
+                        >
+                          {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
+            <button
+              type="button"
+              onClick={() => setStep(3)}
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back
+            </button>
+            <div className="flex items-center gap-4">
+              <span className="text-xs font-mono text-neutral-400">
+                {selectedServices.length} items selected
+              </span>
+              <button
+                type="button"
+                onClick={() => setStep(5)}
+                className="bg-black hover:bg-[#ff4500] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors"
+              >
+                Continue <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 5: Project Context & Budget */}
+      {step === 5 && (
+        <div className="space-y-8 animate-fade-in">
+          <div>
+            <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">05</span>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+              Project Context & Budget
+            </h2>
+            <p className="text-neutral-500 text-sm mt-2">
+              Optional details to help us refine the scope.
+            </p>
+          </div>
+
+          <div className="space-y-6 max-w-2xl">
+            <div>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-2 font-medium">
+                Tell us about your project or current challenges
+              </label>
+              <textarea
+                rows={4}
+                value={projectContext}
+                onChange={(e) => setProjectContext(e.target.value)}
+                placeholder="E.g., We're launching in 2 months and need a brand refresh + custom Next.js site to generate leads..."
+                className="w-full p-4 rounded-2xl border border-neutral-200 focus:border-[#ff4500] focus:ring-1 focus:ring-[#ff4500] text-sm text-black outline-none font-sans leading-relaxed"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-2 font-medium">
+                Estimated Investment Target (Optional)
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {["₹25K – ₹50K", "₹50K – ₹1L", "₹1L – ₹2.5L", "₹2.5L+"].map((b) => (
+                  <button
+                    key={b}
+                    type="button"
+                    onClick={() => setBudget(b)}
+                    className={`p-3 rounded-xl border text-center text-xs font-mono transition-all ${
+                      budget === b
+                        ? "border-[#ff4500] bg-[#ff4500]/[0.05] text-[#ff4500] font-semibold"
+                        : "border-neutral-200 text-neutral-600 hover:border-neutral-300"
+                    }`}
+                  >
+                    {b}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
+            <button
+              type="button"
+              onClick={() => setStep(4)}
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back
+            </button>
+            <button
+              type="button"
+              onClick={() => setStep(6)}
+              className="bg-black hover:bg-[#ff4500] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors"
+            >
+              Final Step <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 6: Contact Information */}
+      {step === 6 && (
+        <form onSubmit={handleStep6Submit} className="space-y-8 animate-fade-in">
+          <div>
+            <span className="text-xs font-mono text-[#ff4500] uppercase tracking-widest block mb-2 font-semibold">06</span>
+            <h2 className="font-display font-bold text-3xl sm:text-5xl text-black tracking-tight leading-tight">
+              Where should we send your estimate?
+            </h2>
+            <p className="text-neutral-500 text-sm mt-2">
+              Enter your contact details to verify and calculate your project range.
+            </p>
+          </div>
+
+          <div className="space-y-5 max-w-xl">
+            {formErrors.server && (
+              <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-xs font-mono text-red-600">
+                {formErrors.server}
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1.5 font-medium">
+                Full Name *
+              </label>
+              <input
+                type="text"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. John Doe"
+                className={`w-full p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
+                  formErrors.name ? "border-red-500 bg-red-50/20" : "border-neutral-200 focus:border-[#ff4500]"
+                }`}
+              />
+              {formErrors.name && <p className="text-xs text-red-500 font-mono mt-1">{formErrors.name}</p>}
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1.5 font-medium">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="e.g. john@example.com"
+                className={`w-full p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
+                  formErrors.email ? "border-red-500 bg-red-50/20" : "border-neutral-200 focus:border-[#ff4500]"
+                }`}
+              />
+              {formErrors.email && <p className="text-xs text-red-500 font-mono mt-1">{formErrors.email}</p>}
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono uppercase text-neutral-600 mb-1.5 font-medium">
+                Phone Number *
+              </label>
+              <input
+                type="tel"
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="e.g. +91 98765 43210"
+                className={`w-full p-4 rounded-2xl border text-sm text-black outline-none transition-colors font-sans ${
+                  formErrors.phone ? "border-red-500 bg-red-50/20" : "border-neutral-200 focus:border-[#ff4500]"
+                }`}
+              />
+              {formErrors.phone && <p className="text-xs text-red-500 font-mono mt-1">{formErrors.phone}</p>}
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center pt-4 border-t border-neutral-100">
+            <button
+              type="button"
+              onClick={() => setStep(5)}
+              className="text-xs font-mono text-neutral-500 hover:text-black flex items-center gap-1.5"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back
+            </button>
+            <button
+              type="submit"
+              disabled={isSendingOtp}
+              className="bg-[#ff4500] hover:bg-[#e03d00] text-white px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors shadow-sm disabled:opacity-50"
+            >
+              {isSendingOtp ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" /> Sending Code...
+                </>
+              ) : (
+                <>
+                  Get Your Estimate <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* EMAIL VERIFICATION MODAL */}
+      {showOtpModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-3xl p-8 sm:p-10 max-w-md w-full border border-neutral-200 shadow-2xl relative space-y-6">
+            <button
+              type="button"
+              onClick={() => setShowOtpModal(false)}
+              className="absolute top-6 right-6 text-neutral-400 hover:text-black p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="space-y-2">
+              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest font-semibold block">
+                [ SECURITY VERIFICATION ]
+              </span>
+              <h3 className="font-display font-bold text-2xl text-black tracking-tight">
+                Verify your email.
+              </h3>
+              <p className="text-xs text-neutral-500 leading-relaxed font-sans">
+                We've sent a 6-digit verification code to <span className="text-black font-semibold">{email}</span>.
+              </p>
+            </div>
+
+            {/* 6-Digit OTP Inputs */}
+            <div className="space-y-4">
+              <div className="flex justify-between gap-2">
+                {otpDigits.map((digit, idx) => (
+                  <input
+                    key={idx}
+                    ref={(el) => { otpInputRefs.current[idx] = el; }}
+                    type="text"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => handleOtpChange(idx, e.target.value)}
+                    onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                    onPaste={handleOtpPaste}
+                    className="w-11 h-13 sm:w-12 sm:h-14 text-center font-mono font-bold text-xl text-black border border-neutral-200 rounded-xl focus:border-[#ff4500] focus:ring-1 focus:ring-[#ff4500] outline-none transition-all"
+                  />
+                ))}
+              </div>
+
+              {otpError && (
+                <p className="text-xs text-red-500 font-mono text-center">{otpError}</p>
+              )}
+            </div>
+
+            {/* Verification Actions */}
+            <div className="space-y-3 pt-2">
+              <button
+                type="button"
+                disabled={isVerifying || otpDigits.join("").length < 6}
+                onClick={handleOtpSubmit}
+                className="w-full bg-black hover:bg-[#ff4500] text-white py-4 rounded-full text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+              >
+                {isVerifying ? (
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Verify & View Estimate"
+                )}
+              </button>
+
+              <div className="flex items-center justify-between text-xs font-mono text-neutral-500 pt-2">
+                <button
+                  type="button"
+                  disabled={resendTimer > 0 || isSendingOtp}
+                  onClick={requestOtpEmail}
+                  className="hover:text-black disabled:opacity-50"
+                >
+                  {resendTimer > 0 ? `Resend code in ${resendTimer}s` : "Resend code"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setShowOtpModal(false)}
+                  className="hover:text-black"
+                >
+                  Change email
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
