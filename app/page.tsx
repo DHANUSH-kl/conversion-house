@@ -4,9 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Star, MessageSquare, ExternalLink, Target, Cpu, TrendingUp, Zap, Users, Rocket, ShieldCheck } from "lucide-react";
 import Accordion from "@/components/Accordion";
+import ScrollReveal from "@/components/ScrollReveal";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-
 
 // 1. HERO
 const HERO_TITLE_LINE1 = "When someone searches for your business…";
@@ -39,7 +38,7 @@ const PILLARS = [
   },
 ];
 
-// 3. SERVICES (Adapted style matching reference image)
+// 3. SERVICES
 const SERVICES = [
   {
     title: "Branding & Rebranding",
@@ -180,58 +179,6 @@ const PROCESS_STEPS = [
   { num: "06", title: "Optimize", subtitle: "Continuous Growth", desc: "We use data to improve SEO, advertising, conversion rates, performance and the overall customer journey." },
 ];
 
-// 8. PACKAGES
-const PACKAGES = [
-  {
-    title: "Launch",
-    desc: "Build a strong digital foundation.",
-    bullets: ["Branding", "Website", "Landing pages", "Analytics", "Basic SEO", "Conversion-focused structure"],
-    best: "Businesses starting fresh or upgrading an outdated presence.",
-    popular: false,
-  },
-  {
-    title: "Growth",
-    desc: "Turn your digital presence into a customer acquisition system.",
-    bullets: ["Website", "SEO", "Meta Ads", "Google Ads", "Conversion optimization", "Analytics", "Landing pages", "Ongoing optimization"],
-    best: "Businesses that already have a product/service and want more qualified enquiries or customers.",
-    popular: true,
-  },
-  {
-    title: "Scale",
-    desc: "Build, acquire, optimize and scale.",
-    bullets: ["Advanced branding", "High-performance website", "Headless Shopify", "Advanced SEO", "Meta Ads", "Google Ads", "CRO", "Advanced tracking", "Ongoing optimization"],
-    best: "Growing brands, e-commerce businesses and companies investing seriously in digital acquisition.",
-    popular: false,
-  },
-  {
-    title: "Custom",
-    desc: "Don't see what you need?",
-    bullets: ["Your business doesn't have to fit into a package. Select the services you need and we'll calculate an estimated project scope."],
-    best: "Businesses looking for tailored, specialized systems designed from scratch.",
-    popular: false,
-  },
-];
-
-// 11. AUDIENCE
-const AUDIENCES = [
-  { title: "Growing businesses", desc: "You already have something people want. Now your digital presence needs to catch up." },
-  { title: "New businesses", desc: "You're launching and want to start with the right brand, website and growth foundation." },
-  { title: "Service businesses", desc: "You need more qualified enquiries, bookings or calls." },
-  { title: "E-commerce brands", desc: "You want a better storefront, stronger conversion and scalable acquisition." },
-  { title: "Local businesses", desc: "You want customers to find you through Google, Maps, social and search." },
-  { title: "Established brands", desc: "Your current website, branding or acquisition strategy is no longer keeping up with the business." },
-  { title: "Founders", desc: "You know where you want to go but need the right team to build the digital system around it." },
-];
-
-const NOT_FOR = [
-  "You only want the cheapest possible website.",
-  "You're looking for a ₹5K logo with no strategic work.",
-  "You expect guaranteed Google rankings.",
-  "You want advertising without a realistic marketing budget.",
-  "You're looking for someone to simply follow instructions without challenging bad ideas.",
-  "You're not willing to invest in improving the business itself.",
-];
-
 // 13. FAQ
 const FAQ_ITEMS = [
   { question: "What does ConversionHouse do?", answer: "ConversionHouse helps businesses build and grow online through branding, website development, e-commerce, SEO, paid advertising and conversion optimization." },
@@ -270,11 +217,11 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
   return (
     <div
       ref={rowRef}
-      className={`grid grid-cols-12 gap-1.5 sm:gap-4 md:gap-8 lg:gap-10 py-8 sm:py-14 md:py-20 ${
+      className={`grid grid-cols-12 gap-2 sm:gap-4 md:gap-8 lg:gap-10 py-8 sm:py-14 md:py-20 ${
         !isLast ? "border-b border-neutral-100" : ""
       }`}
     >
-      {/* Numeral column — tight alignment to rail */}
+      {/* Numeral column */}
       <div className="col-span-2 sm:col-span-2 lg:col-span-2 relative flex justify-start sm:justify-end pr-1 sm:pr-2">
         <div className="sticky top-24 md:top-32">
           <motion.span
@@ -282,7 +229,7 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="block font-display text-[32px] sm:text-[64px] md:text-[96px] lg:text-[112px] leading-none font-extralight tracking-tighter select-none"
+            className="block font-display text-[32px] sm:text-[64px] md:text-[96px] lg:text-[112px] leading-none font-extralight select-none"
             style={{ color: "rgba(0,0,0,0.025)", WebkitTextStroke: "1.25px #d4d4d4" }}
           >
             {step.num}
@@ -291,7 +238,7 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
       </div>
 
       {/* Rail + content column */}
-      <div className="col-span-10 sm:col-span-10 lg:col-span-10 flex gap-2.5 sm:gap-6 md:gap-10">
+      <div className="col-span-10 sm:col-span-10 lg:col-span-10 flex gap-3 sm:gap-6 md:gap-10">
         <div className="relative w-px shrink-0 bg-neutral-100">
           <motion.div
             style={{ height: tickHeight }}
@@ -316,7 +263,7 @@ function TimelineRow({ step, idx, total }: TimelineRowProps) {
             </span>
           </div>
 
-          <h3 className="font-display font-bold text-2xl sm:text-3xl md:text-[42px] text-black tracking-tight leading-[1.08] mb-2 sm:mb-4 transition-colors duration-500 group-hover:text-[#ff4500]">
+          <h3 className="font-display font-bold text-2xl sm:text-3xl md:text-[42px] text-black leading-[1.1] mb-2 sm:mb-4 transition-colors duration-500 group-hover:text-[#ff4500]">
             {step.title}
           </h3>
 
@@ -349,20 +296,20 @@ function GrowthTimeline() {
 
 export default function Home() {
   return (
-    <main className="bg-white text-black">
+    <main className="bg-white text-black overflow-x-hidden">
       {/* A. HERO SECTION */}
       <section className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-12 overflow-hidden">
         <div className="container-x text-center">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
-            <h1 className="font-display tracking-tight text-black leading-tight mb-8">
-              <span className="font-display block text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-semibold tracking-tight leading-tight mb-2">
+            <h1 className="font-display text-black leading-tight mb-8">
+              <span className="font-display block text-3xl sm:text-5xl md:text-6xl lg:text-[62px] font-semibold leading-tight mb-2">
                 When people search for your business,
               </span>
-              <span className="font-display block text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-tight leading-tight">
+              <span className="font-display block text-3xl sm:text-4xl md:text-5xl lg:text-[54px] leading-tight">
                 will <span className="text-[#ff4500] font-bold">they find you</span>{" "}
                 <span className="text-black font-semibold">or your competitors?</span>
               </span>
@@ -374,7 +321,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
               <Link
                 href="/contact"
-                className="bg-[#ff4500] hover:bg-[#e03d00] text-white font-semibold px-8 py-4 rounded-full transition-colors flex items-center gap-2 group w-full sm:w-auto justify-center"
+                className="bg-[#ff4500] hover:bg-[#e03d00] text-white font-semibold px-8 py-4 rounded-full transition-colors flex items-center gap-2 group w-full sm:w-auto justify-center shadow-sm"
               >
                 Get Your Estimate <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
@@ -391,19 +338,16 @@ export default function Home() {
 
       {/* A2. SHOWCASE CAROUSEL - "A look at the work." */}
       <section className="py-16 overflow-hidden relative border-t border-neutral-100 bg-white">
-        {/* Headline container - Elevated Z-index so it sits above side blurs */}
-        <div className="container-x mb-12 relative z-30">
-          <h2 className="font-display text-4xl md:text-6xl font-semibold text-black tracking-tight leading-none">
+        <ScrollReveal className="container-x mb-12 relative z-30">
+          <h2 className="font-display text-4xl md:text-6xl font-semibold text-black leading-none">
             A look at the <span className="text-[#ff4500] font-bold">work.</span>
           </h2>
-        </div>
+        </ScrollReveal>
 
         <div className="relative">
-          {/* Side Gradient Blurs - Positioned over marquee cards only */}
           <div className="pointer-events-none absolute inset-y-0 left-0 w-24 md:w-48 bg-gradient-to-r from-white via-white/80 to-transparent z-20" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-24 md:w-48 bg-gradient-to-l from-white via-white/80 to-transparent z-20" />
 
-          {/* Infinite Moving Marquee */}
           <div className="flex overflow-hidden select-none">
             <motion.div
               className="flex gap-6 shrink-0 pr-6"
@@ -455,7 +399,6 @@ export default function Home() {
                   type: "Print & Stationery Collateral",
                   src: "/a look at work/sheen visiting card mockup (branding).jpeg",
                 },
-                // Duplicated array for smooth infinite looping
                 {
                   title: "Sheen Mobile Car Care",
                   type: "Brand Identity & Digital Launch",
@@ -510,7 +453,7 @@ export default function Home() {
                     <span className="text-[10px] font-mono text-[#ff4500] uppercase tracking-wider block mb-1">
                       {item.type}
                     </span>
-                    <h3 className="font-display text-lg sm:text-xl font-semibold tracking-tight text-white">
+                    <h3 className="font-display text-lg sm:text-xl font-semibold text-white">
                       {item.title}
                     </h3>
                   </div>
@@ -524,84 +467,67 @@ export default function Home() {
       {/* B. CORE IDEA SECTION */}
       <section className="py-28 border-t border-neutral-900 bg-black text-white overflow-hidden">
         <div className="container-x">
-          {/* Header Tag & Big Headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-4xl space-y-4 mb-20"
-          >
+          <ScrollReveal className="max-w-4xl space-y-4 mb-20">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ The Core Philosophy ]</span>
-            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold text-white leading-[0.98] tracking-tighter">
+            <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-semibold text-white leading-[1.02]">
               Your business has one goal. Your digital presence should work <span className="text-[#ff4500] font-bold">towards it.</span>
             </h2>
-          </motion.div>
+          </ScrollReveal>
 
-          {/* Stacked Row Pillars matching reference image with Framer Motion scroll animations */}
           <div className="border-t border-neutral-900 divide-y divide-neutral-900">
             {PILLARS.map((pillar, idx) => (
-              <motion.div
+              <ScrollReveal
                 key={pillar.num}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-30px" }}
-                transition={{
-                  duration: 0.9,
-                  ease: [0.16, 1, 0.3, 1],
-                  delay: idx * 0.12,
-                }}
-                className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 py-10 md:py-12 group transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-neutral-950/90 rounded-2xl px-3 md:px-6 cursor-pointer"
+                delay={idx * 0.1}
+                className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 py-10 md:py-12 group transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:bg-neutral-950/90 rounded-2xl px-3 md:px-6 cursor-pointer"
               >
-                {/* Smaller Sleek Orange Number */}
                 <div className="md:col-span-3 lg:col-span-2 flex items-start pt-1">
-                  <span className="text-xl sm:text-2xl md:text-3xl font-display font-medium text-[#ff4500] leading-none tracking-tight select-none opacity-90 group-hover:opacity-100 transition-opacity duration-700">
+                  <span className="text-xl sm:text-2xl md:text-3xl font-display font-medium text-[#ff4500] leading-none select-none opacity-90 group-hover:opacity-100 transition-opacity">
                     0{idx + 1}
                   </span>
                 </div>
 
-                {/* Title & Description */}
                 <div className="md:col-span-9 lg:col-span-10 space-y-2 md:space-y-3">
-                  <h3 className="font-display text-2xl sm:text-3xl md:text-4xl text-white tracking-tight leading-tight transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-[#ff4500] group-hover:translate-x-1">
+                  <h3 className="font-display text-2xl sm:text-3xl md:text-4xl text-white leading-tight transition-all duration-500 group-hover:text-[#ff4500] group-hover:translate-x-1">
                     {pillar.title}.
                   </h3>
-                  <p className="text-neutral-400 text-sm sm:text-base md:text-lg leading-relaxed font-sans max-w-3xl transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-neutral-300">
+                  <p className="text-neutral-400 text-sm sm:text-base md:text-lg leading-relaxed font-sans max-w-3xl transition-colors duration-500 group-hover:text-neutral-300">
                     {pillar.desc}
                   </p>
                 </div>
-              </motion.div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* C. WHAT WE DO (SERVICES OVERVIEW) */}
-      <section className="py-32 border-t border-neutral-100 bg-white">
+      <section className="py-28 sm:py-32 border-t border-neutral-100 bg-white">
         <div className="container-x">
-          <div className="mb-24 text-left max-w-4xl space-y-6">
+          <ScrollReveal className="mb-24 text-left max-w-4xl space-y-6">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Capabilities ]</span>
-            <h2 className="font-display text-5xl sm:text-7xl font-semibold text-black leading-[0.95] tracking-tighter">
+            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold text-black leading-[1.02]">
               From first impression<br />to <span className="text-[#ff4500] font-bold">final click.</span>
             </h2>
             <p className="text-neutral-500 text-sm md:text-base max-w-xl leading-relaxed pt-2">
               We don't promise a magic ranking. We build the systems that give your business a better chance of earning sustainable search visibility.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="space-y-32">
+          <div className="space-y-28 sm:space-y-32">
             {SERVICES.map((s, idx) => (
-              <div
+              <ScrollReveal
                 key={s.title}
+                delay={0.1}
                 className="pb-16 space-y-10 group relative border-b border-neutral-100/80"
               >
-                {/* Top Row: Left Title & Serial, Tag/Subtitle, Right Description */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10 items-start">
                   <div className="lg:col-span-7 flex items-start gap-4 md:gap-6 min-w-0">
-                    <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-display font-light text-[#ff4500] leading-none select-none tracking-tight shrink-0 pt-1">
+                    <span className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-display font-light text-[#ff4500] leading-none select-none shrink-0 pt-1">
                       0{idx + 1}
                     </span>
                     <div className="space-y-2.5 min-w-0">
-                      <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[58px] font-bold text-black tracking-tight leading-none transition-colors duration-500 hover:text-[#ff4500] cursor-pointer">
+                      <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-[52px] xl:text-[58px] font-bold text-black leading-none transition-colors duration-500 hover:text-[#ff4500] cursor-pointer">
                         {s.title}
                       </h3>
                       <p className="text-xs sm:text-sm font-mono text-[#ff4500] font-medium tracking-wide">
@@ -615,7 +541,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Middle Row: Image Cards (3 cards for Branding, 4 cards for Websites, ONLY images - NO text inside) */}
                 {s.images && s.images.length > 0 && (
                   <div
                     className={`grid gap-4 md:gap-5 w-full pt-4 ${
@@ -639,36 +564,32 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* Bottom Row: Typical Engagement Bar (Whole box is clickable Link) */}
                 <Link
                   href="/contact"
-                  className="group/bar block relative overflow-hidden rounded-2xl transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] p-6 bg-transparent hover:bg-[#fff2ed] cursor-pointer"
+                  className="group/bar block relative overflow-hidden rounded-2xl transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] p-6 bg-transparent hover:bg-[#fff2ed] cursor-pointer"
                 >
                   <div className="flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10">
                     <span className="text-xs md:text-sm font-sans text-neutral-700 font-medium">
                       {s.engagement}
                     </span>
 
-                    <span className="text-xs md:text-sm font-sans font-semibold text-black group-hover/bar:text-[#ff4500] flex items-center gap-2 transition-colors duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]">
-                      {s.cta} <span className="transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/bar:translate-x-1.5">→</span>
+                    <span className="text-xs md:text-sm font-sans font-semibold text-black group-hover/bar:text-[#ff4500] flex items-center gap-2 transition-colors duration-500">
+                      {s.cta} <span className="transition-transform duration-500 group-hover/bar:translate-x-1.5">→</span>
                     </span>
                   </div>
 
-                  {/* Thick Bottom Orange Border Line */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[3.5px] bg-[#ff4500] origin-left scale-x-0 transition-transform duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/bar:scale-x-100" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3.5px] bg-[#ff4500] origin-left scale-x-0 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/bar:scale-x-100" />
                 </Link>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-
-
       {/* E. SELECTED WORK */}
       <section className="py-24 border-t border-neutral-100 bg-white">
         <div className="container-x">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <ScrollReveal className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="space-y-4">
               <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Shipped Projects ]</span>
               <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black leading-none">
@@ -680,92 +601,86 @@ export default function Home() {
             </div>
             <Link
               href="/work"
-              className="bg-black hover:bg-[#ff4500] text-white text-xs font-mono uppercase tracking-wider px-6 py-3 rounded-full transition-colors"
+              className="bg-black hover:bg-[#ff4500] text-white text-xs font-mono uppercase tracking-wider px-6 py-3 rounded-full transition-colors self-start md:self-auto"
             >
               [ View All Work ]
             </Link>
-          </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-            {CASE_STUDIES.map((cs) => (
-              <div
-                key={cs.slug}
-                className="border border-neutral-200/80 rounded-[32px] overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between group"
-              >
-                {/* Upper Half: Mockup Image Showcase */}
-                <div className="h-[280px] sm:h-[340px] md:h-[380px] w-full relative overflow-hidden bg-neutral-950 group/hero">
-                  <img
-                    src={cs.image}
-                    alt={cs.name}
-                    className="w-full h-full object-cover group-hover/hero:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                  />
-                  {/* Top Bar Overlay */}
-                  <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
-                    <span className="text-[11px] font-mono text-white bg-black/60 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/20">
-                      [ Live Platform ]
-                    </span>
-                    <span className="text-[11px] font-mono text-[#ff4500] bg-black/70 backdrop-blur-md px-3.5 py-1 rounded-full border border-[#ff4500]/30 font-medium">
-                      {cs.website}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Lower Half: Content Details (Matching Reference Image) */}
-                <div className="p-8 sm:p-10 flex flex-col justify-between flex-1 space-y-6 bg-white">
-                  <div className="space-y-4">
-                    <span className="text-[#ff4500] text-xs font-mono font-semibold uppercase tracking-wider block">
-                      {cs.badge}
-                    </span>
-
-                    <h3 className="font-display font-bold text-3xl sm:text-4xl text-black tracking-normal sm:tracking-wide group-hover:text-[#ff4500] transition-colors">
-                      {cs.name}
-                    </h3>
-
-                    <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-sans">
-                      {cs.desc}
-                    </p>
-
-                    {/* Pill Badges Row */}
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {cs.pills.map((pill, pIdx) => (
-                        <span
-                          key={pill}
-                          className={
-                            pIdx === 0
-                              ? "bg-[#ff4500] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full"
-                              : "bg-neutral-100 text-neutral-700 text-xs font-medium px-3.5 py-1.5 rounded-full"
-                          }
-                        >
-                          {pill}
-                        </span>
-                      ))}
+            {CASE_STUDIES.map((cs, idx) => (
+              <ScrollReveal key={cs.slug} delay={idx * 0.15}>
+                <div className="border border-neutral-200/80 rounded-[32px] overflow-hidden bg-white shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between group">
+                  <div className="h-[280px] sm:h-[340px] md:h-[380px] w-full relative overflow-hidden bg-neutral-950 group/hero">
+                    <img
+                      src={cs.image}
+                      alt={cs.name}
+                      className="w-full h-full object-cover group-hover/hero:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                    />
+                    <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
+                      <span className="text-[11px] font-mono text-white bg-black/60 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/20">
+                        [ Live Platform ]
+                      </span>
+                      <span className="text-[11px] font-mono text-[#ff4500] bg-black/70 backdrop-blur-md px-3.5 py-1 rounded-full border border-[#ff4500]/30 font-medium">
+                        {cs.website}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Bottom Action Links */}
-                  <div className="pt-6 border-t border-neutral-100 flex items-center justify-between gap-4 flex-wrap">
-                    <Link
-                      href={`/work/${cs.slug}`}
-                      className="text-xs sm:text-sm font-sans font-semibold text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
-                    >
-                      View Case Study <ArrowRight className="w-4 h-4" />
-                    </Link>
-                    
-                    <a
-                      href={cs.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs sm:text-sm font-sans font-semibold text-[#ff4500] hover:underline flex items-center gap-1.5"
-                    >
-                      Visit Website <ExternalLink className="w-4 h-4" />
-                    </a>
+                  <div className="p-8 sm:p-10 flex flex-col justify-between flex-1 space-y-6 bg-white">
+                    <div className="space-y-4">
+                      <span className="text-[#ff4500] text-xs font-mono font-semibold uppercase tracking-wider block">
+                        {cs.badge}
+                      </span>
+
+                      <h3 className="font-display font-bold text-3xl sm:text-4xl text-black group-hover:text-[#ff4500] transition-colors">
+                        {cs.name}
+                      </h3>
+
+                      <p className="text-neutral-600 text-sm sm:text-base leading-relaxed font-sans">
+                        {cs.desc}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {cs.pills.map((pill, pIdx) => (
+                          <span
+                            key={pill}
+                            className={
+                              pIdx === 0
+                                ? "bg-[#ff4500] text-white text-xs font-semibold px-3.5 py-1.5 rounded-full"
+                                : "bg-neutral-100 text-neutral-700 text-xs font-medium px-3.5 py-1.5 rounded-full"
+                            }
+                          >
+                            {pill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="pt-6 border-t border-neutral-100 flex items-center justify-between gap-4 flex-wrap">
+                      <Link
+                        href={`/work/${cs.slug}`}
+                        className="text-xs sm:text-sm font-sans font-semibold text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors"
+                      >
+                        View Case Study <ArrowRight className="w-4 h-4" />
+                      </Link>
+                      
+                      <a
+                        href={cs.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs sm:text-sm font-sans font-semibold text-[#ff4500] hover:underline flex items-center gap-1.5"
+                      >
+                        Visit Website <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
 
-          <div className="mt-16 text-center bg-neutral-50/40 p-8 rounded-2xl border border-neutral-100 max-w-xl mx-auto space-y-4">
+          <ScrollReveal delay={0.2} className="mt-16 text-center bg-neutral-50/40 p-8 rounded-2xl border border-neutral-100 max-w-xl mx-auto space-y-4">
             <h3 className="font-display text-xl text-black">Have a project that belongs here?</h3>
             <p className="text-neutral-500 text-xs">Let's build it.</p>
             <Link
@@ -774,73 +689,71 @@ export default function Home() {
             >
               Get a Quote
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* F. RESULTS / PROOF SECTION */}
       <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
         <div className="container-x">
-          <div className="mb-16 max-w-xl">
+          <ScrollReveal className="mb-16 max-w-xl">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Sustainable Growth ]</span>
-            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black mt-4 leading-none tracking-tight">
+            <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black mt-4 leading-none">
               We care about what happens <span className="text-[#ff4500] font-bold">after launch.</span>
             </h2>
             <p className="text-neutral-500 text-sm mt-4 leading-relaxed">
               The work isn't finished when the website goes live. A successful project should create something measurable: More visibility, enquiries, sales, conversions, and a stronger brand.
             </p>
-          </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            {PROOF_CARDS.map((card) => (
-              <div key={card.title} className="bg-white border border-neutral-105 p-6 rounded-2xl shadow-sm">
+            {PROOF_CARDS.map((card, idx) => (
+              <ScrollReveal key={card.title} delay={idx * 0.08} className="bg-white border border-neutral-105 p-6 rounded-2xl shadow-sm">
                 <h3 className="font-display text-lg text-black mb-2">{card.title}</h3>
                 <p className="text-xs text-neutral-500 leading-relaxed">{card.desc}</p>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-     {/* G. HOW WE WORK (PROCESS TIMELINE) */}
-{/* G. HOW WE WORK (PROCESS TIMELINE) */}
-<section className="relative py-28 md:py-36 border-t border-neutral-100 bg-white overflow-hidden">
-  {/* Ambient background layer */}
-  <div className="absolute inset-0 pointer-events-none">
-    <div className="absolute -top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[#ff4500]/[0.035] blur-3xl" />
-    <div className="absolute top-1/2 -right-40 w-[520px] h-[520px] rounded-full bg-[#ff4500]/[0.03] blur-3xl" />
-    <div
-      className="absolute inset-0 opacity-[0.5]"
-      style={{
-        backgroundImage: "radial-gradient(#00000009 1px, transparent 1px)",
-        backgroundSize: "28px 28px",
-      }}
-    />
-  </div>
+      {/* G. HOW WE WORK (PROCESS TIMELINE) */}
+      <section className="relative py-28 md:py-36 border-t border-neutral-100 bg-white overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-32 -left-32 w-[420px] h-[420px] rounded-full bg-[#ff4500]/[0.035] blur-3xl" />
+          <div className="absolute top-1/2 -right-40 w-[520px] h-[520px] rounded-full bg-[#ff4500]/[0.03] blur-3xl" />
+          <div
+            className="absolute inset-0 opacity-[0.5]"
+            style={{
+              backgroundImage: "radial-gradient(#00000009 1px, transparent 1px)",
+              backgroundSize: "28px 28px",
+            }}
+          />
+        </div>
 
-  <div className="container-x relative z-10">
-    <div className="mb-20 md:mb-28 max-w-2xl">
-      <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block mb-4">
-        [ Operating System ]
-      </span>
-      <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-black tracking-tight leading-[1.05] mb-6">
-        The ConversionHouse <span className="text-[#ff4500] font-bold">Growth Loop</span>
-      </h2>
-      <div className="flex items-center gap-3">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#ff4500]" />
-        <span className="text-xs sm:text-sm font-mono text-neutral-500 tracking-wide">
-          Build → Measure → Learn → Improve → Repeat.
-        </span>
-      </div>
-    </div>
+        <div className="container-x relative z-10">
+          <ScrollReveal className="mb-20 md:mb-28 max-w-2xl">
+            <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block mb-4">
+              [ Operating System ]
+            </span>
+            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-black leading-[1.05] mb-6">
+              The ConversionHouse <span className="text-[#ff4500] font-bold">Growth Loop</span>
+            </h2>
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff4500]" />
+              <span className="text-xs sm:text-sm font-mono text-neutral-500 tracking-wide">
+                Build → Measure → Learn → Improve → Repeat.
+              </span>
+            </div>
+          </ScrollReveal>
 
-    <GrowthTimeline />
-  </div>
-</section>
+          <GrowthTimeline />
+        </div>
+      </section>
 
       {/* I. QUOTE CALCULATOR TEASER */}
       <section className="py-24 border-t border-neutral-100 bg-white">
-        <div className="container-x text-center max-w-xl mx-auto space-y-6">
+        <ScrollReveal className="container-x text-center max-w-xl mx-auto space-y-6">
           <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Dynamic Estimator ]</span>
           <h2 className="font-display text-4xl sm:text-5xl font-semibold text-black leading-none">
             Tell us what you're <span className="text-[#ff4500] font-bold">building.</span>
@@ -864,14 +777,14 @@ export default function Home() {
               <MessageSquare className="w-4 h-4 text-[#ff4500]" /> Talk on WhatsApp
             </a>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* J. ABOUT TEASER */}
       <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
         <div className="container-x">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-6">
+            <ScrollReveal className="lg:col-span-6 space-y-6">
               <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Who We Are ]</span>
               <h2 className="font-display text-4xl sm:text-5xl font-semibold leading-tight text-black">
                 Pretty is good. <span className="text-[#ff4500] font-bold">Purpose is better.</span>
@@ -879,9 +792,9 @@ export default function Home() {
               <p className="text-neutral-500 leading-relaxed text-sm">
                 ConversionHouse exists to close the gap between looking good online and performing well online. We bring together creative thinking, technology and digital growth to help businesses build stronger brands, better experiences and more effective customer journeys.
               </p>
-            </div>
+            </ScrollReveal>
 
-            <div className="lg:col-span-6 bg-white border border-neutral-100 p-8 rounded-2xl relative overflow-hidden shadow-sm">
+            <ScrollReveal delay={0.15} className="lg:col-span-6 bg-white border border-neutral-100 p-8 rounded-2xl relative overflow-hidden shadow-sm">
               <h3 className="text-xs font-mono uppercase text-[#ff4500] tracking-widest mb-4">
                 ABOUT PHILOSOPHY
               </h3>
@@ -897,47 +810,29 @@ export default function Home() {
                   <p>• Data tells us what to improve.</p>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
-
-      {/* L. CLIENT SUPPORT */}
-      <section className="py-24 border-t border-neutral-100 bg-neutral-50/30">
-        <div className="container-x text-center max-w-2xl mx-auto space-y-6">
-          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Active Partnerships ]</span>
-          <h2 className="font-display text-3xl sm:text-4xl text-black">
-            We don't disappear after delivery.
-          </h2>
-          <p className="text-sm text-neutral-500 leading-relaxed">
-            Your website going live shouldn't mean your relationship with us ends. Depending on your requirements, ConversionHouse can continue working with you through: SEO, Paid advertising, Website maintenance, CRO, analytics, and strategy.
-          </p>
-          <div className="text-xs font-mono text-[#ff4500] uppercase tracking-wider">
-            "Launch is not the end of the project. It's the beginning of growth."
-          </div>
-        </div>
-      </section>
-
-
 
       {/* N. FAQ */}
       <section id="faq" className="py-28 border-t border-neutral-100 bg-white">
         <div className="container-x">
-          <div className="mb-16 max-w-5xl mx-auto space-y-4">
+          <ScrollReveal className="mb-16 max-w-5xl mx-auto space-y-4">
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block">[ Clear Answers ]</span>
-            <h2 className="font-display font-semibold text-4xl sm:text-6xl text-black tracking-tight leading-tight">
+            <h2 className="font-display font-semibold text-4xl sm:text-6xl text-black leading-tight">
               Things founders ask before <span className="text-[#ff4500] font-bold">hiring us.</span>
             </h2>
-          </div>
+          </ScrollReveal>
           <Accordion items={FAQ_ITEMS} />
         </div>
       </section>
 
       {/* O. FINAL CTA */}
       <section className="py-32 border-t border-neutral-100 bg-white relative overflow-hidden">
-        <div className="container-x relative z-10 text-center max-w-3xl space-y-8">
+        <ScrollReveal className="container-x relative z-10 text-center max-w-3xl space-y-8">
           <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Get Started ]</span>
-          <h2 className="font-display text-4xl sm:text-6xl font-semibold text-black leading-tight tracking-tight">
+          <h2 className="font-display text-4xl sm:text-6xl font-semibold text-black leading-tight">
             Ready to turn your digital presence into a <span className="text-[#ff4500] font-bold">growth engine?</span>
           </h2>
           <p className="text-neutral-500 text-sm max-w-lg mx-auto leading-relaxed">
@@ -948,21 +843,10 @@ export default function Home() {
               href="/contact"
               className="bg-black hover:bg-[#ff4500] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors w-full sm:w-auto"
             >
-              Get a Quote
+              Get Your Estimate
             </Link>
-            <a
-              href="https://wa.me/919900447762"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-ghost text-black font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full flex items-center justify-center gap-2 w-full sm:w-auto"
-            >
-              <MessageSquare className="w-4 h-4 text-[#ff4500]" /> WhatsApp Us
-            </a>
           </div>
-          <p className="text-xs text-neutral-400 font-mono">
-            Tell us what you're building. Select what you need. Get an estimated investment.
-          </p>
-        </div>
+        </ScrollReveal>
       </section>
     </main>
   );

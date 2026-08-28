@@ -79,25 +79,47 @@
   --accent-hover: #e03d00;
 }
 
-body {
+html, body {
   background: var(--bg-light);
   color: var(--ink-light);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  width: 100%;
 }
 
+/* Global Font Display & Letter Spacing Rules - Prevents Character Collisions */
 .font-display {
   font-family: 'Clash Display', var(--font-clash-display), sans-serif !important;
-  letter-spacing: normal;
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: normal !important;
+  word-spacing: normal !important;
+}
+
+/* Ensure no tight tracking squishes characters on mobile/tablet screens */
+@media (max-width: 1024px) {
+  .tracking-tight, .tracking-tighter {
+    letter-spacing: 0.01em !important;
+  }
 }
 
 .container-x {
   max-width: 1440px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 28px;
-  padding-right: 28px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+@media (min-width: 640px) {
+  .container-x {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 }
 
 @media (min-width: 768px) {
