@@ -1,9 +1,41 @@
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
+import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { SITE_CONFIG, getCanonicalUrl } from "@/lib/seo";
+import { getBreadcrumbSchema } from "@/lib/structured-data";
 
-export const metadata = {
-  title: "About Us — ConversionHouse",
-  description: "ConversionHouse exists to close the gap between looking good online and performing well online.",
+export const metadata: Metadata = {
+  title: "About ConversionHouse — Digital Growth Studio & Performance Agency",
+  description:
+    "Learn about ConversionHouse, a digital growth studio dedicated to closing the gap between looking good online and delivering measurable return on ad spend.",
+  alternates: {
+    canonical: getCanonicalUrl("/about"),
+  },
+  openGraph: {
+    title: "About ConversionHouse — Digital Growth Studio & Performance Agency",
+    description:
+      "Learn about ConversionHouse, a digital growth studio dedicated to closing the gap between looking good online and delivering measurable return on ad spend.",
+    url: getCanonicalUrl("/about"),
+    siteName: SITE_CONFIG.name,
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`,
+        width: 1200,
+        height: 630,
+        alt: "About ConversionHouse",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About ConversionHouse — Digital Growth Studio & Performance Agency",
+    description:
+      "Learn about ConversionHouse, a digital growth studio dedicated to closing the gap between looking good online and delivering measurable return on ad spend.",
+    images: [`${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`],
+  },
 };
 
 const AUDIENCES = [
@@ -26,120 +58,106 @@ const NOT_FOR = [
 ];
 
 export default function AboutPage() {
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "About", item: "/about" },
+  ];
+  const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
+  const aboutPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About ConversionHouse",
+    description: "ConversionHouse exists to close the gap between looking good online and performing well online.",
+    url: getCanonicalUrl("/about"),
+    mainEntity: {
+      "@id": `${SITE_CONFIG.url}/#organization`,
+    },
+  };
+
   return (
     <main className="bg-black text-white pt-32 pb-24">
+      <JsonLd data={[breadcrumbSchema, aboutPageSchema]} />
+
       <div className="container-x">
-        
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+            <li>
+              <Link href="/" className="hover:text-[#ff5722] transition-colors">
+                Home
+              </Link>
+            </li>
+            <li>/</li>
+            <li className="text-white font-medium">About</li>
+          </ol>
+        </nav>
+
         {/* H1 header */}
         <div className="max-w-3xl mb-16 space-y-4">
           <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Studio Identity ]</span>
           <h1 className="font-display text-4xl sm:text-6xl text-white leading-tight">
             We build with one question in mind: Will this actually help the business?
           </h1>
+          <p className="text-neutral-400 text-sm md:text-base leading-relaxed pt-2">
+            ConversionHouse was built on a simple premise: Most digital agencies sell deliverables like logos, websites, or ad packages without connecting them to actual revenue growth. We bridge brand, engineering, and performance marketing into one unified growth system.
+          </p>
         </div>
 
-        {/* Section 1: Studio */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-16 border-t border-neutral-900">
-          <div className="lg:col-span-4 text-xs font-mono text-[#ff5722] uppercase">
-            [ 01 — Studio ]
+        {/* Core Philosophy Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+          <div className="bg-neutral-950 border border-neutral-900 p-8 rounded-3xl space-y-4">
+            <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Who We Are ]</span>
+            <h2 className="font-display text-2xl sm:text-3xl text-white">Pretty is good. Purpose is better.</h2>
+            <p className="text-neutral-400 text-sm leading-relaxed">
+              Design matters. Visual presence matters. But design without user intent is decoration. We build high-converting brand identities, fast Next.js & Shopify platforms, Meta Ads campaigns, and Google Ads setups built to convert attention into customers.
+            </p>
           </div>
-          <div className="lg:col-span-8 space-y-6 text-neutral-400 text-sm md:text-base leading-relaxed">
-            <p className="font-display text-xl text-white">
-              ConversionHouse exists to close the gap between looking good online and performing well online.
-            </p>
-            <p>
-              We bring together creative thinking, technology and digital growth to help businesses build stronger brands, better experiences and more effective customer journeys.
-            </p>
-            <p>
-              We believe your website shouldn't just tell people who you are. It should help them understand: Why you? Why now? What should I do next? And your marketing shouldn't simply generate traffic. It should create opportunities.
+
+          <div className="bg-neutral-950 border border-neutral-900 p-8 rounded-3xl space-y-4">
+            <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ How We Work ]</span>
+            <h2 className="font-display text-2xl sm:text-3xl text-white">One dedicated partner accountable for growth.</h2>
+            <p className="text-neutral-400 text-sm leading-relaxed">
+              Instead of hiring separate agencies for branding, web development, SEO, Meta Ads, and CRO, ConversionHouse provides one dedicated team accountable for the overall outcome.
             </p>
           </div>
         </div>
 
-        {/* Section 2: Story / Philosophy */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-16 border-t border-neutral-900 bg-neutral-950/40 p-6 md:p-8 rounded-2xl">
-          <div className="lg:col-span-4 text-xs font-mono text-[#ff5722] uppercase">
-            [ 02 — Philosophy ]
+        {/* Who We Work With */}
+        <div className="mb-20 space-y-8">
+          <div>
+            <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Target Clients ]</span>
+            <h2 className="font-display text-3xl sm:text-4xl text-white mt-2 font-semibold">Who we build for:</h2>
           </div>
-          <div className="lg:col-span-8 space-y-6">
-            <h2 className="font-display text-3xl text-white">
-              Pretty is good. Purpose is better.
-            </h2>
-            <div className="text-neutral-400 text-sm space-y-4 max-w-xl leading-relaxed">
-              <p>
-                A beautiful brand that nobody remembers isn't enough. A fast website that nobody understands isn't enough. Traffic that doesn't convert isn't enough. We believe every decision should have a reason.
-              </p>
-              <div className="space-y-2 text-xs font-mono text-[#ff5722] pl-4 border-l border-neutral-800">
-                <p>• Strategy informs design.</p>
-                <p>• Design supports experience.</p>
-                <p>• Technology enables performance.</p>
-                <p>• Marketing creates demand.</p>
-                <p>• Data tells us what to improve.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {AUDIENCES.map((aud, idx) => (
+              <div key={idx} className="bg-neutral-950 border border-neutral-900 p-6 rounded-2xl space-y-2">
+                <h3 className="font-display text-xl text-white font-semibold">{aud.title}</h3>
+                <p className="text-xs text-neutral-400 leading-relaxed">{aud.desc}</p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Section 3: Who we work with */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-16 border-t border-neutral-900">
-          <div className="lg:col-span-4 text-xs font-mono text-[#ff5722] uppercase">
-            [ 03 — Alignment ]
-          </div>
-          
-          <div className="lg:col-span-8 space-y-12">
-            <div>
-              <h2 className="font-display text-2xl text-white mb-6">Suitable For</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {AUDIENCES.map((aud) => (
-                  <div key={aud.title} className="bg-neutral-950 border border-neutral-900 p-6 rounded-xl">
-                    <h3 className="font-display text-base text-white mb-2">{aud.title}</h3>
-                    <p className="text-xs text-neutral-400 leading-relaxed">{aud.desc}</p>
-                  </div>
-                ))}
+        {/* Who We Are NOT For */}
+        <div className="mb-20 bg-neutral-950 border border-neutral-900 p-8 md:p-12 rounded-3xl space-y-6">
+          <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Clear Expectations ]</span>
+          <h2 className="font-display text-2xl sm:text-3xl text-white">Who we are NOT a good fit for:</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {NOT_FOR.map((item, idx) => (
+              <div key={idx} className="flex items-start gap-3 bg-neutral-900/60 p-4 rounded-xl border border-neutral-800">
+                <span className="text-[#ff5722] font-mono text-sm font-bold">✕</span>
+                <p className="text-xs sm:text-sm text-neutral-300">{item}</p>
               </div>
-            </div>
-
-            <div className="bg-neutral-950 border border-neutral-900 p-6 md:p-8 rounded-2xl">
-              <h3 className="font-display text-lg text-[#ff5722] mb-6">
-                We're probably not the right fit if...
-              </h3>
-              <ul className="space-y-3">
-                {NOT_FOR.map((item, idx) => (
-                  <li key={idx} className="text-xs text-neutral-400 flex items-start gap-2.5">
-                    <span className="text-neutral-600 font-semibold">[✕]</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <div className="border-t border-neutral-900 pt-6 mt-6">
-                <p className="text-xs italic text-neutral-500">
-                  "We'd rather build something meaningful with the right clients than take every project that comes our way."
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 4: Client Support */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 py-16 border-t border-neutral-900">
-          <div className="lg:col-span-4 text-xs font-mono text-[#ff5722] uppercase">
-            [ 04 — Ongoing Support ]
-          </div>
-          <div className="lg:col-span-8 space-y-6 text-neutral-400 text-sm leading-relaxed">
-            <p>
-              Your website going live shouldn't mean your relationship with us ends. Depending on your requirements, ConversionHouse can continue working with you through SEO, paid advertising, website maintenance, conversion optimization, performance improvements, analytics, and strategy.
-            </p>
-            <div className="text-xs font-mono text-[#ff5722] uppercase tracking-wider mt-4">
-              "Launch is not the end of the project. It's the beginning of growth."
-            </div>
+            ))}
           </div>
         </div>
 
         {/* CTA */}
-        <div className="mt-20 border-t border-neutral-900 pt-12 text-center max-w-xl mx-auto space-y-4">
-          <p className="text-neutral-400 text-sm">
-            Working on something serious? Tell us about the brand, website, or growth system you're building.
-          </p>
+        <div className="text-center max-w-xl mx-auto space-y-6">
+          <h2 className="font-display text-3xl sm:text-4xl text-white font-semibold">
+            Ready to take digital growth seriously?
+          </h2>
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 bg-[#ff5722] hover:bg-[#e64a19] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors"

@@ -1,9 +1,41 @@
 import Link from "next/link";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { SITE_CONFIG, getCanonicalUrl } from "@/lib/seo";
+import { getBreadcrumbSchema } from "@/lib/structured-data";
 
-export const metadata = {
-  title: "Selected Work — ConversionHouse",
-  description: "A curated set of brand systems, websites, e-commerce and growth projects shipped for founders and leadership teams.",
+export const metadata: Metadata = {
+  title: "Case Studies & Client Results",
+  description:
+    "Explore ConversionHouse case studies across brand identity, high-converting web development, Meta Ads, SEO, and headless Shopify e-commerce.",
+  alternates: {
+    canonical: getCanonicalUrl("/work"),
+  },
+  openGraph: {
+    title: "Case Studies & Client Results — ConversionHouse",
+    description:
+      "Explore ConversionHouse case studies across brand identity, high-converting web development, Meta Ads, SEO, and headless Shopify e-commerce.",
+    url: getCanonicalUrl("/work"),
+    siteName: SITE_CONFIG.name,
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`,
+        width: 1200,
+        height: 630,
+        alt: "ConversionHouse Case Studies",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Case Studies & Client Results — ConversionHouse",
+    description:
+      "Explore ConversionHouse case studies across brand identity, high-converting web development, Meta Ads, SEO, and headless Shopify e-commerce.",
+    images: [`${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`],
+  },
 };
 
 const CASE_STUDIES = [
@@ -43,17 +75,46 @@ const CASE_STUDIES = [
 ];
 
 export default function WorkPage() {
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Work", item: "/work" },
+  ];
+  const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "ConversionHouse Case Studies",
+    description: "Curated portfolio of brand systems, high-converting websites, Meta Ads, and e-commerce platforms.",
+    url: getCanonicalUrl("/work"),
+  };
+
   return (
     <main className="bg-white text-black pt-32 pb-24 border-t border-neutral-100">
+      <JsonLd data={[breadcrumbSchema, collectionSchema]} />
+
       <div className="container-x">
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-xs font-mono text-neutral-500">
+            <li>
+              <Link href="/" className="hover:text-[#ff4500] transition-colors">
+                Home
+              </Link>
+            </li>
+            <li>/</li>
+            <li className="text-black font-medium">Work</li>
+          </ol>
+        </nav>
+
         {/* Header */}
         <div className="max-w-3xl mb-16 space-y-4">
-          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Portfolio ]</span>
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Shipped Projects ]</span>
           <h1 className="font-display text-4xl sm:text-6xl text-black font-semibold leading-tight tracking-tight">
-            Select work from <span className="text-[#ff4500] font-bold">our projects.</span>
+            Select work from <span className="text-[#ff4500] font-bold">our client projects.</span>
           </h1>
           <p className="text-neutral-600 text-sm md:text-base leading-relaxed">
-            A curated set of brand systems, websites, e-commerce and growth projects shipped for founders and leadership teams. Each one starts with a business problem, not a moodboard.
+            A curated set of brand systems, websites, e-commerce, and growth projects shipped for founders and leadership teams. Every project starts with a commercial objective.
           </p>
         </div>
 
@@ -68,7 +129,7 @@ export default function WorkPage() {
               <div className="h-[240px] sm:h-[280px] w-full relative overflow-hidden bg-neutral-950 group/hero">
                 <img
                   src={cs.image}
-                  alt={cs.name}
+                  alt={`Case study preview for ${cs.name}`}
                   className="w-full h-full object-cover group-hover/hero:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 />
                 <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
@@ -139,7 +200,7 @@ export default function WorkPage() {
             We take on a limited number of new engagements each year.
           </h2>
           <p className="text-neutral-600 text-sm leading-relaxed">
-            Tell us about the brand, website, or growth system you're trying to build. We are ready to help you take digital seriously.
+            Tell us about the brand, website, Meta Ads campaign, or growth system you're trying to build. We are ready to help you take digital seriously.
           </p>
           <Link
             href="/contact"

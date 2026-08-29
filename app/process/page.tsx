@@ -1,9 +1,41 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { SITE_CONFIG, getCanonicalUrl } from "@/lib/seo";
+import { getBreadcrumbSchema } from "@/lib/structured-data";
 
-export const metadata = {
-  title: "Process — ConversionHouse",
-  description: "The ConversionHouse Growth Loop: From idea to growth. Build, measure, learn, improve, repeat.",
+export const metadata: Metadata = {
+  title: "Growth Process & Operating System",
+  description:
+    "The ConversionHouse Growth Loop: Discover, Define, Build, Launch, Measure, and Optimize. Our 6-stage continuous growth process.",
+  alternates: {
+    canonical: getCanonicalUrl("/process"),
+  },
+  openGraph: {
+    title: "Growth Process & Operating System — ConversionHouse",
+    description:
+      "The ConversionHouse Growth Loop: Discover, Define, Build, Launch, Measure, and Optimize. Our 6-stage continuous growth process.",
+    url: getCanonicalUrl("/process"),
+    siteName: SITE_CONFIG.name,
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`,
+        width: 1200,
+        height: 630,
+        alt: "ConversionHouse Growth Process",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Growth Process & Operating System — ConversionHouse",
+    description:
+      "The ConversionHouse Growth Loop: Discover, Define, Build, Launch, Measure, and Optimize. Our 6-stage continuous growth process.",
+    images: [`${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`],
+  },
 };
 
 const STEPS = [
@@ -46,18 +78,38 @@ const STEPS = [
 ];
 
 export default function ProcessPage() {
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Process", item: "/process" },
+  ];
+  const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
   return (
     <main className="bg-black text-white pt-32 pb-24">
+      <JsonLd data={breadcrumbSchema} />
+
       <div className="container-x">
-        
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-xs font-mono text-neutral-400">
+            <li>
+              <Link href="/" className="hover:text-[#ff5722] transition-colors">
+                Home
+              </Link>
+            </li>
+            <li>/</li>
+            <li className="text-white font-medium">Process</li>
+          </ol>
+        </nav>
+
         {/* Intro */}
         <div className="max-w-3xl mb-20 space-y-4">
-          <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Our Process ]</span>
+          <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Our Operating System ]</span>
           <h1 className="font-display text-4xl sm:text-6xl text-white leading-tight">
-            From idea to growth.
+            From idea to sustainable growth.
           </h1>
           <p className="text-neutral-400 text-sm md:text-base leading-relaxed">
-            The ConversionHouse Growth Loop is an operating system designed around continuous validation. We connect strategy, execution, and tracking.
+            The ConversionHouse Growth Loop is an operating framework designed around continuous validation. We connect research, build execution, tracking, and campaign optimization.
           </p>
         </div>
 
@@ -68,7 +120,7 @@ export default function ProcessPage() {
             Build → Measure → Learn → Improve → Repeat.
           </h2>
           <p className="text-neutral-500 text-xs font-mono mt-4">
-            This loop runs across every engagement: brand, website, e-commerce, SEO, ads, and optimization.
+            This loop runs across every engagement: brand, website, e-commerce, SEO, Meta Ads, Google Ads, and conversion optimization.
           </p>
         </div>
 

@@ -1,12 +1,62 @@
+import Link from "next/link";
 import QuoteCalculator from "@/components/QuoteCalculator";
-import { MessageSquare, Mail, Briefcase, LifeBuoy, CreditCard, UserCheck } from "lucide-react";
+import { MessageSquare, Mail, Briefcase, LifeBuoy } from "lucide-react";
+import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { SITE_CONFIG, getCanonicalUrl } from "@/lib/seo";
+import { getBreadcrumbSchema } from "@/lib/structured-data";
 
-export const metadata = {
-  title: "Contact & Estimate — ConversionHouse",
-  description: "Get in touch with ConversionHouse or calculate an estimated investment for your project.",
+export const metadata: Metadata = {
+  title: "Contact & Project Quote Calculator",
+  description:
+    "Contact ConversionHouse or calculate an estimated investment for Meta Ads, Google Ads, website development, e-commerce, or CRO.",
+  alternates: {
+    canonical: getCanonicalUrl("/contact"),
+  },
+  openGraph: {
+    title: "Contact & Project Quote Calculator — ConversionHouse",
+    description:
+      "Contact ConversionHouse or calculate an estimated investment for Meta Ads, Google Ads, website development, e-commerce, or CRO.",
+    url: getCanonicalUrl("/contact"),
+    siteName: SITE_CONFIG.name,
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`,
+        width: 1200,
+        height: 630,
+        alt: "Contact ConversionHouse",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact & Project Quote Calculator — ConversionHouse",
+    description:
+      "Contact ConversionHouse or calculate an estimated investment for Meta Ads, Google Ads, website development, e-commerce, or CRO.",
+    images: [`${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`],
+  },
 };
 
 export default function ContactPage() {
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Contact", item: "/contact" },
+  ];
+  const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact ConversionHouse",
+    description: "Get in touch or calculate a project estimate.",
+    url: getCanonicalUrl("/contact"),
+    mainEntity: {
+      "@id": `${SITE_CONFIG.url}/#organization`,
+    },
+  };
+
   const contactChannels = [
     {
       title: "General Inquiries",
@@ -17,108 +67,106 @@ export default function ContactPage() {
     {
       title: "New Projects & Scope",
       email: "projects@conversionhouse.in",
-      desc: "Ready to start a brand, website, or digital system? Reach out to our project team.",
+      desc: "Ready to start a performance marketing campaign, Meta Ads, website, or growth system?",
       icon: Briefcase,
     },
     {
       title: "Client Support & Maintenance",
       email: "support@conversionhouse.in",
-      desc: "For active clients needing help, updates, maintenance, or growth support.",
+      desc: "For ongoing optimization, analytics, and retainer updates.",
       icon: LifeBuoy,
-    },
-    {
-      title: "Accounts & Finance",
-      email: "accounts@conversionhouse.in",
-      desc: "For billing, invoices, payments, and financial queries.",
-      icon: CreditCard,
-    },
-    {
-      title: "Founder / Direct Contact",
-      email: "dhanush@conversionhouse.in",
-      desc: "Direct line for strategic partnerships and founder consultations.",
-      icon: UserCheck,
     },
   ];
 
   return (
-    <main className="bg-black text-white pt-32 pb-24 min-h-[90vh] flex flex-col justify-center">
+    <main className="bg-white text-black pt-32 pb-24 border-t border-neutral-100">
+      <JsonLd data={[breadcrumbSchema, contactPageSchema]} />
+
       <div className="container-x">
-        <div className="max-w-2xl mx-auto text-center mb-12 space-y-4">
-          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Dynamic Pricing Engine ]</span>
-          <h1 className="font-display text-4xl md:text-5xl text-white leading-tight">
-            Tell us what you're building.
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-xs font-mono text-neutral-500">
+            <li>
+              <Link href="/" className="hover:text-[#ff4500] transition-colors">
+                Home
+              </Link>
+            </li>
+            <li>/</li>
+            <li className="text-black font-medium">Contact</li>
+          </ol>
+        </nav>
+
+        {/* Page Header */}
+        <div className="max-w-3xl mb-16 space-y-4">
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Estimate & Contact ]</span>
+          <h1 className="font-display font-semibold text-4xl sm:text-6xl text-black leading-tight tracking-tight">
+            Let's talk about <span className="text-[#ff4500] font-bold">your project.</span>
           </h1>
-          <p className="text-neutral-400 text-sm">
-            Select what you need. Get an estimated investment.
+          <p className="text-neutral-600 text-sm md:text-base leading-relaxed">
+            Use our interactive quote calculator below to select your requirements and calculate an estimated investment, or reach out to our team directly.
           </p>
         </div>
 
-        <QuoteCalculator />
+        {/* Interactive Quote Calculator */}
+        <div className="mb-20">
+          <QuoteCalculator />
+        </div>
 
-        {/* DIRECT CONTACT CHANNELS & ALIASES */}
-        <div className="mt-28 border-t border-neutral-900 pt-20 max-w-5xl mx-auto">
-          <div className="text-center mb-16 space-y-3">
+        {/* Direct Contact Channels */}
+        <div className="border-t border-neutral-100 pt-16 space-y-8">
+          <div>
             <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Direct Channels ]</span>
-            <h2 className="font-display text-3xl md:text-4xl text-white">
-              Get in touch directly.
+            <h2 className="font-display font-semibold text-3xl text-black mt-2">
+              Reach out directly:
             </h2>
-            <p className="text-neutral-400 text-sm max-w-md mx-auto">
-              Need immediate assistance or looking to reach a specific department? Choose the best channel below.
-            </p>
           </div>
 
-          {/* WHATSAPP HIGHLIGHT CARD */}
-          <div className="bg-neutral-900/60 border border-neutral-800 p-8 rounded-2xl mb-12 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-[#ff4500]/10 border border-[#ff4500]/30 flex items-center justify-center shrink-0">
-                <MessageSquare className="w-6 h-6 text-[#ff4500]" />
-              </div>
-              <div>
-                <h3 className="font-display text-lg text-white font-semibold">WhatsApp Enquiries</h3>
-                <p className="text-xs text-neutral-400 mt-1">Instant chat for quick questions, quotes, and project discussions.</p>
-                <p className="text-sm font-mono text-[#ff4500] mt-1">+91 99004 47762</p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {contactChannels.map((channel, idx) => {
+              const Icon = channel.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-neutral-50/70 border border-neutral-200/80 p-6 rounded-2xl space-y-3"
+                >
+                  <div className="w-10 h-10 rounded-full bg-white border border-neutral-200 flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-[#ff4500]" />
+                  </div>
+                  <h3 className="font-display font-semibold text-lg text-black">{channel.title}</h3>
+                  <p className="text-xs text-neutral-500 leading-relaxed font-sans">{channel.desc}</p>
+                  <div className="pt-2">
+                    <a
+                      href={`mailto:${channel.email}`}
+                      className="text-xs font-mono text-[#ff4500] hover:underline font-semibold"
+                    >
+                      {channel.email}
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Quick WhatsApp Banner */}
+          <div className="bg-neutral-950 text-white p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 max-w-3xl mx-auto mt-12">
+            <div>
+              <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest block mb-1">
+                Fast Response
+              </span>
+              <h3 className="font-display text-xl font-semibold text-white">Prefer to chat on WhatsApp?</h3>
+              <p className="text-xs text-neutral-400 mt-1">Get immediate project feedback from our team.</p>
             </div>
             <a
               href="https://wa.me/919900447762"
               target="_blank"
-              rel="noreferrer"
-              className="bg-[#ff4500] hover:bg-[#ff5722] text-white text-xs font-mono font-semibold uppercase tracking-wider px-6 py-3.5 rounded-full transition-colors shrink-0"
+              rel="noopener noreferrer"
+              className="bg-[#ff4500] hover:bg-[#e03d00] text-white font-semibold text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-colors flex items-center gap-2 shrink-0"
             >
-              Chat on WhatsApp
+              <MessageSquare className="w-4 h-4" /> Message Us on WhatsApp
             </a>
           </div>
-
-          {/* EMAIL ALIASES GRID */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {contactChannels.map((channel) => {
-              const Icon = channel.icon;
-              return (
-                <a
-                  key={channel.email}
-                  href={`mailto:${channel.email}`}
-                  className="group bg-neutral-900/40 hover:bg-neutral-900 border border-neutral-800 hover:border-neutral-700 p-6 rounded-xl transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono text-neutral-400 uppercase tracking-wider">{channel.title}</span>
-                      <Icon className="w-4 h-4 text-[#ff4500] group-hover:scale-110 transition-transform" />
-                    </div>
-                    <span className="font-mono text-sm font-semibold text-white group-hover:text-[#ff4500] transition-colors block mb-2">
-                      {channel.email}
-                    </span>
-                    <p className="text-xs text-neutral-400 leading-relaxed">
-                      {channel.desc}
-                    </p>
-                  </div>
-                  <div className="mt-6 text-[11px] font-mono text-[#ff4500] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                    Send Email &rarr;
-                  </div>
-                </a>
-              );
-            })}
-          </div>
         </div>
+
       </div>
     </main>
   );

@@ -20,7 +20,7 @@ export default function Footer() {
                 </span>
               </Link>
               <p className="text-neutral-500 text-sm max-w-sm leading-relaxed mt-4">
-                We build brands, websites, e-commerce experiences and growth systems designed to help businesses move forward.
+                We build brands, websites, performance marketing campaigns, and growth systems designed to turn attention into qualified customers.
               </p>
               
               {/* Contact Information */}
@@ -52,26 +52,23 @@ export default function Footer() {
             {/* Services */}
             <div>
               <h4 className="text-xs font-mono text-[#ff4500] uppercase tracking-wider mb-4">
-                Services
+                Capabilities
               </h4>
               <ul className="space-y-2">
                 {[
-                  "Branding",
-                  "Websites",
-                  "E-commerce",
-                  "SEO",
-                  "Meta Ads",
-                  "Google Ads",
-                  "CRO",
-                  "Analytics",
-                  "Maintenance"
+                  { label: "Meta Ads Agency", href: "/services/meta-ads" },
+                  { label: "Google Ads Agency", href: "/services/google-ads" },
+                  { label: "Lead Generation", href: "/services/lead-generation" },
+                  { label: "CRO & UX Design", href: "/services/conversion-rate-optimization" },
+                  { label: "UGC Ads Creative", href: "/services/ugc-ads" },
+                  { label: "All Capabilities", href: "/services" },
                 ].map((item) => (
-                  <li key={item}>
+                  <li key={item.href}>
                     <Link
-                      href="/services"
+                      href={item.href}
                       className="text-neutral-600 hover:text-black text-sm transition-colors"
                     >
-                      {item}
+                      {item.label}
                     </Link>
                   </li>
                 ))}
@@ -148,9 +145,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom copyright line */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 gap-4 text-xs text-neutral-400">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-400">
           <p>© {new Date().getFullYear()} ConversionHouse. All rights reserved.</p>
-          <p className="font-mono">Built for businesses ready to take digital seriously.</p>
+          <p className="text-[#ff4500]">Brand. Build. Convert. Grow.</p>
         </div>
       </div>
     </footer>

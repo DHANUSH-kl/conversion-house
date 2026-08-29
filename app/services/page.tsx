@@ -1,136 +1,168 @@
 import Link from "next/link";
 import { ArrowRight, Check } from "lucide-react";
+import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { SITE_CONFIG, getCanonicalUrl } from "@/lib/seo";
+import { getBreadcrumbSchema, getServiceSchema } from "@/lib/structured-data";
 
-export const metadata = {
-  title: "Services — ConversionHouse",
-  description: "Branding, websites, e-commerce, SEO, paid advertising, conversion optimization and analytics under one roof.",
+export const metadata: Metadata = {
+  title: "Performance Marketing & Digital Services",
+  description:
+    "Explore ConversionHouse performance marketing services: Meta Ads management, Google Ads PPC, high-intent lead generation, CRO, and UGC ad creative.",
+  alternates: {
+    canonical: getCanonicalUrl("/services"),
+  },
+  openGraph: {
+    title: "Performance Marketing Services — ConversionHouse",
+    description:
+      "Meta Ads, Google Ads, Lead Generation, Conversion Rate Optimization, and UGC Ads built to drive measurable revenue growth.",
+    url: getCanonicalUrl("/services"),
+    siteName: SITE_CONFIG.name,
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: `${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`,
+        width: 1200,
+        height: 630,
+        alt: "ConversionHouse Performance Marketing Services",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Performance Marketing Services — ConversionHouse",
+    description:
+      "Meta Ads, Google Ads, Lead Generation, Conversion Rate Optimization, and UGC Ads built to drive measurable revenue growth.",
+    images: [`${SITE_CONFIG.url}/CONVERION HOUSE LOGO .png`],
+  },
 };
 
-const SERVICES = [
+const COMMERCIAL_SERVICES = [
   {
-    title: "Branding & Rebranding",
-    tag: "Make them remember you.",
-    desc: "We create identities that give your business a clear presence across digital and physical touchpoints.",
-    engagement: "Typical engagement ₹35K – ₹1.5L",
-    cards: [
-      { title: "Brand Identity", desc: "Logo, colour, typography and visual systems that make your brand recognizable." },
-      { title: "Rebranding", desc: "Refresh how your business looks, feels and is perceived." },
-      { title: "Visual Systems", desc: "Create a consistent language across every brand touchpoint." },
-      { title: "Brand Applications", desc: "Social media, packaging, vehicles, marketing materials and more." },
-    ],
+    slug: "meta-ads",
+    title: "Meta Ads Agency",
+    tag: "Scale Facebook & Instagram Ads",
+    desc: "Profitable media buying, visual ad creative, CAPI server-side tracking, and continuous audience optimization for predictable customer acquisition.",
+    href: "/services/meta-ads",
   },
   {
-    title: "Digital Experiences",
-    tag: "Give them somewhere to go.",
-    desc: "We turn your brand into fast, purposeful digital experiences built to earn trust and drive action.",
-    engagement: "Typical engagement ₹25K – ₹1L+",
-    cards: [
-      { title: "Websites", desc: "Custom-designed websites built around your business and customers." },
-      { title: "Landing Pages", desc: "Focused experiences designed around one clear action." },
-      { title: "E-commerce", desc: "Scalable Shopify stores built for seamless shopping experiences." },
-      { title: "Headless Commerce", desc: "High-performance Shopify storefronts with complete frontend flexibility." },
-    ],
+    slug: "google-ads",
+    title: "Google Ads Agency",
+    tag: "Capture Buyer Search Intent",
+    desc: "High-intent Search campaigns, Shopping feeds, and Performance Max setups optimized to capture active demand and minimize wasted CPC spend.",
+    href: "/services/google-ads",
   },
   {
-    title: "Visibility & Growth",
-    tag: "Make sure they find you.",
-    desc: "We put your business in front of the right people through search, social and performance-driven campaigns.",
-    engagement: "Ongoing engagement ₹30K – ₹60K+ / month",
-    cards: [
-      { title: "SEO", desc: "Build sustainable organic visibility and attract relevant traffic." },
-      { title: "Local SEO", desc: "Get discovered by customers searching for businesses like yours nearby." },
-      { title: "Meta Ads", desc: "Reach the right audiences and turn attention into enquiries." },
-      { title: "Google Ads", desc: "Capture high-intent searches when customers are ready to act." },
-    ],
+    slug: "lead-generation",
+    title: "Lead Generation Agency",
+    tag: "Predictable Lead Flow",
+    desc: "End-to-end client acquisition engines combining targeted ads, mobile-first landing pages, and lead qualification workflows.",
+    href: "/services/lead-generation",
   },
   {
-    title: "Conversion & Intelligence",
-    tag: "Give them a reason to choose you.",
-    desc: "We turn clicks into customers by understanding what people do, where they drop off and what makes them act.",
-    engagement: "Engagements from ₹20K+",
-    cards: [
-      { title: "CRO", desc: "Remove friction and make more visitors take action." },
-      { title: "Analytics", desc: "Understand how people actually interact with your digital experience." },
-      { title: "Tracking", desc: "Measure the actions that matter — from clicks to enquiries and purchases." },
-      { title: "Optimization", desc: "Test, learn and continuously improve what isn't performing." },
-    ],
+    slug: "conversion-rate-optimization",
+    title: "Conversion Rate Optimization (CRO)",
+    tag: "Turn Clicks Into Customers",
+    desc: "Behavior audits, heatmap analysis, UX wireframing, and page speed optimization to maximize your site's conversion rate.",
+    href: "/services/conversion-rate-optimization",
+  },
+  {
+    slug: "ugc-ads",
+    title: "UGC Ads & Conversion Creative",
+    tag: "Scroll-Stopping Ad Concepts",
+    desc: "Direct-response video scripts, authentic user-generated content, motion graphics, and high-converting ad hooks built for social feeds.",
+    href: "/services/ugc-ads",
   },
 ];
 
 export default function ServicesPage() {
+  const breadcrumbs = [
+    { name: "Home", item: "/" },
+    { name: "Services", item: "/services" },
+  ];
+  const breadcrumbSchema = getBreadcrumbSchema(breadcrumbs);
+
+  const mainServiceSchema = getServiceSchema({
+    name: "ConversionHouse Growth Services",
+    description: "Performance marketing, Meta Ads, Google Ads, Lead Generation, and CRO services.",
+    url: "/services",
+    serviceType: "Digital Marketing Agency",
+  });
+
   return (
-    <main className="bg-black text-white pt-32 pb-24">
+    <main className="bg-white text-black pt-32 pb-24 border-t border-neutral-100">
+      <JsonLd data={[breadcrumbSchema, mainServiceSchema]} />
+
       <div className="container-x">
-        
-        {/* Intro */}
-        <div className="max-w-3xl mb-20 space-y-4">
-          <span className="text-[#ff5722] text-xs font-mono uppercase tracking-widest">[ Our Expertise ]</span>
-          <h1 className="font-display text-4xl sm:text-6xl text-white leading-tight">
-            Everything your business needs to grow online.
+        {/* Breadcrumb Navigation */}
+        <nav aria-label="Breadcrumb" className="mb-8">
+          <ol className="flex items-center gap-2 text-xs font-mono text-neutral-500">
+            <li>
+              <Link href="/" className="hover:text-[#ff4500] transition-colors">
+                Home
+              </Link>
+            </li>
+            <li>/</li>
+            <li className="text-black font-medium">Services</li>
+          </ol>
+        </nav>
+
+        {/* Header */}
+        <div className="max-w-3xl mb-16 space-y-4">
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Commercial Capabilities ]</span>
+          <h1 className="font-display font-semibold text-4xl sm:text-6xl text-black leading-tight tracking-tight">
+            Services built for <span className="text-[#ff4500] font-bold">measurable return on ad spend.</span>
           </h1>
-          <p className="text-neutral-400 text-sm md:text-base leading-relaxed">
-            Branding, websites, e-commerce, SEO, paid advertising, conversion optimization and analytics — under one roof.
+          <p className="text-neutral-600 text-sm md:text-base leading-relaxed">
+            Performance marketing, paid advertising, landing page design, lead generation, and conversion optimization under one roof. No fluff — just metrics that move your business forward.
           </p>
         </div>
 
-        {/* Services List Breakdown */}
-        <div className="space-y-16">
-          {SERVICES.map((s, idx) => (
-            <div
-              key={s.title}
-              className="border-b border-neutral-900 pb-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+        {/* Commercial Service Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          {COMMERCIAL_SERVICES.map((s) => (
+            <Link
+              key={s.slug}
+              href={s.href}
+              className="bg-neutral-50/80 border border-neutral-200/80 p-8 rounded-3xl flex flex-col justify-between group hover:border-[#ff4500] hover:shadow-xl transition-all duration-300"
             >
-              <div className="lg:col-span-1 text-xs font-mono text-[#ff5722]">
-                0{idx + 1}
-              </div>
-              
-              <div className="lg:col-span-5 space-y-4">
-                <h2 className="font-display text-2xl sm:text-3xl text-white">{s.title}</h2>
-                <p className="text-xs font-mono text-[#ff5722]">{s.tag}</p>
-                <p className="text-sm text-neutral-400 leading-relaxed">{s.desc}</p>
-                <p className="text-xs font-mono text-neutral-500 pt-1">{s.engagement}</p>
-                
-                <div className="pt-4">
-                  <Link
-                    href="/contact"
-                    className="inline-flex items-center gap-2 bg-neutral-900 border border-neutral-800 hover:border-[#ff5722] px-6 py-3 rounded-full text-xs font-mono transition-all text-white"
-                  >
-                    Select Capability <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#ff4500] font-semibold block mb-3">
+                  {s.tag}
+                </span>
+                <h2 className="font-display font-bold text-2xl text-black mb-4 group-hover:text-[#ff4500] transition-colors">
+                  {s.title}
+                </h2>
+                <p className="text-xs sm:text-sm text-neutral-600 leading-relaxed font-sans mb-6">
+                  {s.desc}
+                </p>
               </div>
 
-              <div className="lg:col-span-6 bg-neutral-950 p-6 md:p-8 rounded-2xl border border-neutral-900">
-                <h3 className="text-xs font-mono uppercase text-neutral-500 mb-4">Included Capabilities</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {s.cards.map((c) => (
-                    <div key={c.title} className="space-y-1">
-                      <div className="text-xs text-white font-medium flex items-center gap-2">
-                        <Check className="w-3.5 h-3.5 text-[#ff5722] shrink-0" />
-                        <span>{c.title}</span>
-                      </div>
-                      <p className="text-[11px] text-neutral-500 pl-5 leading-relaxed">{c.desc}</p>
-                    </div>
-                  ))}
-                </div>
+              <div className="pt-4 border-t border-neutral-200/80 mt-auto flex items-center justify-between">
+                <span className="text-xs font-sans font-semibold text-black group-hover:text-[#ff4500] flex items-center gap-1.5 transition-colors">
+                  View Dedicated Service <ArrowRight className="w-3.5 h-3.5" />
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
-        {/* Pricing Guide Alert */}
-        <div className="mt-20 bg-neutral-950 border border-neutral-900 p-8 rounded-2xl max-w-2xl mx-auto space-y-4">
-          <span className="text-xs font-mono uppercase text-[#ff5722] tracking-wider block">[ Investment Guide ]</span>
-          <h3 className="font-display text-xl text-white">Investment Scope Framework</h3>
-          <p className="text-neutral-400 text-xs md:text-sm leading-relaxed">
-            Projects typically start around ₹35K–₹40K, with most growth engagements in the ₹60K–₹1.5L+ range. Final scope and investment depend on your goals and requirements.
+        {/* CTA */}
+        <div className="bg-black text-white p-10 md:p-14 rounded-3xl text-center space-y-6 max-w-3xl mx-auto">
+          <span className="text-[#ff4500] text-xs font-mono uppercase tracking-widest">[ Tailored Growth Scope ]</span>
+          <h2 className="font-display text-3xl sm:text-5xl font-semibold text-white">
+            Need a custom growth system for your business?
+          </h2>
+          <p className="text-neutral-400 text-sm max-w-lg mx-auto leading-relaxed">
+            Tell us about your target lead volume or ad spend goals. We will build a customized proposal.
           </p>
-          <div className="pt-4">
+          <div>
             <Link
               href="/contact"
-              className="inline-block bg-[#ff5722] hover:bg-[#e64a19] text-white font-semibold text-xs uppercase tracking-wider px-6 py-3 rounded-full transition-colors"
+              className="inline-block bg-[#ff4500] hover:bg-[#e03d00] text-white font-semibold text-xs uppercase tracking-wider px-8 py-4 rounded-full transition-colors"
             >
-              Get Custom Quote
+              Get a Quote
             </Link>
           </div>
         </div>
